@@ -1,219 +1,143 @@
 <!doctype html>
-<meta charset="utf-8" />
 <html lang="zh-CN">
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <title>星期日 · 歌织者·梦之铎音 — D&D 5R 人物卡</title>
 <style>
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  :root{
-    --bg:#0d0b18; --card:#151220; --card2:#1a1730; --fg:#e0d8cc; --muted:#7a6a9a;
-    --a:#2d1b69; --b:#4a2a8a; --accent:#7c5cfc; --gold:#d4a057; --soft:#c4a4ff;
-    --red:#ff5e6b; --green:#6bcb8a; --blue:#5b9aff;
-  }
-  html{font-size:15px;scroll-behavior:smooth}
-  body{
-    background:var(--bg);color:var(--fg);
-    font-family:"Microsoft YaHei","Noto Sans SC","PingFang SC","Segoe UI",system-ui,sans-serif;
-    padding:0;line-height:1.6;overflow-x:hidden
-  }
-  .pg{max-width:800px;margin:0 auto;padding:0 14px 60px;position:relative;z-index:2}
-
-  /* ═══ FEATHER FALL ═══ */
-  #feather-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:hidden}
-  .feather{
-    position:absolute;top:-60px;width:18px;height:8px;
-    background:radial-gradient(ellipse at 30% 50%,rgba(255,248,220,.85),rgba(212,160,87,.2) 60%,transparent 80%);
-    border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;opacity:0;
-    box-shadow:0 0 8px 3px rgba(212,160,87,.08), 0 0 2px 1px rgba(255,248,220,.04);
-    will-change:transform,opacity;
-  }
-  .feather::after{
-    content:'';position:absolute;top:2px;left:50%;width:1px;height:6px;
-    background:linear-gradient(to bottom,rgba(255,248,200,.4),transparent);transform:translateX(-50%);
-  }
-
-  /* ═══ MUSIC ═══ */
-  .music-bar{
-    position:fixed;bottom:24px;right:24px;z-index:100;
-    display:flex;align-items:center;gap:10px;
-    background:rgba(21,18,32,.88);border:1px solid rgba(124,92,252,.15);
-    border-radius:50px;padding:8px 16px 8px 12px;
-    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-    box-shadow:0 4px 20px rgba(0,0,0,.4);transition:all .3s;
-  }
-  .music-btn{
-    width:32px;height:32px;border-radius:50%;
-    background:rgba(124,92,252,.15);border:1px solid rgba(124,92,252,.2);
-    color:var(--soft);font-size:14px;cursor:pointer;
-    display:flex;align-items:center;justify-content:center;
-    transition:all .25s;flex-shrink:0;
-  }
-  .music-btn:hover{background:rgba(124,92,252,.3);border-color:var(--accent);transform:scale(1.08)}
-  .music-btn.playing{background:rgba(124,92,252,.25);border-color:var(--accent)}
-  .progress-wrap{display:flex;align-items:center;gap:6px;flex:1;min-width:0}
-  .progress-bar{flex:1;height:4px;border-radius:2px;background:rgba(124,92,252,.12);cursor:pointer;position:relative;min-width:40px;transition:height .15s}
-  .progress-bar:hover{height:6px}
-  .progress-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--gold));width:0%;position:relative}
-  .progress-fill::after{content:'';position:absolute;right:-4px;top:-3px;width:10px;height:10px;border-radius:50%;background:var(--gold);opacity:0;transition:opacity .15s}
-  .progress-bar:hover .progress-fill::after{opacity:1}
-  .time-display{font-size:.6rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;min-width:55px;text-align:center}
-  .music-bar .vol-slider{width:0;overflow:hidden;transition:width .3s;display:flex;align-items:center}
-  .music-bar:hover .vol-slider,.vol-slider.open{width:80px}
-  .vol-slider input[type="range"]{width:72px;height:3px;-webkit-appearance:none;appearance:none;background:rgba(124,92,252,.2);border-radius:2px;outline:none;margin-left:6px}
-  .vol-slider input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:10px;height:10px;border-radius:50%;background:var(--accent);cursor:pointer;border:none}
-  .vol-slider input[type="range"]::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:var(--accent);cursor:pointer;border:none}
-
-  /* ═══ EDIT BUTTON ═══ */
-  .edit-btn{
-    position:fixed;top:16px;right:16px;z-index:100;
-    background:rgba(21,18,32,.88);border:1px solid rgba(124,92,252,.2);
-    color:var(--soft);border-radius:50%;width:40px;height:40px;
-    display:flex;align-items:center;justify-content:center;
-    cursor:pointer;font-size:18px;backdrop-filter:blur(8px);
-    box-shadow:0 2px 12px rgba(0,0,0,.3);transition:all .25s;
-  }
-  .edit-btn:hover{background:rgba(124,92,252,.25);border-color:var(--accent);transform:scale(1.08)}
-  .edit-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-
-  /* ═══ EDIT PANEL ═══ */
-  .edit-panel{
-    position:fixed;top:0;right:-400px;width:380px;height:100vh;
-    z-index:99;background:rgba(13,11,24,.97);
-    border-left:1px solid rgba(124,92,252,.15);
-    backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-    transition:right .35s cubic-bezier(0.22,1,0.36,1);
-    padding:60px 18px 80px;overflow-y:auto;
-    font-size:.82rem;
-  }
-  .edit-panel.open{right:0}
-  .edit-panel h3{color:var(--gold);font-size:.9rem;margin:18px 0 8px;border-bottom:1px solid rgba(212,160,87,.1);padding-bottom:4px}
-  .edit-group{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;margin-bottom:8px}
-  .edit-field{display:flex;flex-direction:column;gap:2px}
-  .edit-field label{font-size:.62rem;color:var(--muted);letter-spacing:1px}
-  .edit-field input,.edit-field textarea,.edit-field select{
-    background:rgba(124,92,252,.06);border:1px solid rgba(124,92,252,.1);
-    border-radius:4px;padding:4px 7px;color:var(--fg);font-size:.78rem;font-family:inherit;
-    outline:none;transition:border .2s;
-  }
-  .edit-field input:focus,.edit-field textarea:focus{border-color:var(--accent)}
-  .edit-field.half{grid-column:span 1}
-  .edit-field.full{grid-column:span 2}
-  .edit-field textarea{min-height:50px;resize:vertical}
-  .edit-actions{position:sticky;bottom:0;display:flex;gap:8px;margin-top:16px;padding-top:12px;border-top:1px solid rgba(124,92,252,.1);background:rgba(13,11,24,.98)}
-  .edit-actions button{
-    flex:1;padding:8px;border-radius:6px;border:none;cursor:pointer;
-    font-size:.78rem;font-weight:600;transition:all .2s;
-  }
-  .btn-save{background:var(--accent);color:#fff}
-  .btn-save:hover{background:#8a6cff}
-  .btn-reset{background:rgba(124,92,252,.1);color:var(--muted)}
-  .btn-reset:hover{background:rgba(124,92,252,.2);color:var(--soft)}
-  .edit-success{color:var(--green);font-size:.7rem;text-align:center;padding:4px;opacity:0;transition:opacity .3s}
-  .edit-success.show{opacity:1}
-
-  @media(max-width:480px){
-    html{font-size:14px}
-    .info-grid,.g2,.g3{grid-template-columns:1fr}
-    .abilities{grid-template-columns:repeat(3,1fr)}
-    .g-auto{grid-template-columns:repeat(2,1fr)}
-    .g-auto-s{grid-template-columns:repeat(2,1fr)}
-    .music-bar{bottom:12px;right:12px;padding:6px 12px 6px 10px}
-    .edit-panel{width:100vw;right:-100vw}
-  }
-
-  /* ═══ EXISTING ═══ */
-  h1{font-size:1.8rem;font-weight:900;letter-spacing:3px;background:linear-gradient(135deg,#f0e6ff,#7c5cfc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-  h2{font-size:1.15rem;font-weight:700;color:var(--soft);margin:28px 0 10px;padding-bottom:5px;border-bottom:1.5px solid rgba(124,92,252,.2);display:flex;align-items:center;gap:8px}
-  h2::before{content:"◇";font-size:.7rem;color:var(--accent)}
-  h3{font-size:.95rem;color:#d0bcf0;margin:14px 0 6px}
-  .sub{font-size:.75rem;color:var(--muted);margin-bottom:12px;letter-spacing:1px}
-  .tag{display:inline-block;padding:1px 7px;border-radius:4px;font-size:.68rem;font-weight:400;margin:1px;background:rgba(124,92,252,.1);border:1px solid rgba(124,92,252,.15);color:#b0a0d0}
-  .tag-r{background:rgba(255,94,107,.08);border-color:rgba(255,94,107,.15);color:#ff8a94}
-  .tag-g{background:rgba(107,203,138,.08);border-color:rgba(107,203,138,.15);color:#8bdaa4}
-  .tag-b{background:rgba(91,154,255,.08);border-color:rgba(91,154,255,.15);color:#8bb8ff}
-  .tag-y{background:rgba(212,160,87,.08);border-color:rgba(212,160,87,.15);color:#e0c080}
-  .hero{text-align:center;padding:32px 0 16px}
-  .hero::after{content:'';display:block;width:60px;height:1.5px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin:12px auto 0}
-  .hero .cn{font-size:.8rem;color:var(--muted);letter-spacing:4px}
-  .hero .info{font-size:.82rem;color:#b0a0c8;margin-top:5px;cursor:default}
-  .portrait-wrap{width:100%;max-width:320px;margin:16px auto;border-radius:10px;overflow:hidden;border:1px solid rgba(124,92,252,.12)}
-  .portrait-wrap img{width:100%;display:block}
-  .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:12px 0}
-  .info-grid .ig{background:var(--card);border:1px solid rgba(124,92,252,.06);border-radius:7px;padding:8px 12px}
-  .info-grid .ig .lb{font-size:.62rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted)}
-  .info-grid .ig .vl{font-size:1rem;font-weight:600;color:#d8ccee}
-  .abilities{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:12px 0}
-  .ab{text-align:center;background:var(--card);border:1px solid rgba(124,92,252,.06);border-radius:8px;padding:10px 4px}
-  .ab .n{font-size:.6rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted)}
-  .ab .v{font-size:1.2rem;font-weight:700;color:#e8ddf8}
-  .ab .m{font-size:.78rem;color:var(--muted)}
-  .card{background:var(--card);border:1px solid rgba(124,92,252,.06);border-radius:8px;padding:12px 14px;margin:6px 0}
-  .card .hd{font-weight:600;color:#d0bcf0;margin-bottom:3px;font-size:.88rem}
-  .card .hd .rn{font-weight:400;font-size:.68rem;color:var(--muted)}
-  .card p{font-size:.82rem;color:#b0a0c8;line-height:1.65}
-  .card .meta{font-size:.68rem;color:var(--muted);margin-top:3px}
-  .g2,.g3{display:grid;gap:6px}
-  .g2{grid-template-columns:1fr 1fr}
-  .g3{grid-template-columns:repeat(3,1fr)}
-  .g-auto{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:5px}
-  .g-auto-s{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:4px}
-  .spell-group{margin-bottom:12px}
-  .spell-group .sg-title{font-size:.76rem;color:#a890d0;font-weight:500;margin-bottom:5px;border-left:3px solid var(--accent);padding-left:7px}
-  .spell{background:rgba(255,255,255,.015);border:1px solid rgba(124,92,252,.05);border-radius:5px;padding:4px 8px;font-size:.74rem}
-  .spell .sn{color:#c8b8e0}
-  .spell .ss{font-size:.6rem;color:#6a5a8a}
-
-  /* ═══ SPELL CARDS ═══ */
-  .spell-block{margin:14px 0}
-  .sb-hd{font-size:.8rem;font-weight:600;color:var(--soft);padding:4px 0 2px;margin-bottom:2px;border-left:3px solid var(--accent);padding-left:8px}
-  .spell-row{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-  .spell-card{border:1px solid rgba(124,92,252,.05);border-radius:5px;padding:6px 9px;background:rgba(255,255,255,.012)}
-  .sc-hd{font-size:.76rem;color:#c8b8e0;font-weight:500}
-  .sc-school{font-size:.62rem;color:#6a5a8a;font-weight:400}
-  .sc-desc{font-size:.7rem;color:#b0a0c8;line-height:1.55;margin-top:3px}
-  .sc-meta{font-size:.62rem;color:#5a4a7a;margin-top:3px;font-family:monospace}
-  .inst-card{border:1px solid rgba(124,92,252,.05);border-radius:5px;padding:5px 8px;background:rgba(255,255,255,.012)}
-  @media(max-width:560px){.spell-row{grid-template-columns:1fr}}
-
-  .chronicle{position:relative;padding-left:24px;margin:6px 0}
-  .chronicle::before{content:'';position:absolute;left:8px;top:4px;bottom:4px;width:1.5px;background:linear-gradient(180deg,var(--accent),rgba(124,92,252,.05))}
-  .chronicle-item{position:relative;padding:6px 0 6px 16px}
-  .chronicle-item::before{content:'';position:absolute;left:-18px;top:11px;width:10px;height:10px;border-radius:50%;border:2px solid var(--accent);background:rgba(124,92,252,.15)}
-  .chronicle-item .ch-title{font-weight:600;color:#d0bcf0;font-size:.85rem}
-  .chronicle-item .ch-body{font-size:.8rem;color:#b0a0c8;line-height:1.65;margin-top:2px}
-  .chronicle-item .ch-tag{display:inline-block;font-size:.58rem;padding:0 5px;border-radius:3px;margin-right:3px;font-weight:500;background:rgba(124,92,252,.15);color:var(--soft)}
-  .party{display:flex;flex-wrap:wrap;gap:5px}
-  .party .pc{background:var(--card);border:1px solid rgba(124,92,252,.06);border-radius:7px;padding:6px 12px;font-size:.78rem}
-  .party .pc .nm{color:#d0bcf0;font-weight:600}
-  .party .pc .cl{color:var(--muted);font-size:.7rem}
-  .eq{display:inline-block;background:rgba(124,92,252,.03);border:1px solid rgba(124,92,252,.06);border-radius:4px;padding:2px 7px;margin:1px;font-size:.74rem;color:#b0a0c8}
-  .eq-gold{background:rgba(212,160,87,.05);border-color:rgba(212,160,87,.08);color:#e0c080}
-  .note-box{background:rgba(124,92,252,.04);border-left:3px solid var(--gold);border-radius:0 7px 7px 0;padding:8px 12px;margin:8px 0;font-size:.78rem;color:#c0b0d0}
-  .char-note{background:rgba(124,92,252,.03);border-radius:7px;padding:10px 14px;margin:6px 0;font-size:.8rem;color:#b0a0c8;line-height:1.65}
-  .char-note .cn-hd{color:#d0bcf0;font-weight:600;font-size:.82rem}
-  .char-note .cn-tag{font-size:.6rem;color:var(--muted)}
-
-  /* ═══ EDITABLE HIGHLIGHT ═══ */
-  .editable-hl{cursor:pointer;transition:background .2s;border-radius:3px;padding:0 2px}
-  .editable-hl:hover{background:rgba(124,92,252,.08);outline:1px dashed rgba(124,92,252,.2)}
-  .editing .editable-hl{background:rgba(124,92,252,.05);outline:1px dashed var(--accent)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0d0b18;--card:#151220;--card2:#1a1730;--fg:#e0d8cc;--muted:#7a6a9a;--a:#2d1b69;--b:#4a2a8a;--accent:#7c5cfc;--gold:#d4a057;--soft:#c4a4ff;--red:#ff5e6b;--green:#6bcb8a;--blue:#5b9aff}
+html{font-size:15px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:"Microsoft YaHei","Noto Sans SC","PingFang SC","Segoe UI",system-ui,sans-serif;padding:0;line-height:1.6;overflow-x:hidden}
+.pg{max-width:800px;margin:0 auto;padding:0 14px 60px;position:relative;z-index:2}
+#feather-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:hidden}
+.feather{position:absolute;top:-60px;width:18px;height:8px;background:radial-gradient(ellipse at 30% 50%,rgba(255,248,220,.85),rgba(212,160,87,.2) 60%,transparent 80%);border-radius:50% 50% 50% 50%/60% 60% 40% 40%;opacity:0;box-shadow:0 0 8px 3px rgba(212,160,87,.08),0 0 2px 1px rgba(255,248,220,.04);will-change:transform,opacity}
+.feather::after{content:'';position:absolute;top:2px;left:50%;width:1px;height:6px;background:linear-gradient(to bottom,rgba(255,248,200,.4),transparent);transform:translateX(-50%)}
+.music-bar{position:fixed;bottom:24px;right:24px;z-index:100;display:flex;align-items:center;gap:10px;background:rgba(21,18,32,.88);border:1px solid rgba(124,92,252,.15);border-radius:50px;padding:8px 16px 8px 12px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 4px 20px rgba(0,0,0,.4);transition:all .3s}
+.music-btn{width:32px;height:32px;border-radius:50%;background:rgba(124,92,252,.15);border:1px solid rgba(124,92,252,.2);color:var(--soft);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s;flex-shrink:0}
+.music-btn:hover{background:rgba(124,92,252,.3);border-color:var(--accent);transform:scale(1.08)}
+.music-btn.playing{background:rgba(124,92,252,.25);border-color:var(--accent)}
+.progress-wrap{display:flex;align-items:center;gap:6px;flex:1;min-width:0}
+.progress-bar{flex:1;height:4px;border-radius:2px;background:rgba(124,92,252,.12);cursor:pointer;position:relative;min-width:40px;transition:height .15s}
+.progress-bar:hover{height:6px}
+.progress-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--gold));width:0%;position:relative}
+.progress-fill::after{content:'';position:absolute;right:-4px;top:-3px;width:10px;height:10px;border-radius:50%;background:var(--gold);opacity:0;transition:opacity .15s}
+.progress-bar:hover .progress-fill::after{opacity:1}
+.time-display{font-size:.6rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;min-width:55px;text-align:center}
+.music-bar .vol-slider{width:0;overflow:hidden;transition:width .3s;display:flex;align-items:center}
+.music-bar:hover .vol-slider,.vol-slider.open{width:80px}
+.vol-slider input[type=range]{width:72px;height:3px;-webkit-appearance:none;appearance:none;background:rgba(124,92,252,.2);border-radius:2px;outline:none;margin-left:6px}
+.vol-slider input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:10px;height:10px;border-radius:50%;background:var(--accent);cursor:pointer;border:none}
+.vol-slider input[type=range]::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:var(--accent);cursor:pointer;border:none}
+.edit-btn{position:fixed;bottom:76px;right:24px;z-index:100;background:rgba(21,18,32,.88);border:1px solid rgba(124,92,252,.2);color:var(--soft);border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(0,0,0,.3);transition:all .25s}
+.edit-btn:hover{background:rgba(124,92,252,.25);border-color:var(--accent);transform:scale(1.08)}
+.edit-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.edit-panel{position:fixed;top:0;right:-440px;width:420px;height:100vh;z-index:99;background:rgba(13,11,24,.98);border-left:1px solid rgba(124,92,252,.15);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:right .35s cubic-bezier(0.22,1,0.36,1);padding:60px 18px 100px;overflow-y:auto;font-size:.82rem;box-shadow:-4px 0 30px rgba(0,0,0,.3)}
+.edit-panel.open{right:0}
+.edit-panel h3{color:var(--gold);font-size:.9rem;margin:18px 0 8px;border-bottom:1px solid rgba(212,160,87,.1);padding-bottom:4px}
+.edit-panel h4{color:var(--soft);font-size:.8rem;margin:12px 0 4px}
+.edit-group{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;margin-bottom:8px}
+.edit-field{display:flex;flex-direction:column;gap:2px}
+.edit-field label{font-size:.62rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+.edit-field input,.edit-field textarea,.edit-field select{background:rgba(124,92,252,.06);border:1px solid rgba(124,92,252,.1);border-radius:4px;padding:4px 7px;color:var(--fg);font-size:.78rem;font-family:inherit;outline:none;transition:border .2s}
+.edit-field input:focus,.edit-field textarea:focus{border-color:var(--accent)}
+.edit-field.half{grid-column:span 1}
+.edit-field.full{grid-column:span 2}
+.edit-field textarea{min-height:50px;resize:vertical}
+.edit-actions{position:sticky;bottom:0;display:flex;gap:8px;margin-top:16px;padding:12px 0;border-top:1px solid rgba(124,92,252,.1);background:rgba(13,11,24,.98)}
+.edit-actions button{flex:1;padding:8px;border-radius:6px;border:none;cursor:pointer;font-size:.78rem;font-weight:600;transition:all .2s}
+.btn-save{background:var(--accent);color:#fff}
+.btn-save:hover{background:#8a6cff}
+.btn-reset{background:rgba(124,92,252,.1);color:var(--muted)}
+.btn-reset:hover{background:rgba(124,92,252,.2);color:var(--soft)}
+.btn-export{background:rgba(91,154,255,.15);color:var(--blue)}
+.btn-export:hover{background:rgba(91,154,255,.25)}
+.edit-success{color:var(--green);font-size:.7rem;text-align:center;padding:4px;opacity:0;transition:opacity .3s}
+.edit-success.show{opacity:1}
+.cr-add{background:rgba(124,92,252,.08);border:1px dashed rgba(124,92,252,.15);border-radius:6px;padding:8px;margin:6px 0;cursor:pointer;text-align:center;color:var(--muted);font-size:.72rem;transition:all .2s}
+.cr-add:hover{background:rgba(124,92,252,.15);border-color:var(--accent);color:var(--soft)}
+.cr-item{border:1px solid rgba(124,92,252,.06);border-radius:5px;padding:6px 8px;margin:4px 0;position:relative}
+.cr-item .cr-del{position:absolute;top:4px;right:4px;width:18px;height:18px;border-radius:50%;background:rgba(255,94,107,.1);border:1px solid rgba(255,94,107,.15);color:var(--red);cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
+.cr-item:hover .cr-del{opacity:1}
+.cr-item .cr-del:hover{background:rgba(255,94,107,.2)}
+.spell-item{background:rgba(124,92,252,.03);border:1px solid rgba(124,92,252,.05);border-radius:4px;padding:4px 6px;margin:2px 0;font-size:.7rem;color:#b0a0c8;display:flex;align-items:center;gap:4px}
+.spell-item .sp-del{width:16px;height:16px;border-radius:50%;background:rgba(255,94,107,.1);border:none;color:var(--red);cursor:pointer;font-size:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+@media(max-width:560px){.edit-panel{width:100vw;right:-100vw}}
+h1{font-size:1.8rem;font-weight:900;letter-spacing:3px;background:linear-gradient(135deg,#f0e6ff,#7c5cfc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+h2{font-size:1.15rem;font-weight:700;color:var(--soft);margin:28px 0 10px;padding-bottom:5px;border-bottom:1.5px solid rgba(124,92,252,.2);display:flex;align-items:center;gap:8px}
+h2::before{content:"◇";font-size:.7rem;color:var(--accent)}
+h3{font-size:.95rem;color:#d0bcf0;margin:14px 0 6px}
+.tag{display:inline-block;padding:1px 7px;border-radius:4px;font-size:.68rem;font-weight:400;margin:1px;background:rgba(124,92,252,.1);border:1px solid rgba(124,92,252,.15);color:#b0a0d0}
+.tag-r{background:rgba(255,94,107,.08);border-color:rgba(255,94,107,.15);color:#ff8a94}
+.tag-g{background:rgba(107,203,138,.08);border-color:rgba(107,203,138,.15);color:#8bdaa4}
+.tag-b{background:rgba(91,154,255,.08);border-color:rgba(91,154,255,.15);color:#8bb8ff}
+.tag-y{background:rgba(212,160,87,.08);border-color:rgba(212,160,87,.15);color:#e0c080}
+.hero{text-align:center;padding:32px 0 16px}
+.hero::after{content:'';display:block;width:60px;height:1.5px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin:12px auto 0}
+.hero .cn{font-size:.8rem;color:var(--muted);letter-spacing:4px}
+.hero .info{font-size:.82rem;color:#b0a0c8;margin-top:5px}
+.portrait-wrap{width:100%;max-width:320px;margin:16px auto;border-radius:10px;overflow:hidden;border:1px solid rgba(124,92,252,.12)}
+.portrait-wrap img{width:100%;display:block}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:12px 0}
+.info-grid .ig{background:var(--card);border:1px solid rgba(124,92,252,.06);border-radius:7px;padding:8px 12px}
+.info-grid .ig .lb{font-size:.62rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted)}
+.info-grid .ig .vl{font-size:1rem;font-weight:600;color:#d8ccee}
+.abilities{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:12px 0}
+.ab{text-align:center;background:var(--card);border:1px solid rgba(124,92,252,.06);border-radius:8px;padding:10px 4px}
+.ab .n{font-size:.6rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted)}
+.ab .v{font-size:1.2rem;font-weight:700;color:#e8ddf8}
+.ab .m{font-size:.78rem;color:var(--muted)}
+.card{background:var(--card);border:1px solid rgba(124,92,252,.06);border-radius:8px;padding:12px 14px;margin:6px 0}
+.card .hd{font-weight:600;color:#d0bcf0;margin-bottom:3px;font-size:.88rem}
+.card .hd .rn{font-weight:400;font-size:.68rem;color:var(--muted)}
+.card p{font-size:.82rem;color:#b0a0c8;line-height:1.65}
+.card .meta{font-size:.68rem;color:var(--muted);margin-top:3px}
+.g2,.g3{display:grid;gap:6px}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g-auto{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:5px}
+.g-auto-s{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:4px}
+.spell-block{margin:14px 0}
+.sb-hd{font-size:.8rem;font-weight:600;color:var(--soft);padding:4px 0 2px;margin-bottom:2px;border-left:3px solid var(--accent);padding-left:8px}
+.spell-row{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.spell-card{border:1px solid rgba(124,92,252,.05);border-radius:5px;padding:6px 9px;background:rgba(255,255,255,.012)}
+.sc-hd{font-size:.76rem;color:#c8b8e0;font-weight:500}
+.sc-school{font-size:.62rem;color:#6a5a8a;font-weight:400}
+.sc-desc{font-size:.7rem;color:#b0a0c8;line-height:1.55;margin-top:3px}
+.sc-meta{font-size:.62rem;color:#5a4a7a;margin-top:3px;font-family:monospace}
+.inst-card{border:1px solid rgba(124,92,252,.05);border-radius:5px;padding:5px 8px;background:rgba(255,255,255,.012)}
+@media(max-width:560px){.spell-row{grid-template-columns:1fr}}
+.chronicle{position:relative;padding-left:24px;margin:6px 0}
+.chronicle::before{content:'';position:absolute;left:8px;top:4px;bottom:4px;width:1.5px;background:linear-gradient(180deg,var(--accent),rgba(124,92,252,.05))}
+.chronicle-item{position:relative;padding:6px 0 6px 16px}
+.chronicle-item::before{content:'';position:absolute;left:-18px;top:11px;width:10px;height:10px;border-radius:50%;border:2px solid var(--accent);background:rgba(124,92,252,.15)}
+.chronicle-item .ch-tag{display:inline-block;font-size:.58rem;padding:0 5px;border-radius:3px;margin-right:3px;font-weight:500;background:rgba(124,92,252,.15);color:var(--soft)}
+.chronicle-item .ch-title{font-weight:600;color:#d0bcf0;font-size:.85rem}
+.chronicle-item .ch-body{font-size:.8rem;color:#b0a0c8;line-height:1.65;margin-top:2px}
+.party{display:flex;flex-wrap:wrap;gap:5px}
+.party .pc{background:var(--card);border:1px solid rgba(124,92,252,.06);border-radius:7px;padding:6px 12px;font-size:.78rem}
+.party .pc .nm{color:#d0bcf0;font-weight:600}
+.party .pc .cl{color:var(--muted);font-size:.7rem}
+.eq{display:inline-block;background:rgba(124,92,252,.03);border:1px solid rgba(124,92,252,.06);border-radius:4px;padding:2px 7px;margin:1px;font-size:.74rem;color:#b0a0c8}
+.eq-gold{background:rgba(212,160,87,.05);border-color:rgba(212,160,87,.08);color:#e0c080}
+.note-box{background:rgba(124,92,252,.04);border-left:3px solid var(--gold);border-radius:0 7px 7px 0;padding:8px 12px;margin:8px 0;font-size:.78rem;color:#c0b0d0}
+.char-note{background:rgba(124,92,252,.03);border-radius:7px;padding:10px 14px;margin:6px 0;font-size:.8rem;color:#b0a0c8;line-height:1.65}
+.char-note .cn-hd{color:#d0bcf0;font-weight:600;font-size:.82rem}
+.char-note .cn-tag{font-size:.6rem;color:var(--muted)}
 </style>
 </head>
 <body>
-
 <div id="feather-container"></div>
 
-<!-- ═══ EDIT BUTTON ═══ -->
+<!-- EDIT BUTTON -->
 <div class="edit-btn" id="editBtn" title="编辑人物卡">✏️</div>
 
-<!-- ═══ EDIT PANEL ═══ -->
+<!-- EDIT PANEL -->
 <div class="edit-panel" id="editPanel">
   <h3>📋 基本信息</h3>
   <div class="edit-group">
     <div class="edit-field half"><label>等级</label><input id="e-lvl" /></div>
     <div class="edit-field half"><label>熟练加值</label><input id="e-prof" /></div>
-    <div class="edit-field half"><label>HP</label><input id="e-hp" /></div>
+    <div class="edit-field half"><label>生命值</label><input id="e-hp" placeholder="如 45（20+5d8）" /></div>
     <div class="edit-field half"><label>AC</label><input id="e-ac" /></div>
     <div class="edit-field half"><label>先攻</label><input id="e-init" /></div>
     <div class="edit-field half"><label>速度</label><input id="e-speed" /></div>
@@ -223,36 +147,40 @@
 
   <h3>⚔️ 属性</h3>
   <div class="edit-group">
-    <div class="edit-field half"><label>力量</label><input id="e-str" /></div>
-    <div class="edit-field half"><label>敏捷</label><input id="e-dex" /></div>
-    <div class="edit-field half"><label>体质</label><input id="e-con" /></div>
-    <div class="edit-field half"><label>智力</label><input id="e-int" /></div>
-    <div class="edit-field half"><label>感知</label><input id="e-wis" /></div>
-    <div class="edit-field half"><label>魅力</label><input id="e-cha" /></div>
+    <div class="edit-field half"><label>力量</label><input id="e-str" type="number" /></div>
+    <div class="edit-field half"><label>敏捷</label><input id="e-dex" type="number" /></div>
+    <div class="edit-field half"><label>体质</label><input id="e-con" type="number" /></div>
+    <div class="edit-field half"><label>智力</label><input id="e-int" type="number" /></div>
+    <div class="edit-field half"><label>感知</label><input id="e-wis" type="number" /></div>
+    <div class="edit-field half"><label>魅力</label><input id="e-cha" type="number" /></div>
   </div>
 
   <h3>✨ 法术</h3>
   <div class="edit-group">
     <div class="edit-field half"><label>法术DC</label><input id="e-dc" /></div>
     <div class="edit-field half"><label>法术攻击</label><input id="e-atk" /></div>
-    <div class="edit-field full"><label>法术位（逗号分隔 如 4,3,3）</label><input id="e-slots" /></div>
+    <div class="edit-field full"><label>法术位（逗号分隔）</label><input id="e-slots" placeholder="如 4,3,3" /></div>
   </div>
+  <div id="spellEditor"></div>
+
+  <h3>📜 冒险纪事</h3>
+  <div id="chronicleEditor"></div>
+  <div class="cr-add" id="addChronicleBtn">+ 新增纪事条目</div>
 
   <div class="edit-actions">
-    <button class="btn-save" id="saveBtn">💾 保存</button>
+    <button class="btn-save" id="saveBtn">💾 保存并应用</button>
+    <button class="btn-export" id="exportBtn">📤 导出数据</button>
     <button class="btn-reset" id="resetBtn">↺ 重置</button>
   </div>
-  <div class="edit-success" id="editSuccess">✅ 已保存！刷新页面后数值会更新（仅在你当前浏览器生效）</div>
+  <div class="edit-success" id="editSuccess">✅ 已保存</div>
 </div>
 
-<!-- ═══ MUSIC ═══ -->
+<!-- AUDIO -->
 <audio id="bgAudio" preload="auto" style="display:none"></audio>
 <div class="music-bar" id="musicBar">
   <button class="music-btn" id="musicToggle" title="播放/暂停">▶</button>
   <div class="progress-wrap">
-    <div class="progress-bar" id="progressBar">
-      <div class="progress-fill" id="progressFill"></div>
-    </div>
+    <div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
     <span class="time-display" id="timeDisplay">0:00 / 4:57</span>
   </div>
   <div class="vol-slider" id="volSlider">
@@ -260,339 +188,311 @@
   </div>
 </div>
 
-<div class="pg">
-
-<!-- HEADER -->
-<div class="hero">
-  <h1>星期日</h1>
-  <div class="cn">S U N D A Y · 梦 之 铎 音</div>
-  <div class="info" id="classLine">6级 歌织者（吟游诗人）· 阿斯莫 · 守序中立</div>
-</div>
-
-<!-- PORTRAIT -->
-<div class="portrait-wrap">
-  <picture>
-    <source srcset="sunday_splash.webp" type="image/webp" />
-    <img src="sunday_splash.jpg" alt="星期日" />
-  </picture>
-</div>
-
-<!-- 属性 -->
-<div class="abilities" id="abilitiesContainer">
-  <div class="ab"><div class="n">力量</div><div class="v" id="str-val">12</div><div class="m" id="str-mod">（+1）</div></div>
-  <div class="ab"><div class="n">敏捷</div><div class="v" id="dex-val">18</div><div class="m" id="dex-mod">（+4）</div></div>
-  <div class="ab"><div class="n">体质</div><div class="v" id="con-val">15</div><div class="m" id="con-mod">（+2）</div></div>
-  <div class="ab"><div class="n">智力</div><div class="v" id="int-val">14</div><div class="m" id="int-mod">（+2）</div></div>
-  <div class="ab"><div class="n">感知</div><div class="v" id="wis-val">16</div><div class="m" id="wis-mod">（+3）</div></div>
-  <div class="ab"><div class="n">魅力</div><div class="v" id="cha-val">20</div><div class="m" id="cha-mod">（+5）</div></div>
-</div>
-
-<!-- 基本数据 -->
-<div class="info-grid" id="statsGrid">
-  <div class="ig"><div class="lb">护甲等级</div><div class="vl" id="s-ac">15</div></div>
-  <div class="ig"><div class="lb">生命值</div><div class="vl" id="s-hp">45（20+5d8）</div></div>
-  <div class="ig"><div class="lb">先攻加值</div><div class="vl" id="s-init">+4</div></div>
-  <div class="ig"><div class="lb">速度</div><div class="vl" id="s-speed">30尺（变身可飞行30尺）</div></div>
-  <div class="ig"><div class="lb">熟练加值</div><div class="vl" id="s-prof">+3</div></div>
-  <div class="ig"><div class="lb">被动察觉</div><div class="vl" id="s-pp">16</div></div>
-  <div class="ig"><div class="lb">黑暗视觉</div><div class="vl">60尺</div></div>
-  <div class="ig"><div class="lb">体型/种族</div><div class="vl">中型 · 阿斯莫</div></div>
-</div>
-
-<!-- 豁免与技能 -->
-<div class="g2">
-  <div class="card">
-    <div class="hd">豁免检定 <span class="rn">Saving Throws</span></div>
-    <p id="savesDisplay"><span class="tag tag-r">敏捷 +7</span> <span class="tag tag-r">魅力 +8</span></p>
-    <div class="hd" style="margin-top:6px;font-size:.82rem">技能熟练</div>
-    <p id="skillsDisplay"><span class="tag tag-b">游说 +11（专精）</span><span class="tag tag-b">表演 +11（专精）</span><span class="tag tag-g">察觉 +6</span><span class="tag tag-g">洞察 +6</span><span class="tag">奥秘 +5</span></p>
-    <div class="meta">万事通：所有未熟练的技能检定+1</div>
-  </div>
-  <div class="card">
-    <div class="hd">抗性 · 工具 · 语言</div>
-    <p><span class="tag tag-r">火焰伤害抗性</span></p>
-    <p style="margin-top:3px"><span class="tag">钢琴</span><span class="tag">里拉琴</span><span class="tag">鲁特琴</span><span class="tag">风笛</span><span class="tag">提琴</span><span class="tag">鼓</span><span class="tag">工匠工具</span></p>
-    <p style="margin-top:3px"><span class="tag">通用语</span><span class="tag">天界语</span><span class="tag">通用手语</span></p>
-    <div class="meta" id="biDisplay">诗人激励：八面骰 · 每天5次（短休恢复）</div>
-  </div>
-</div>
-
-<!-- 种族特性 -->
-<h2>阿斯莫种族特性</h2>
-<div class="g3">
-  <div class="card"><div class="hd">治愈之手</div><p>触碰一个生物，用手上的圣光为其恢复2d4点生命值。每天能用一次。</p></div>
-  <div class="card"><div class="hd">天启变身</div><p>用附赠动作变身，背后展开灵体飞翼。变身期间每回合一次，造成伤害时额外附带3点光耀伤害。每天能用一次。</p></div>
-  <div class="card"><div class="hd">天堂飞翼</div><p>天启变身期间获得30尺飞行速度。</p></div>
-</div>
-
-<!-- 专长 -->
-<h2>专长</h2>
-<div class="g2">
-  <div class="card"><div class="hd">音乐家 <span class="tag tag-y">1级起源专长</span></div><p><strong>乐器训练。</strong>获得三种自选乐器的使用熟练。<br><strong>鼓舞之歌。</strong>休息时演奏歌曲，最多3名同伴获得英雄激励。</p></div>
-  <div class="card"><div class="hd">领袖之证 <span class="tag tag-y">4级通用专长</span></div><p><strong>魅力+1</strong>（提升至20）。<br><strong>激励演出。</strong>休息时表演，最多6名同伴获得临时生命值。</p></div>
-</div>
-
-<!-- 职业特性 -->
-<h2>吟游诗人 · 歌织者</h2>
-<div class="card"><div class="hd">美梦祝福 <span class="tag tag-r">每天一次</span></div><p>你或30尺内所有同伴进行豁免检定时，可以投掷两次并使用较高的结果。</p></div>
-<div class="card"><div class="hd">诗人激励 <span class="tag tag-b">八面骰 · 每天5次</span></div><p>用附赠动作，让30尺内一个同伴获得一枚激励骰（八面骰）。</p></div>
-<div class="g2"><div class="card"><div class="hd">万事通</div><p>将熟练加值的一半加入所有未熟练的技能检定。</p></div><div class="card"><div class="hd">技能专精</div><p>游说和表演获得双倍熟练加值。</p></div></div>
-<div class="card"><div class="hd">织曲入术 <span class="tag tag-r">每天一次</span></div><p>当一个同伴使用了你的诗人激励骰后，你可以立刻用一个反应施放一个法术。</p></div>
-<div class="card"><div class="hd">咏术入织</div><p>当你施放一个需要消耗法术位的法术时，可以额外消耗一次诗人激励次数。根据法术学派触发不同效果。</p><div class="g-auto-s" style="margin-top:5px"><div><span class="tag tag-r">防护</span><span style="font-size:.72rem;color:#b0a0c8">60尺内一同伴恢复2d6生命</span></div><div><span class="tag tag-b">咒法</span><span style="font-size:.72rem;color:#b0a0c8">60尺内一同伴速度+10、ac+1</span></div><div><span class="tag tag-g">预言</span><span style="font-size:.72rem;color:#b0a0c8">60尺内目标被近战命中额外3力场</span></div><div><span class="tag">惑控</span><span style="font-size:.72rem;color:#b0a0c8">60尺内一生物心灵伤害+恐慌</span></div><div><span class="tag tag-r">塑能</span><span style="font-size:.72rem;color:#b0a0c8">120尺远程法术攻击+力场伤害</span></div><div><span class="tag tag-b">幻术</span><span style="font-size:.72rem;color:#b0a0c8">自己隐形直到下回合结束</span></div><div><span class="tag tag-g">死灵</span><span style="font-size:.72rem;color:#b0a0c8">所有伤害额外+3暗蚀</span></div><div><span class="tag tag-y">变化</span><span style="font-size:.72rem;color:#b0a0c8">传送至多30尺</span></div></div></div>
-
-<!-- 法术 -->
-<h2>法术</h2>
-<div class="card" style="margin-bottom:6px">
-  <p><span class="tag tag-b">施法属性</span> 魅力 <span class="tag tag-b" id="spellDCDisplay">法术难度等级：16</span> <span class="tag tag-b" id="spellAtkDisplay">法术攻击加值：+8</span></p>
-</div>
-
-<div class="spell-block"><div class="sb-hd">戏法（0环）— 可随意施放</div>
-<div class="spell-row">
-<div class="spell-card"><div class="sc-hd">光亮术 <span class="sc-school">· 塑能</span></div><div class="sc-desc">触碰一个物件，使其发出半径20尺的明亮光照+20尺微光。持续1小时。</div><div class="sc-meta">施法：动作 · 触碰 · V、S · 1小时</div></div>
-<div class="spell-card"><div class="sc-hd">修复术 <span class="sc-school">· 变化</span></div><div class="sc-desc">修复一个破损物件上的单处断裂或裂缝。</div><div class="sc-meta">施法：1分钟 · 触碰 · V、S、M · 立即</div></div>
-<div class="spell-card"><div class="sc-hd">恶言相加 <span class="sc-school">· 惑控</span></div><div class="sc-desc">对施法距离内一个生物说出魔法侮辱，造成1d4心灵伤害。</div><div class="sc-meta">施法：附赠 · 60尺 · V · 立即</div></div>
-<div class="spell-card"><div class="sc-hd">流光闪灵 <span class="sc-school">· 塑能</span></div><div class="sc-desc">歌织者专属戏法。远程法术攻击，命中造成1d8光耀伤害。</div><div class="sc-meta">施法：动作 · 120尺 · V、S · 立即</div></div>
-<div class="spell-card"><div class="sc-hd">魔法伎俩 <span class="sc-school">· 变化</span></div><div class="sc-desc">基础的魔法把戏。改变颜色/温度、清洁/弄脏物件等。</div><div class="sc-meta">施法：动作 · 30尺 · V、S · 至多1小时</div></div>
-</div></div>
-
-<div class="spell-block"><div class="sb-hd" style="border-left-color:var(--blue)">1环法术（4个法术位）</div>
-<div class="spell-row">
-<div class="spell-card"><div class="sc-hd">命令术 <span class="sc-school">· 惑控</span></div><div class="sc-desc">命令一个生物服从单字指令：靠近/丢弃/逃跑/跪地/停步。</div><div class="sc-meta">施法：动作 · 60尺 · V · 1轮</div></div>
-<div class="spell-card"><div class="sc-hd">治愈真言 <span class="sc-school">· 防护</span></div><div class="sc-desc">一个可见生物恢复1d4+魅力调整值的生命。最快战斗治疗。</div><div class="sc-meta">施法：附赠 · 60尺 · V · 立即</div></div>
-<div class="spell-card"><div class="sc-hd">羽落术 <span class="sc-school">· 变化</span></div><div class="sc-desc">最多5个生物的坠落速度急剧减慢，不受坠落伤害。</div><div class="sc-meta">施法：反应 · 60尺 · V、M · 1分钟</div></div>
-<div class="spell-card"><div class="sc-hd">妖火 <span class="sc-school">· 塑能</span></div><div class="sc-desc">20尺立方内的生物被蓝绿火光描出轮廓，攻击者获得优势。</div><div class="sc-meta">施法：动作 · 60尺 · V · 专注·至多1分钟</div></div>
-</div></div>
-
-<div class="spell-block"><div class="sb-hd" style="border-left-color:var(--green)">2环法术（3个法术位）</div>
-<div class="spell-row">
-<div class="spell-card"><div class="sc-hd">沉默术 <span class="sc-school">· 幻术</span></div><div class="sc-desc">40尺半径球状区域被绝对寂静笼罩，无法施法（需言语成分）。</div><div class="sc-meta">施法：动作 · 120尺 · V、S · 专注·至多10分钟</div></div>
-<div class="spell-card"><div class="sc-hd">人类定身术 <span class="sc-school">· 惑控</span></div><div class="sc-desc">一个人形生物被麻痹，每回合结束可重试豁免。</div><div class="sc-meta">施法：动作 · 60尺 · V、S、M · 专注·至多1分钟</div></div>
-<div class="spell-card"><div class="sc-hd">暗示术 <span class="sc-school">· 惑控</span></div><div class="sc-desc">用一句话暗示一个生物执行指令。指令需合理。</div><div class="sc-meta">施法：动作 · 30尺 · V、M · 专注·至多8小时</div></div>
-<div class="spell-card"><div class="sc-hd">识破隐形 <span class="sc-school">· 预言</span></div><div class="sc-desc">看透隐形、灵体及隐藏魔法陷阱。必备反潜行法术。</div><div class="sc-meta">施法：动作 · 自身 · V、S、M · 专注·至多1小时</div></div>
-</div></div>
-
-<div class="spell-block"><div class="sb-hd" style="border-left-color:var(--red)">3环法术（3个法术位）</div>
-<div class="spell-row">
-<div class="spell-card"><div class="sc-hd">解除魔法 <span class="sc-school">· 防护</span></div><div class="sc-desc">终止一个生物、物件或魔法效应上的法术。</div><div class="sc-meta">施法：动作 · 120尺 · V、S · 立即</div></div>
-<div class="spell-card"><div class="sc-hd">死者交谈 <span class="sc-school">· 死灵</span></div><div class="sc-desc">触碰一具尸体，以它理解的语言问5个问题。</div><div class="sc-meta">施法：动作 · 触碰 · V、S、M · 10分钟</div></div>
-<div class="spell-card"><div class="sc-hd">举目皆敌 <span class="sc-school">· 惑控</span></div><div class="sc-desc">扭曲一个生物的感知，让它视周围所有生物为敌人。</div><div class="sc-meta">施法：动作 · 120尺 · V、S · 专注·至多1分钟</div></div>
-</div></div>
-
-<div class="spell-block"><div class="sb-hd" style="border-left-color:var(--gold);color:var(--gold)">🎵 克里里拉琴 · 乐器法术（每日各一次）</div>
-<div class="spell-row">
-<div class="inst-card"><div class="sc-hd">飞行术 <span class="sc-school">· 变化</span></div><div class="sc-desc">触碰同伴，60尺飞行速度。</div><div class="sc-meta">动作·触碰·专注至多10分钟</div></div>
-<div class="inst-card"><div class="sc-hd">隐形术 <span class="sc-school">· 幻术</span></div><div class="sc-desc">触碰一个生物使其完全隐形。</div><div class="sc-meta">动作·触碰·专注至多1小时</div></div>
-<div class="inst-card"><div class="sc-hd">浮空术 <span class="sc-school">· 变化</span></div><div class="sc-desc">一生物或物件垂直升降。</div><div class="sc-meta">动作·60尺·专注至多10分钟</div></div>
-<div class="inst-card"><div class="sc-hd">防护善恶 <span class="sc-school">· 防护</span></div><div class="sc-desc">抵御异界/元素/精类/魔族/不死。</div><div class="sc-meta">动作·触碰·专注至多10分钟</div></div>
-<div class="inst-card"><div class="sc-hd">塑石术 <span class="sc-school">· 变化</span></div><div class="sc-desc">改变5尺立方的石头形状。</div><div class="sc-meta">动作·触碰·立即</div></div>
-<div class="inst-card"><div class="sc-hd">火墙术 <span class="sc-school">· 塑能</span></div><div class="sc-desc">5d8火焰伤害，阻隔通道。</div><div class="sc-meta">动作·120尺·专注至多1分钟</div></div>
-<div class="inst-card"><div class="sc-hd">风墙术 <span class="sc-school">· 塑能</span></div><div class="sc-desc">阻挡所有远程武器和气体攻击。</div><div class="sc-meta">动作·120尺·专注至多1分钟</div></div>
-</div></div>
-
-<!-- 装备 -->
-<h2>装备与物品</h2>
-<div class="card"><p><span class="eq eq-gold">641金币</span><span class="eq">钢琴</span><span class="eq">里拉琴</span><span class="eq">鲁特琴</span><span class="eq">风笛</span><span class="eq">提琴</span><span class="eq">鼓</span><span class="eq">皮甲</span><span class="eq">两把匕首</span><span class="eq">艺人套装</span><span class="eq">旅行背包</span><span class="eq eq-gold">2瓶治疗药水</span><span class="eq eq-gold">雷石×1</span></p></div>
-<div class="g2"><div class="card"><div class="hd" style="font-size:.82rem;color:var(--gold)">克里里拉琴 Cli Lyre</div><p>稀有级吟游诗人魔法乐器（需同调）。内含七道法术，每日各一次。</p><div class="meta">飞行术·隐形术·浮空术·防护善恶·塑石术·火墙术·风墙术</div></div><div class="card"><div class="hd">火焰抗性戒指</div><p>佩戴后获得对火焰伤害的抗性。</p></div></div>
-<div class="card"><div class="hd">雷石</div><p>投掷至20尺内某处，10尺范围生物体质豁免DC15，否则耳聋1分钟。</p></div>
-
-<!-- 背景 -->
-<h2>冒险的初衷</h2>
-<div class="card" style="border-left:3px solid var(--accent);border-radius:0 8px 8px 0;background:rgba(124,92,252,.03)">
-<p style="font-size:.82rem;line-height:1.7">星期日出生于<strong>卡林港</strong>的<strong>橡木密教</strong>，世代侍奉梦女神蕾拉的神裔家族。天生能听见他人心底的软弱，触碰梦境的涟漪。妹妹<strong>知更鸟</strong>——她的歌声能平息最狂乱的噩梦。</p>
-<p style="font-size:.82rem;line-height:1.7;margin-top:8px">童年平静温柔。直到一颗<strong>异界星辰</strong>砸进卡林港大剧院——母亲在梦境裂隙中<strong>消散</strong>。被密教家主<strong>歌斐木</strong>收养，称他为<strong>"铎音"</strong>——梦之倾听者。</p>
-<p style="font-size:.82rem;line-height:1.7;margin-top:8px">他开始在底层行走：听见工人的疲惫、孤儿的哭泣、难民的绝望。<em>温柔救不了人，善良挡不住痛苦。</em>一只<strong>断翅白鸽</strong>被救活后飞走，却<strong>坠死</strong>在窗前。他在书本里寻找答案——如果不能消除痛苦，那就给他们一个没有痛苦的梦。</p>
-<p style="font-size:.82rem;line-height:1.7;margin-top:8px">16岁那年妹妹受邀前往<strong>深水城</strong>巡演。星期日离开卡林港，出发去寻找"既能保护弱者、又不剥夺自由"的答案。<em>非独裁者，非家主，亦非梦之暴君——只是一个想治愈世界的少年阿斯莫。</em></p></div>
-
-<h2>旅伴</h2>
-<div class="party"><div class="pc"><span class="nm">加洛奈斯</span><span class="cl">希拉西风宗</span></div><div class="pc"><span class="nm">马洛</span><span class="cl">阿斯莫·审判领域</span></div><div class="pc"><span class="nm">艾特拉</span><span class="cl">人类·复生幽影术</span></div></div>
-
-<h2>冒险纪事 · 焚天之战</h2>
-<div class="chronicle">
-<div class="chronicle-item"><span class="ch-tag">旅人</span><div class="ch-title">同伴集结</div><div class="ch-body">星期日先后遇到加洛奈斯、马洛和艾特拉。三人各自背负着使命与秘密。艾特拉、马洛、加洛奈斯在火焰森林释放了天灾。</div></div>
-<div class="chronicle-item"><span class="ch-tag">汐坤</span><div class="ch-title">莱希姆学院·学城的暗流</div><div class="ch-body">抵达汐坤的莱希姆学院。院长戈哈纳赫研究永生之秘，学院内有叛徒基尔南和李勾结拉格西亚。</div></div>
-<div class="chronicle-item"><span class="ch-tag">难民</span><div class="ch-title">拉格西亚的逃亡者</div><div class="ch-body">欲魔杰西请求星期日救出被囚禁在学院地牢的姐妹卡兹克。蒂莫尔夫人领导达森难民游说汐坤。</div></div>
-<div class="chronicle-item"><span class="ch-tag">外交</span><div class="ch-title">沙哈拉斯提的使者</div><div class="ch-body">沙洛沙公主来汐坤求结盟对抗格拉西亚，被戈哈纳赫拒绝。汐坤夹在两国之间危如累卵。</div></div>
-<div class="chronicle-item"><span class="ch-tag">女皇</span><div class="ch-title">莱丝卡的崛起</div><div class="ch-body">女神判官莱丝卡即将成为格拉西亚新女皇。她的立场将决定整个地区的命运。</div></div>
-<div class="chronicle-item"><span class="ch-tag">焚天</span><div class="ch-title">煤舌皇帝与焚天神器</div><div class="ch-body">已故煤舌皇帝的神器"焚天"（Skyburner）下落不明，足以改变整个大陆的力量平衡。</div></div>
-<div class="chronicle-item"><span class="ch-tag">当前</span><div class="ch-title">各怀心事·重返汐坤</div><div class="ch-body">四人告别沙洛沙公主动身返回汐坤。星期日站在命运的十字路口：<em>秩序还是自由？</em></div></div>
-</div>
-
-<h2>旅途中遇到的人</h2>
-<div class="g-auto">
-<div class="card" style="padding:8px 10px"><div class="hd" style="font-size:.8rem">克里斯蒂娜</div><div class="meta">预言法师·汐坤结识</div></div>
-<div class="card" style="padding:8px 10px"><div class="hd" style="font-size:.8rem">雷纳德</div><div class="meta">黑马二把手·汐坤结识</div></div>
-<div class="card" style="padding:8px 10px"><div class="hd" style="font-size:.8rem">莱丝卡</div><div class="meta">女神判官→格拉西亚新女皇</div></div>
-<div class="card" style="padding:8px 10px"><div class="hd" style="font-size:.8rem">杰西</div><div class="meta">欲魔·拉格西亚难民领袖</div></div>
-<div class="card" style="padding:8px 10px"><div class="hd" style="font-size:.8rem">沙洛沙公主</div><div class="meta">沙哈拉斯提·寻求结盟</div></div>
-<div class="card" style="padding:8px 10px"><div class="hd" style="font-size:.8rem">戈哈纳赫</div><div class="meta">莱希姆学院院长·研究永生</div></div>
-<div class="card" style="padding:8px 10px"><div class="hd" style="font-size:.8rem">基尔南 &amp; 李</div><div class="meta">学院叛徒·勾结拉格西亚</div></div>
-<div class="card" style="padding:8px 10px"><div class="hd" style="font-size:.8rem">卡兹克</div><div class="meta">被囚禁在学院地牢</div></div>
-<div class="card" style="padding:8px 10px"><div class="hd" style="font-size:.8rem">知更鸟</div><div class="meta">妹妹·同谐歌者·深水城巡演中</div></div>
-</div>
-
-<div style="text-align:center;color:var(--muted);font-size:.65rem;letter-spacing:2px;padding:24px 0 12px;border-top:1px solid rgba(124,92,252,.06);margin-top:20px">D&amp;D 5R · 歌织者 · 梦之铎音 · 星期日<br>长团模组：焚天之战</div>
-</div>
+<div class="pg" id="pageContent"></div>
 
 <script>
 (function(){
-  const audio = document.getElementById('bgAudio');
-  const toggleBtn = document.getElementById('musicToggle');
-  const progressBar = document.getElementById('progressBar');
-  const progressFill = document.getElementById('progressFill');
-  const timeDisplay = document.getElementById('timeDisplay');
-  const volSlider = document.getElementById('volControl');
+const DEFAULTS = {
+  lvl:'6', prof:'+3', hp:'45（20+5d8）', ac:'15', init:'+4',
+  speed:'30尺（变身可飞行30尺）', pp:'16',
+  bi:'八面骰 · 每天5次（短休恢复）',
+  str:12, dex:18, con:15, int:14, wis:16, cha:20,
+  dc:'16', atk:'+8', slots:'4,3,3',
+  spells: {
+    cantrips:[
+      {n:'光亮术',s:'塑能',d:'触碰一个物件，发出半径20尺光照+20尺微光。',m:'动作·触碰·V、S·1小时'},
+      {n:'修复术',s:'变化',d:'修复一个破损物件的单处断裂或裂缝。',m:'1分钟·触碰·V、S、M·立即'},
+      {n:'恶言相加',s:'惑控',d:'对一个生物说出魔法侮辱，造成1d4心灵伤害。',m:'附赠·60尺·V·立即'},
+      {n:'流光闪灵',s:'塑能·歌织者',d:'远程法术攻击，命中1d8光耀伤害。',m:'动作·120尺·V、S·立即'},
+      {n:'魔法伎俩',s:'变化',d:'改变颜色/温度、清洁/弄脏等基础把戏。',m:'动作·30尺·V、S·至多1小时'}
+    ],
+    level1:[
+      {n:'命令术',s:'惑控',d:'命令一个生物服从单字指令。',m:'动作·60尺·V·1轮'},
+      {n:'治愈真言',s:'防护',d:'一个可见生物恢复1d4+魅力调整值。',m:'附赠·60尺·V·立即'},
+      {n:'羽落术',s:'变化',d:'最多5个生物不受坠落伤害。',m:'反应·60尺·V、M·1分钟'},
+      {n:'妖火',s:'塑能',d:'20尺立方内生物被描出轮廓，攻击者优势。',m:'动作·60尺·V·专注·至多1分钟'}
+    ],
+    level2:[
+      {n:'沉默术',s:'幻术',d:'40尺半径球状区域绝对寂静，无法施法。',m:'动作·120尺·V、S·专注·至多10分钟'},
+      {n:'人类定身术',s:'惑控',d:'一个人形生物被麻痹。',m:'动作·60尺·V、S、M·专注·至多1分钟'},
+      {n:'暗示术',s:'惑控',d:'用一句话暗示生物执行合理指令。',m:'动作·30尺·V、M·专注·至多8小时'},
+      {n:'识破隐形',s:'预言',d:'看透隐形、灵体及隐藏魔法陷阱。',m:'动作·自身·V、S、M·专注·至多1小时'}
+    ],
+    level3:[
+      {n:'解除魔法',s:'防护',d:'终止生物/物件/魔法效应上的法术。',m:'动作·120尺·V、S·立即'},
+      {n:'死者交谈',s:'死灵',d:'触碰一具尸体问5个问题。',m:'动作·触碰·V、S、M·10分钟'},
+      {n:'举目皆敌',s:'惑控',d:'扭曲一个生物的感知，视周围所有生物为敌。',m:'动作·120尺·V、S·专注·至多1分钟'}
+    ],
+    instrument:[
+      {n:'飞行术',s:'变化·60尺飞行',m:'动作·触碰·专注至多10分钟'},
+      {n:'隐形术',s:'幻术·触碰隐形',m:'动作·触碰·专注至多1小时'},
+      {n:'浮空术',s:'变化·垂直升降',m:'动作·60尺·专注至多10分钟'},
+      {n:'防护善恶',s:'防护·抵御异界',m:'动作·触碰·专注至多10分钟'},
+      {n:'塑石术',s:'变化·改变5尺石材',m:'动作·触碰·立即'},
+      {n:'火墙术',s:'塑能·5d8火墙',m:'动作·120尺·专注至多1分钟'},
+      {n:'风墙术',s:'塑能·阻挡远程武器',m:'动作·120尺·专注至多1分钟'}
+    ]
+  },
+  chronicle:[
+    {tag:'旅人',title:'同伴集结',body:'星期日先后遇到加洛奈斯、马洛和艾特拉。艾特拉、马洛、加洛奈斯在火焰森林释放了天灾。'},
+    {tag:'汐坤',title:'莱希姆学院',body:'抵达汐坤的莱希姆学院。院长戈哈纳赫研究永生之秘，学院内有叛徒勾结拉格西亚。'},
+    {tag:'难民',title:'拉格西亚逃亡者',body:'欲魔杰西请求救出被囚禁的姐妹卡兹克。蒂莫尔夫人领导达森难民游说汐坤。'},
+    {tag:'外交',title:'沙哈拉斯提使者',body:'沙洛沙公主求结盟对抗格拉西亚，被戈哈纳赫拒绝。'},
+    {tag:'女皇',title:'莱丝卡的崛起',body:'女神判官莱丝卡即将成为格拉西亚新女皇。'},
+    {tag:'焚天',title:'煤舌皇帝与焚天',body:'已故煤舌皇帝的神器"焚天"下落不明，足以改变大陆力量平衡。'},
+    {tag:'当前',title:'重返汐坤',body:'四人告别沙洛沙公主返回汐坤。星期日站在命运的十字路口。'}
+  ],
+  equipment:'641金币 · 钢琴·里拉琴·鲁特琴·风笛·提琴·鼓 · 皮甲·两把匕首 · 艺人套装·旅行背包 · 2瓶治疗药水 · 雷石×1',
+  party:[{n:'加洛奈斯',c:'希拉西风宗·战士'},{n:'马洛',c:'阿斯莫·审判领域·圣武士'},{n:'艾特拉',c:'人类·复生幽影术·术士'}],
+  people:[
+    '克里斯蒂娜|预言法师·汐坤结识','雷纳德|黑马二把手·汐坤结识','莱丝卡|女神判官→格拉西亚新女皇',
+    '杰西|欲魔·拉格西亚难民领袖','沙洛沙公主|沙哈拉斯提·寻求结盟','戈哈纳赫|莱希姆学院院长',
+    '基尔南&李|学院叛徒·勾结拉格西亚','卡兹克|被囚禁在学院地牢','知更鸟|妹妹·同谐歌者·深水城巡演中'
+  ]
+};
 
-  audio.src = 'https://upos-sz-mirrorcosov.bilivideo.com/upgcxcode/66/13/26715031366/26715031366-1-192.mp4?e=ig8euxZM2rNcNbRjhwdVhwdlhWTVhwdVhoNvNC8BqJIzNbfq9rVEuxTEnE8L5F6VnEsSTx0vkX8fqJeYTj_lta53NCM=&deadline=1782362053&platform=html5&uipk=5&trid=22824c0522544382bb2cb22412f52ceh&gen=playurlv3&og=hw&mid=0&oi=2366345797&nbs=1&os=cosovbv&upsig=d23a430097e8fed015465016ea973b02&uparams=e,deadline,platform,uipk,trid,gen,og,mid,oi,nbs,os&bvc=vod&nettype=0&bw=1280910&lrs=0&dl=0&f=h_0_0&aggr=0&buvid=&build=0&orderid=0,1';
-  audio.volume = 0.3;
-  let isPlaying = false, isSeeking = false;
+// ═══ Load/Save ═══
+function load(){try{var d=JSON.parse(localStorage.getItem('sunday_data'));return d||JSON.parse(JSON.stringify(DEFAULTS))}catch(e){return JSON.parse(JSON.stringify(DEFAULTS))}}
+function save(data){localStorage.setItem('sunday_data',JSON.stringify(data))}
+function mod(v){v=parseInt(v)||10;var m=Math.floor((v-10)/2);return m>=0?'（+'+m+'）':'（'+m+'）'}
 
-  function fmt(t){return t&&!isNaN(t)?Math.floor(t/60)+':'+(Math.floor(t%60)+'').padStart(2,'0'):'0:00'}
-  toggleBtn.addEventListener('click',()=>{if(isPlaying)audio.pause();else{if(audio.ended)audio.currentTime=0;audio.play().catch(()=>{})}});
-  audio.addEventListener('play',()=>{isPlaying=1;toggleBtn.textContent='⏸';toggleBtn.classList.add('playing')});
-  audio.addEventListener('pause',()=>{isPlaying=0;toggleBtn.textContent='▶';toggleBtn.classList.remove('playing')});
-  audio.addEventListener('timeupdate',()=>{if(audio.duration&&!isSeeking){progressFill.style.width=(audio.currentTime/audio.duration*100)+'%';timeDisplay.textContent=fmt(audio.currentTime)+' / '+fmt(audio.duration)}});
-  audio.addEventListener('loadedmetadata',()=>timeDisplay.textContent='0:00 / '+fmt(audio.duration));
-  audio.addEventListener('ended',()=>{isPlaying=0;toggleBtn.textContent='▶';toggleBtn.classList.remove('playing');progressFill.style.width='0%';timeDisplay.textContent='0:00 / '+fmt(audio.duration)});
-  progressBar.addEventListener('mousedown',e=>{isSeeking=1;seek(e)});
-  document.addEventListener('mousemove',e=>{if(isSeeking)seek(e)});
-  document.addEventListener('mouseup',()=>{isSeeking=0});
-  progressBar.addEventListener('touchstart',e=>{isSeeking=1;seekT(e)},{passive:1});
-  document.addEventListener('touchmove',e=>{if(isSeeking)seekT(e)},{passive:1});
-  document.addEventListener('touchend',()=>{isSeeking=0});
-  function seek(e){if(!audio.duration)return;var r=progressBar.getBoundingClientRect(),x=Math.max(0,Math.min(e.clientX-r.left,r.width)),p=x/r.width;audio.currentTime=p*audio.duration;progressFill.style.width=(p*100)+'%';timeDisplay.textContent=fmt(audio.currentTime)+' / '+fmt(audio.duration)}
-  function seekT(e){if(!audio.duration||!e.touches[0])return;var r=progressBar.getBoundingClientRect(),x=Math.max(0,Math.min(e.touches[0].clientX-r.left,r.width)),p=x/r.width;audio.currentTime=p*audio.duration;progressFill.style.width=(p*100)+'%';timeDisplay.textContent=fmt(audio.currentTime)+' / '+fmt(audio.duration)}
-  volSlider.addEventListener('input',()=>audio.volume=parseFloat(volSlider.value));
-  document.addEventListener('keydown',e=>{if((e.key==='m'||e.key==='M')&&!e.ctrlKey&&!e.metaKey&&!e.altKey){e.preventDefault();toggleBtn.click();toggleBtn.style.transform='scale(1.2)';setTimeout(()=>toggleBtn.style.transform='',150)}});
+// ═══ Render Page ═══
+function render(d){
+  var pg=document.getElementById('pageContent');
+  var cd=d.chronicle||[];
+  pg.innerHTML=
+    '<div class="hero"><h1>星期日</h1><div class="cn">S U N D A Y · 梦 之 铎 音</div><div class="info" id="classLine">'+(d.lvl||'6')+'级 歌织者（吟游诗人）· 阿斯莫 · 守序中立</div></div>'+
+    '<div class="portrait-wrap"><picture><source srcset="sunday_splash.webp" type="image/webp" /><img src="sunday_splash.jpg" alt="星期日" /></picture></div>'+
+    '<div class="abilities">'+
+      '<div class="ab"><div class="n">力量</div><div class="v">'+(d.str||12)+'</div><div class="m">'+mod(d.str)+'</div></div>'+
+      '<div class="ab"><div class="n">敏捷</div><div class="v">'+(d.dex||18)+'</div><div class="m">'+mod(d.dex)+'</div></div>'+
+      '<div class="ab"><div class="n">体质</div><div class="v">'+(d.con||15)+'</div><div class="m">'+mod(d.con)+'</div></div>'+
+      '<div class="ab"><div class="n">智力</div><div class="v">'+(d.int||14)+'</div><div class="m">'+mod(d.int)+'</div></div>'+
+      '<div class="ab"><div class="n">感知</div><div class="v">'+(d.wis||16)+'</div><div class="m">'+mod(d.wis)+'</div></div>'+
+      '<div class="ab"><div class="n">魅力</div><div class="v">'+(d.cha||20)+'</div><div class="m">'+mod(d.cha)+'</div></div>'+
+    '</div>'+
+    '<div class="info-grid">'+
+      '<div class="ig"><div class="lb">护甲等级</div><div class="vl">'+(d.ac||'15')+'</div></div>'+
+      '<div class="ig"><div class="lb">生命值</div><div class="vl">'+(d.hp||'45（20+5d8）')+'</div></div>'+
+      '<div class="ig"><div class="lb">先攻加值</div><div class="vl">'+(d.init||'+4')+'</div></div>'+
+      '<div class="ig"><div class="lb">速度</div><div class="vl">'+(d.speed||'30尺')+'</div></div>'+
+      '<div class="ig"><div class="lb">熟练加值</div><div class="vl">'+(d.prof||'+3')+'</div></div>'+
+      '<div class="ig"><div class="lb">被动察觉</div><div class="vl">'+(d.pp||'16')+'</div></div>'+
+      '<div class="ig"><div class="lb">黑暗视觉</div><div class="vl">60尺</div></div>'+
+      '<div class="ig"><div class="lb">体型/种族</div><div class="vl">中型 · 阿斯莫</div></div>'+
+    '</div>'+
+    '<div class="g2"><div class="card"><div class="hd">豁免检定 <span class="rn">Saving Throws</span></div><p><span class="tag tag-r">敏捷 +'+(7+Math.floor((parseInt(d.dex||18)-10)/2)-4)+'</span> <span class="tag tag-r">魅力 +'+(8+Math.floor((parseInt(d.cha||20)-10)/2)-5)+'</span></p><div class="hd" style="margin-top:6px;font-size:.82rem">技能熟练</div><p><span class="tag tag-b">游说 +11（专精）</span><span class="tag tag-b">表演 +11（专精）</span><span class="tag tag-g">察觉 +6</span><span class="tag tag-g">洞察 +6</span><span class="tag">奥秘 +5</span></p><div class="meta">万事通：所有未熟练技能检定+1</div></div>'+
+    '<div class="card"><div class="hd">抗性 · 工具 · 语言</div><p><span class="tag tag-r">火焰伤害抗性</span></p><p style="margin-top:3px"><span class="tag">钢琴</span><span class="tag">里拉琴</span><span class="tag">鲁特琴</span><span class="tag">风笛</span><span class="tag">提琴</span><span class="tag">鼓</span><span class="tag">工匠工具</span></p><p style="margin-top:3px"><span class="tag">通用语</span><span class="tag">天界语</span><span class="tag">通用手语</span></p><div class="meta">诗人激励：'+(d.bi||'八面骰 · 每天5次')+'</div></div></div>'+
 
-  // ═══ FEATHERS ═══
-  var fc=document.getElementById('feather-container');
-  if(fc){(function(){var c=fc;
-  function f(){var e=document.createElement('div');e.className='feather';var sz=12+Math.random()*16,sx=Math.random()*100,du=6+Math.random()*8,de=Math.random()*2,dr=-30+Math.random()*60,ro=Math.random()*360,sp=-120+Math.random()*240,op=.3+Math.random()*.5,bl=Math.random()*1.5;e.style.cssText='left:'+sx+'%;width:'+sz+'px;height:'+sz*.45+'px;opacity:0;filter:blur('+bl+'px);--drift:'+dr+'px;--rotation:'+ro+'deg;--spin:'+sp+'deg';var kf=[{opacity:0,transform:'translateY(0) translateX(0) rotate('+ro+'deg)',offset:0},{opacity:op,transform:'translateY(10vh) translateX('+dr*.2+'px) rotate('+(ro+sp*.15)+'deg)',offset:.08},{opacity:op,transform:'translateY(40vh) translateX('+dr*.5+'px) rotate('+(ro+sp*.4)+'deg)',offset:.35},{opacity:op*.8,transform:'translateY(70vh) translateX('+dr*.8+'px) rotate('+(ro+sp*.7)+'deg)',offset:.65},{opacity:0,transform:'translateY(105vh) translateX('+dr+'px) rotate('+(ro+sp)+'deg)',offset:1}];var ti={duration:du*1000,delay:de*1000,easing:'cubic-bezier(0.25,0.46,0.45,0.94)',fill:'forwards'};c.appendChild(e);var an=e.animate(kf,ti);an.onfinish=function(){e.remove()}}
-  for(var i=0;i<12;i++)setTimeout(f,i*400);var st=setInterval(f,1800);document.addEventListener('visibilitychange',function(){if(document.hidden)clearInterval(st);else st=setInterval(f,1800)})})()}
+    '<h2>阿斯莫种族特性</h2><div class="g3"><div class="card"><div class="hd">治愈之手</div><p>触碰一个生物恢复2d4点生命值。每天一次。</p></div><div class="card"><div class="hd">天启变身</div><p>附赠动作变身，造成伤害时额外+3光耀。每天一次。</p></div><div class="card"><div class="hd">天堂飞翼</div><p>天启变身期间获得30尺飞行速度。</p></div></div>'+
 
-  // ═══ EDIT MODE ═══
-  (function(){
-    var editBtn=document.getElementById('editBtn');
-    var panel=document.getElementById('editPanel');
-    var saveBtn=document.getElementById('saveBtn');
-    var resetBtn=document.getElementById('resetBtn');
-    var success=document.getElementById('editSuccess');
-    var open=false;
+    '<h2>专长</h2><div class="g2"><div class="card"><div class="hd">音乐家 <span class="tag tag-y">1级起源</span></div><p><strong>乐器训练。</strong>获得三种乐器熟练。<br><strong>鼓舞之歌。</strong>休息时演奏，最多3名同伴获得英雄激励。</p></div><div class="card"><div class="hd">领袖之证 <span class="tag tag-y">4级通用</span></div><p><strong>魅力+1</strong>（提升至20）。<br><strong>激励演出。</strong>休息时表演，最多6名同伴获得临时生命值。</p></div></div>'+
 
-    // Default values
-    var defaults={
-      lvl:'6',prof:'+3',hp:'45（20+5d8）',ac:'15',init:'+4',
-      speed:'30尺（变身可飞行30尺）',pp:'16',bi:'八面骰 · 每天5次（短休恢复）',
-      str:'12',dex:'18',con:'15',int:'14',wis:'16',cha:'20',
-      dc:'16',atk:'+8',slots:'4,3,3'
-    };
+    '<h2>吟游诗人 · 歌织者</h2>'+
+    '<div class="card"><div class="hd">美梦祝福 <span class="tag tag-r">每天一次</span></div><p>你或30尺内所有同伴豁免投掷两次取高。</p></div>'+
+    '<div class="card"><div class="hd">诗人激励 <span class="tag tag-b">d8 · 每天5次</span></div><p>附赠动作让30尺内同伴获得激励骰（d8）。</p></div>'+
+    '<div class="g2"><div class="card"><div class="hd">万事通</div><p>熟练加值的一半加入未熟练技能检定。</p></div><div class="card"><div class="hd">技能专精</div><p>游说和表演获得双倍熟练加值。</p></div></div>'+
+    '<div class="card"><div class="hd">织曲入术 <span class="tag tag-r">每天一次</span></div><p>同伴使用激励骰后，你能以反应施法。</p></div>'+
+    '<div class="card"><div class="hd">咏术入织</div><p>施法时额外消耗激励次数，根据学派触发效果。</p><div class="g-auto-s" style="margin-top:5px"><div><span class="tag tag-r">防护</span><span style="font-size:.72rem;color:#b0a0c8">60尺内一同伴恢复2d6生命</span></div><div><span class="tag tag-b">咒法</span><span style="font-size:.72rem;color:#b0a0c8">60尺一同伴速度+10、ac+1</span></div><div><span class="tag tag-g">预言</span><span style="font-size:.72rem;color:#b0a0c8">60尺内目标被近战额外3力场</span></div><div><span class="tag">惑控</span><span style="font-size:.72rem;color:#b0a0c8">心灵伤害+恐慌</span></div><div><span class="tag tag-r">塑能</span><span style="font-size:.72rem;color:#b0a0c8">120尺远程法术攻击</span></div><div><span class="tag tag-b">幻术</span><span style="font-size:.72rem;color:#b0a0c8">自隐直到下回合</span></div><div><span class="tag tag-g">死灵</span><span style="font-size:.72rem;color:#b0a0c8">所有伤害+3暗蚀</span></div><div><span class="tag tag-y">变化</span><span style="font-size:.72rem;color:#b0a0c8">传送至多30尺</span></div></div></div>'+
 
-    // Load from localStorage
-    function loadData(){
-      var saved,data=defaults;
-      try{saved=JSON.parse(localStorage.getItem('sunday_sheet'));if(saved)data=saved}catch(e){}
-      return data;
-    }
+    '<h2>法术</h2><div class="card" style="margin-bottom:6px"><p><span class="tag tag-b">施法属性：魅力</span> <span class="tag tag-b">法术难度等级（DC）：'+(d.dc||'16')+'</span> <span class="tag tag-b">法术攻击加值：'+(d.atk||'+8')+'</span> <span class="tag" style="color:var(--muted)">法术位：'+(d.slots||'4/3/3')+'</span></p></div>'+
+    renderSpells(d.spells)+
 
-    function applyToPage(data){
-      document.getElementById('classLine').textContent=(data.lvl||'6')+'级 歌织者（吟游诗人）· 阿斯莫 · 守序中立';
-      document.getElementById('s-hp').textContent=data.hp||'45（20+5d8）';
-      document.getElementById('s-ac').textContent=data.ac||'15';
-      document.getElementById('s-init').textContent=data.init||'+4';
-      document.getElementById('s-speed').textContent=data.speed||'30尺';
-      document.getElementById('s-prof').textContent=data.prof||'+3';
-      document.getElementById('s-pp').textContent=data.pp||'16';
-      document.getElementById('biDisplay').textContent='诗人激励：'+(data.bi||'八面骰 · 每天5次');
-      document.getElementById('str-val').textContent=data.str||'12';
-      document.getElementById('dex-val').textContent=data.dex||'18';
-      document.getElementById('con-val').textContent=data.con||'15';
-      document.getElementById('int-val').textContent=data.int||'14';
-      document.getElementById('wis-val').textContent=data.wis||'16';
-      document.getElementById('cha-val').textContent=data.cha||'20';
-      // Recalculate mods
-      function mod(v){v=parseInt(v)||10;var m=Math.floor((v-10)/2);return m>=0?'（+'+m+'）':'（'+m+'）'}
-      document.getElementById('str-mod').textContent=mod(data.str);
-      document.getElementById('dex-mod').textContent=mod(data.dex);
-      document.getElementById('con-mod').textContent=mod(data.con);
-      document.getElementById('int-mod').textContent=mod(data.int);
-      document.getElementById('wis-mod').textContent=mod(data.wis);
-      document.getElementById('cha-mod').textContent=mod(data.cha);
-      document.getElementById('spellDCDisplay').textContent='法术难度等级：'+(data.dc||'16');
-      document.getElementById('spellAtkDisplay').textContent='法术攻击加值：'+(data.atk||'+8');
-    }
+    '<h2>装备与物品</h2><div class="card"><p>'+(d.equipment||'')+'</p></div>'+
+    '<h2>旅伴</h2><div class="party">'+(d.party||[]).map(function(p){return '<div class="pc"><span class="nm">'+p.n+'</span><span class="cl">'+p.c+'</span></div>'}).join('')+'</div>'+
 
-    // Apply saved data on load
-    applyToPage(loadData());
+    '<h2>冒险纪事 · 焚天之战</h2><div class="chronicle">'+cd.map(function(c){return '<div class="chronicle-item"><span class="ch-tag">'+c.tag+'</span><div class="ch-title">'+c.title+'</div><div class="ch-body">'+c.body+'</div></div>'}).join('')+'</div>'+
 
-    // Toggle edit panel
-    editBtn.addEventListener('click',function(){
-      open=!open;
-      panel.classList.toggle('open',open);
-      editBtn.classList.toggle('active',open);
-      if(open)populateForm(loadData());
+    '<h2>旅途中遇到的人</h2><div class="g-auto">'+(d.people||[]).map(function(p){var s=p.split('|');return '<div class="card" style="padding:8px 10px"><div class="hd" style="font-size:.8rem">'+s[0]+'</div><div class="meta">'+(s[1]||'')+'</div></div>'}).join('')+'</div>'+
+
+    '<div style="text-align:center;color:var(--muted);font-size:.65rem;letter-spacing:2px;padding:24px 0 12px;border-top:1px solid rgba(124,92,252,.06);margin-top:20px">D&D 5R · 歌织者 · 梦之铎音 · 星期日<br>长团模组：焚天之战</div>';
+}
+
+function renderSpells(sp){
+  if(!sp)return'';
+  var levels={cantrips:'戏法（0环）',level1:'1环法术（'+(slotsParse()[0]||4)+'个法术位）',level2:'2环法术（'+(slotsParse()[1]||3)+'个法术位）',level3:'3环法术（'+(slotsParse()[2]||3)+'个法术位）',instrument:'🎵 克里里拉琴 · 乐器法术（每日各一次）'};
+  var colors={cantrips:'var(--accent)',level1:'var(--blue)',level2:'var(--green)',level3:'var(--red)',instrument:'var(--gold)'};
+  var r='';
+  Object.keys(levels).forEach(function(k){
+    if(!sp[k]||!sp[k].length)return;
+    r+='<div class="spell-block"><div class="sb-hd" style="border-left-color:'+colors[k]+';'+(k==='instrument'?'color:var(--gold)':'')+'">'+levels[k]+'</div><div class="spell-row">';
+    sp[k].forEach(function(s){
+      r+='<div class="'+(k==='instrument'?'inst-card':'spell-card')+'"><div class="sc-hd">'+s.n+' <span class="sc-school">· '+s.s+'</span></div>'+
+        (s.d?'<div class="sc-desc">'+s.d+'</div>':'')+
+        '<div class="sc-meta">'+s.m+'</div></div>';
     });
+    r+='</div></div>';
+  });
+  return r;
+}
 
-    function populateForm(data){
-      document.getElementById('e-lvl').value=data.lvl||'';
-      document.getElementById('e-prof').value=data.prof||'';
-      document.getElementById('e-hp').value=data.hp||'';
-      document.getElementById('e-ac').value=data.ac||'';
-      document.getElementById('e-init').value=data.init||'';
-      document.getElementById('e-speed').value=data.speed||'';
-      document.getElementById('e-pp').value=data.pp||'';
-      document.getElementById('e-bi').value=data.bi||'';
-      document.getElementById('e-str').value=data.str||'';
-      document.getElementById('e-dex').value=data.dex||'';
-      document.getElementById('e-con').value=data.con||'';
-      document.getElementById('e-int').value=data.int||'';
-      document.getElementById('e-wis').value=data.wis||'';
-      document.getElementById('e-cha').value=data.cha||'';
-      document.getElementById('e-dc').value=data.dc||'';
-      document.getElementById('e-atk').value=data.atk||'';
-      document.getElementById('e-slots').value=data.slots||'';
-    }
+function slotsParse(){try{var d=load();return d.slots?d.slots.split(',').map(function(x){return x.trim()}):['4','3','3']}catch(e){return['4','3','3']}}
 
-    function collectForm(){
-      return {
-        lvl:document.getElementById('e-lvl').value,
-        prof:document.getElementById('e-prof').value,
-        hp:document.getElementById('e-hp').value,
-        ac:document.getElementById('e-ac').value,
-        init:document.getElementById('e-init').value,
-        speed:document.getElementById('e-speed').value,
-        pp:document.getElementById('e-pp').value,
-        bi:document.getElementById('e-bi').value,
-        str:document.getElementById('e-str').value,
-        dex:document.getElementById('e-dex').value,
-        con:document.getElementById('e-con').value,
-        int:document.getElementById('e-int').value,
-        wis:document.getElementById('e-wis').value,
-        cha:document.getElementById('e-cha').value,
-        dc:document.getElementById('e-dc').value,
-        atk:document.getElementById('e-atk').value,
-        slots:document.getElementById('e-slots').value
-      };
-    }
+// ═══ Populate form ═══
+function populateForm(d){
+  ['lvl','prof','hp','ac','init','speed','pp','bi','dc','atk','slots'].forEach(function(k){var el=document.getElementById('e-'+k);if(el)el.value=d[k]||''});
+  ['str','dex','con','int','wis','cha'].forEach(function(k){var el=document.getElementById('e-'+k);if(el)el.value=d[k]||''});
+  renderChronicleEditor(d.chronicle||[]);
+  renderSpellEditor(d.spells);
+}
 
-    saveBtn.addEventListener('click',function(){
-      var data=collectForm();
-      localStorage.setItem('sunday_sheet',JSON.stringify(data));
-      applyToPage(data);
-      success.classList.add('show');
-      setTimeout(function(){success.classList.remove('show')},2500);
+function collectForm(){
+  var d={};
+  ['lvl','prof','hp','ac','init','speed','pp','bi','dc','atk','slots'].forEach(function(k){var el=document.getElementById('e-'+k);d[k]=el?el.value:''});
+  ['str','dex','con','int','wis','cha'].forEach(function(k){var el=document.getElementById('e-'+k);d[k]=parseInt(el?el.value:10)||10});
+  d.chronicle=collectChronicle();
+  d.spells=collectSpells();
+  return d;
+}
+
+// ═══ Chronicle editor ═══
+function renderChronicleEditor(arr){
+  var el=document.getElementById('chronicleEditor');
+  if(!el)return;
+  el.innerHTML=arr.map(function(c,i){
+    return '<div class="cr-item">'+
+      '<div class="cr-del" data-idx="'+i+'">✕</div>'+
+      '<div class="edit-field" style="margin-bottom:3px"><label>标签</label><input class="cr-tag" value="'+c.tag+'" /></div>'+
+      '<div class="edit-field" style="margin-bottom:3px"><label>标题</label><input class="cr-title" value="'+c.title.replace(/"/g,'&quot;')+'" /></div>'+
+      '<div class="edit-field"><label>内容</label><textarea class="cr-body" rows="2">'+c.body+'</textarea></div>'+
+      '</div>';
+  }).join('');
+  el.querySelectorAll('.cr-del').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var idx=parseInt(this.getAttribute('data-idx'));
+      var d=collectForm();
+      d.chronicle.splice(idx,1);
+      save(d);render(d);populateForm(d);
     });
+  });
+}
 
-    resetBtn.addEventListener('click',function(){
-      localStorage.removeItem('sunday_sheet');
-      applyToPage(defaults);
-      populateForm(defaults);
-      success.textContent='🔄 已重置为默认值';
-      success.classList.add('show');
-      setTimeout(function(){success.textContent='✅ 已保存！刷新页面后数值会更新';success.classList.remove('show')},2500);
+function collectChronicle(){
+  var arr=[];
+  var items=document.querySelectorAll('#chronicleEditor .cr-item');
+  items.forEach(function(item){
+    arr.push({
+      tag:(item.querySelector('.cr-tag')||{}).value||'',
+      title:(item.querySelector('.cr-title')||{}).value||'',
+      body:(item.querySelector('.cr-body')||{}).value||''
     });
-  })();
+  });
+  return arr;
+}
+
+// ═══ Spell editor ═══
+function renderSpellEditor(sp){
+  var el=document.getElementById('spellEditor');
+  if(!el||!sp)return;
+  var levels=['cantrips','level1','level2','level3','instrument'];
+  var names={cantrips:'戏法',level1:'1环',level2:'2环',level3:'3环',instrument:'乐器'};
+  el.innerHTML='<h4>法术管理</h4>'+levels.map(function(k,i){
+    return '<div style="margin-bottom:6px"><div style="font-size:.7rem;color:var(--muted);margin-bottom:2px">'+names[k]+' <span style="color:var(--soft);cursor:pointer" class="sp-add" data-level="'+k+'">+</span></div>'+
+      (sp[k]||[]).map(function(s,j){
+        return '<div class="spell-item"><span class="sp-del" data-level="'+k+'" data-idx="'+j+'">✕</span> '+s.n+' <span style="color:var(--muted)">· '+s.s+'</span></div>';
+      }).join('')+'</div>';
+  }).join('');
+  el.querySelectorAll('.sp-del').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var level=this.getAttribute('data-level'),idx=parseInt(this.getAttribute('data-idx'));
+      var d=collectForm();
+      if(d.spells[level])d.spells[level].splice(idx,1);
+      save(d);render(d);populateForm(d);
+    });
+  });
+  el.querySelectorAll('.sp-add').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var level=this.getAttribute('data-level');
+      var name=prompt('输入法术名称：');
+      if(!name)return;
+      var school=prompt('学派（如 塑能、惑控）：')||'';
+      var desc=prompt('简述：')||'';
+      var meta=prompt('施法信息：')||'';
+      var d=collectForm();
+      if(!d.spells[level])d.spells[level]=[];
+      d.spells[level].push({n:name,s:school,d:desc,m:meta});
+      save(d);render(d);populateForm(d);
+    });
+  });
+}
+
+function collectSpells(){
+  var sp={cantrips:[],level1:[],level2:[],level3:[],instrument:[]};
+  try{
+    var d=load();
+    if(d.spells){
+      Object.keys(d.spells).forEach(function(k){sp[k]=d.spells[k]});
+    }
+  }catch(e){}
+  return sp;
+}
+
+// ═══ Init ═══
+render(load());
+
+// Edit panel
+var editBtn=document.getElementById('editBtn'),panel=document.getElementById('editPanel'),open=false;
+editBtn.addEventListener('click',function(){
+  open=!open;panel.classList.toggle('open',open);editBtn.classList.toggle('active',open);
+  if(open)populateForm(load());
+});
+
+document.getElementById('saveBtn').addEventListener('click',function(){
+  var d=collectForm();save(d);render(d);
+  var s=document.getElementById('editSuccess');s.classList.add('show');
+  setTimeout(function(){s.classList.remove('show')},2000);
+});
+
+document.getElementById('resetBtn').addEventListener('click',function(){
+  localStorage.removeItem('sunday_data');
+  render(DEFAULTS);populateForm(DEFAULTS);
+  var s=document.getElementById('editSuccess');s.textContent='🔄 已重置';s.classList.add('show');
+  setTimeout(function(){s.textContent='✅ 已保存';s.classList.remove('show')},2000);
+});
+
+document.getElementById('exportBtn').addEventListener('click',function(){
+  var d=collectForm();save(d);
+  var blob=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='sunday_data.json';a.click();
+});
+
+document.getElementById('addChronicleBtn').addEventListener('click',function(){
+  var d=collectForm();
+  d.chronicle.push({tag:'新章',title:'新纪事',body:'在这里写下冒险经历……'});
+  save(d);render(d);populateForm(d);
+});
+
+// ═══ Audio ═══
+var audio=document.getElementById('bgAudio'),tb=document.getElementById('musicToggle'),pb=document.getElementById('progressBar'),pf=document.getElementById('progressFill'),td=document.getElementById('timeDisplay'),vs=document.getElementById('volControl');
+audio.src='https://upos-sz-mirrorcosov.bilivideo.com/upgcxcode/66/13/26715031366/26715031366-1-192.mp4?e=ig8euxZM2rNcNbRjhwdVhwdlhWTVhwdVhoNvNC8BqJIzNbfq9rVEuxTEnE8L5F6VnEsSTx0vkX8fqJeYTj_lta53NCM=&deadline=1782362053&platform=html5&uipk=5&trid=22824c0522544382bb2cb22412f52ceh&gen=playurlv3&og=hw&mid=0&oi=2366345797&nbs=1&os=cosovbv&upsig=d23a430097e8fed015465016ea973b02&uparams=e,deadline,platform,uipk,trid,gen,og,mid,oi,nbs,os&bvc=vod&nettype=0&bw=1280910&lrs=0&dl=0&f=h_0_0&aggr=0&buvid=&build=0&orderid=0,1';
+audio.volume=0.3;var ip=false,is=false;
+function ft(t){return t&&!isNaN(t)?Math.floor(t/60)+':'+(Math.floor(t%60)+'').padStart(2,'0'):'0:00'}
+tb.addEventListener('click',function(){if(ip)audio.pause();else{if(audio.ended)audio.currentTime=0;audio.play().catch(function(){})}});
+audio.addEventListener('play',function(){ip=1;tb.textContent='⏸';tb.classList.add('playing')});
+audio.addEventListener('pause',function(){ip=0;tb.textContent='▶';tb.classList.remove('playing')});
+audio.addEventListener('timeupdate',function(){if(audio.duration&&!is){pf.style.width=(audio.currentTime/audio.duration*100)+'%';td.textContent=ft(audio.currentTime)+' / '+ft(audio.duration)}});
+audio.addEventListener('loadedmetadata',function(){td.textContent='0:00 / '+ft(audio.duration)});
+audio.addEventListener('ended',function(){ip=0;tb.textContent='▶';tb.classList.remove('playing');pf.style.width='0%';td.textContent='0:00 / '+ft(audio.duration)});
+pb.addEventListener('mousedown',function(e){is=1;sk(e)});
+document.addEventListener('mousemove',function(e){if(is)sk(e)});
+document.addEventListener('mouseup',function(){is=0});
+pb.addEventListener('touchstart',function(e){is=1;skt(e)},{passive:1});
+document.addEventListener('touchmove',function(e){if(is)skt(e)},{passive:1});
+document.addEventListener('touchend',function(){is=0});
+function sk(e){if(!audio.duration)return;var r=pb.getBoundingClientRect(),x=Math.max(0,Math.min(e.clientX-r.left,r.width)),p=x/r.width;audio.currentTime=p*audio.duration;pf.style.width=(p*100)+'%';td.textContent=ft(audio.currentTime)+' / '+ft(audio.duration)}
+function skt(e){if(!audio.duration||!e.touches[0])return;var r=pb.getBoundingClientRect(),x=Math.max(0,Math.min(e.touches[0].clientX-r.left,r.width)),p=x/r.width;audio.currentTime=p*audio.duration;pf.style.width=(p*100)+'%';td.textContent=ft(audio.currentTime)+' / '+ft(audio.duration)}
+vs.addEventListener('input',function(){audio.volume=parseFloat(vs.value)});
+document.addEventListener('keydown',function(e){if((e.key==='m'||e.key==='M')&&!e.ctrlKey&&!e.metaKey&&!e.altKey){e.preventDefault();tb.click();tb.style.transform='scale(1.2)';setTimeout(function(){tb.style.transform=''},150)}});
+
+// ═══ Feathers ═══
+(function(){var c=document.getElementById('feather-container');if(!c)return;
+function f(){var e=document.createElement('div');e.className='feather';var sz=12+Math.random()*16,sx=Math.random()*100,du=6+Math.random()*8,de=Math.random()*2,dr=-30+Math.random()*60,ro=Math.random()*360,sp=-120+Math.random()*240,op=.3+Math.random()*.5,bl=Math.random()*1.5;
+e.style.cssText='left:'+sx+'%;width:'+sz+'px;height:'+sz*.45+'px;opacity:0;filter:blur('+bl+'px)';
+var kf=[{opacity:0,transform:'translateY(0) translateX(0) rotate('+ro+'deg)',offset:0},{opacity:op,transform:'translateY(10vh) translateX('+dr*.2+'px) rotate('+(ro+sp*.15)+'deg)',offset:.08},{opacity:op,transform:'translateY(40vh) translateX('+dr*.5+'px) rotate('+(ro+sp*.4)+'deg)',offset:.35},{opacity:op*.8,transform:'translateY(70vh) translateX('+dr*.8+'px) rotate('+(ro+sp*.7)+'deg)',offset:.65},{opacity:0,transform:'translateY(105vh) translateX('+dr+'px) rotate('+(ro+sp)+'deg)',offset:1}];
+var ti={duration:du*1000,delay:de*1000,easing:'cubic-bezier(0.25,0.46,0.45,0.94)',fill:'forwards'};c.appendChild(e);var an=e.animate(kf,ti);an.onfinish=function(){e.remove()}}
+for(var i=0;i<12;i++)setTimeout(f,i*400);var st=setInterval(f,1800);document.addEventListener('visibilitychange',function(){if(document.hidden)clearInterval(st);else st=setInterval(f,1800)})})();
+
 })();
 </script>
-
 </body>
 </html>
