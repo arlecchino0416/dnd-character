@@ -1,37 +1,10 @@
-﻿<!doctype html>
+<!doctype html>
 <meta charset="utf-8" />
 <html lang="zh-CN">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title>星期日 · 歌织者·梦之铎音 — D&D 5R 人物卡</title>
-<!--
-  ✦ 编辑指南 ✦
-  
-  升级改数值的方法：
-  1. 打开 https://github.com/arlecchino0416/dnd-character
-  2. 点 index.html → 点铅笔图标 ✏️ 编辑
-  3. 搜索下面的关键字直接改：
-  
-  等级/职业       → 搜索 "6级"
-  生命值 / HP     → 搜索 "45（20"
-  护甲等级 / AC   → 搜索 "护甲等级"
-  属性值          → 搜索 "力量" "敏捷" "体质" 等
-  熟练加值        → 搜索 "+3"
-  法术位          → 搜索 "4个法术位" "3个法术位"
-  诗人激励次数    → 搜索 "每天5次"
-  专长/特性       → 搜索对应名称
-  冒险纪事/日记   → 搜索 "冒险纪事"
-  BGM链接         → 搜索 "sunday_audio"
-  金羽毛/特效开关 → 搜索 "FEATHER_COUNT"
-  
-  4. 改完后拉到下面点 "Commit changes" → "Commit directly"
-  5. 等1-2分钟，GitHub Pages 自动更新
-  
-  💡 批量替换：按 Ctrl+F (Mac: Cmd+F) 搜关键字
-  ⚠️ 改数字注意格式一致，比如 "12" 和 "（+1）" 一起改
--->
 <style>
-  /* ═══════════════════ BASE ═══════════════════ */
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   :root{
     --bg:#0d0b18; --card:#151220; --card2:#1a1730; --fg:#e0d8cc; --muted:#7a6a9a;
@@ -46,38 +19,29 @@
   }
   .pg{max-width:800px;margin:0 auto;padding:0 14px 60px;position:relative;z-index:2}
 
-  /* ═══════════════════ FEATHER FALL ═══════════════════ */
-  #feather-container{
-    position:fixed;top:0;left:0;width:100%;height:100%;
-    pointer-events:none;z-index:1;overflow:hidden
-  }
+  /* ═══ FEATHER FALL ═══ */
+  #feather-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:hidden}
   .feather{
-    position:absolute;top:-60px;
-    width:18px;height:8px;
+    position:absolute;top:-60px;width:18px;height:8px;
     background:radial-gradient(ellipse at 30% 50%,rgba(255,248,220,.85),rgba(212,160,87,.2) 60%,transparent 80%);
-    border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
-    opacity:0;
+    border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;opacity:0;
     box-shadow:0 0 8px 3px rgba(212,160,87,.08), 0 0 2px 1px rgba(255,248,220,.04);
     will-change:transform,opacity;
   }
   .feather::after{
-    content:'';position:absolute;top:2px;left:50%;
-    width:1px;height:6px;
-    background:linear-gradient(to bottom,rgba(255,248,200,.4),transparent);
-    transform:translateX(-50%);
+    content:'';position:absolute;top:2px;left:50%;width:1px;height:6px;
+    background:linear-gradient(to bottom,rgba(255,248,200,.4),transparent);transform:translateX(-50%);
   }
 
-  /* ═══════════════════ MUSIC CONTROLS ═══════════════════ */
+  /* ═══ MUSIC ═══ */
   .music-bar{
     position:fixed;bottom:24px;right:24px;z-index:100;
     display:flex;align-items:center;gap:10px;
     background:rgba(21,18,32,.88);border:1px solid rgba(124,92,252,.15);
     border-radius:50px;padding:8px 16px 8px 12px;
     backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-    box-shadow:0 4px 20px rgba(0,0,0,.4);
-    transition:all .3s;
+    box-shadow:0 4px 20px rgba(0,0,0,.4);transition:all .3s;
   }
-  .music-bar:hover{border-color:rgba(124,92,252,.35);box-shadow:0 4px 28px rgba(124,92,252,.12)}
   .music-btn{
     width:32px;height:32px;border-radius:50%;
     background:rgba(124,92,252,.15);border:1px solid rgba(124,92,252,.2);
@@ -87,124 +51,66 @@
   }
   .music-btn:hover{background:rgba(124,92,252,.3);border-color:var(--accent);transform:scale(1.08)}
   .music-btn.playing{background:rgba(124,92,252,.25);border-color:var(--accent)}
-  .music-label{font-size:.65rem;color:var(--muted);white-space:nowrap;max-width:120px;overflow:hidden;text-overflow:ellipsis}
-  .music-label .track{color:var(--soft);font-size:.7rem;display:block}
-
+  .progress-wrap{display:flex;align-items:center;gap:6px;flex:1;min-width:0}
+  .progress-bar{flex:1;height:4px;border-radius:2px;background:rgba(124,92,252,.12);cursor:pointer;position:relative;min-width:40px;transition:height .15s}
+  .progress-bar:hover{height:6px}
+  .progress-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--gold));width:0%;position:relative}
+  .progress-fill::after{content:'';position:absolute;right:-4px;top:-3px;width:10px;height:10px;border-radius:50%;background:var(--gold);opacity:0;transition:opacity .15s}
+  .progress-bar:hover .progress-fill::after{opacity:1}
+  .time-display{font-size:.6rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;min-width:55px;text-align:center}
   .music-bar .vol-slider{width:0;overflow:hidden;transition:width .3s;display:flex;align-items:center}
   .music-bar:hover .vol-slider,.vol-slider.open{width:80px}
-  .vol-slider input[type="range"]{
-    width:72px;height:3px;-webkit-appearance:none;appearance:none;
-    background:rgba(124,92,252,.2);border-radius:2px;outline:none;margin-left:6px;
+  .vol-slider input[type="range"]{width:72px;height:3px;-webkit-appearance:none;appearance:none;background:rgba(124,92,252,.2);border-radius:2px;outline:none;margin-left:6px}
+  .vol-slider input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:10px;height:10px;border-radius:50%;background:var(--accent);cursor:pointer;border:none}
+  .vol-slider input[type="range"]::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:var(--accent);cursor:pointer;border:none}
+
+  /* ═══ EDIT BUTTON ═══ */
+  .edit-btn{
+    position:fixed;top:16px;right:16px;z-index:100;
+    background:rgba(21,18,32,.88);border:1px solid rgba(124,92,252,.2);
+    color:var(--soft);border-radius:50%;width:40px;height:40px;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;font-size:18px;backdrop-filter:blur(8px);
+    box-shadow:0 2px 12px rgba(0,0,0,.3);transition:all .25s;
   }
-  .vol-slider input[type="range"]::-webkit-slider-thumb{
-    -webkit-appearance:none;width:10px;height:10px;border-radius:50%;
-    background:var(--accent);cursor:pointer;border:none;
+  .edit-btn:hover{background:rgba(124,92,252,.25);border-color:var(--accent);transform:scale(1.08)}
+  .edit-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+  /* ═══ EDIT PANEL ═══ */
+  .edit-panel{
+    position:fixed;top:0;right:-400px;width:380px;height:100vh;
+    z-index:99;background:rgba(13,11,24,.97);
+    border-left:1px solid rgba(124,92,252,.15);
+    backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+    transition:right .35s cubic-bezier(0.22,1,0.36,1);
+    padding:60px 18px 80px;overflow-y:auto;
+    font-size:.82rem;
   }
-  .vol-slider input[type="range"]::-moz-range-thumb{
-    width:10px;height:10px;border-radius:50%;
-    background:var(--accent);cursor:pointer;border:none;
+  .edit-panel.open{right:0}
+  .edit-panel h3{color:var(--gold);font-size:.9rem;margin:18px 0 8px;border-bottom:1px solid rgba(212,160,87,.1);padding-bottom:4px}
+  .edit-group{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;margin-bottom:8px}
+  .edit-field{display:flex;flex-direction:column;gap:2px}
+  .edit-field label{font-size:.62rem;color:var(--muted);letter-spacing:1px}
+  .edit-field input,.edit-field textarea,.edit-field select{
+    background:rgba(124,92,252,.06);border:1px solid rgba(124,92,252,.1);
+    border-radius:4px;padding:4px 7px;color:var(--fg);font-size:.78rem;font-family:inherit;
+    outline:none;transition:border .2s;
   }
-
-  /* ═════ PROGRESS BAR ═════ */
-  .progress-wrap{
-    display:flex;align-items:center;gap:6px;
-    flex:1;min-width:0;
+  .edit-field input:focus,.edit-field textarea:focus{border-color:var(--accent)}
+  .edit-field.half{grid-column:span 1}
+  .edit-field.full{grid-column:span 2}
+  .edit-field textarea{min-height:50px;resize:vertical}
+  .edit-actions{position:sticky;bottom:0;display:flex;gap:8px;margin-top:16px;padding-top:12px;border-top:1px solid rgba(124,92,252,.1);background:rgba(13,11,24,.98)}
+  .edit-actions button{
+    flex:1;padding:8px;border-radius:6px;border:none;cursor:pointer;
+    font-size:.78rem;font-weight:600;transition:all .2s;
   }
-  .progress-bar{
-    flex:1;height:4px;border-radius:2px;
-    background:rgba(124,92,252,.12);cursor:pointer;
-    position:relative;min-width:40px;
-    transition:height .15s;
-  }
-  .progress-bar:hover{height:6px}
-  .progress-fill{
-    height:100%;border-radius:2px;
-    background:linear-gradient(90deg,var(--accent),var(--gold));
-    width:0%;position:relative;
-  }
-  .progress-fill::after{
-    content:'';position:absolute;right:-4px;top:-3px;
-    width:10px;height:10px;border-radius:50%;
-    background:var(--gold);opacity:0;
-    transition:opacity .15s;
-  }
-  .progress-bar:hover .progress-fill::after{opacity:1}
-  .time-display{
-    font-size:.6rem;color:var(--muted);
-    font-variant-numeric:tabular-nums;white-space:nowrap;
-    min-width:55px;text-align:center;
-  }
-
-  /* ═══════════════════ EXISTING STYLES ═══════════════════ */
-  h1{font-size:1.8rem;font-weight:900;letter-spacing:3px;background:linear-gradient(135deg,#f0e6ff,#7c5cfc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-  h2{font-size:1.15rem;font-weight:700;color:var(--soft);margin:28px 0 10px;padding-bottom:5px;border-bottom:1.5px solid rgba(124,92,252,.2);display:flex;align-items:center;gap:8px}
-  h2::before{content:"◇";font-size:.7rem;color:var(--accent)}
-  h3{font-size:.95rem;color:#d0bcf0;margin:14px 0 6px}
-  .sub{font-size:.75rem;color:var(--muted);margin-bottom:12px;letter-spacing:1px}
-
-  .tag{display:inline-block;padding:1px 7px;border-radius:4px;font-size:.68rem;font-weight:400;margin:1px;background:rgba(124,92,252,.1);border:1px solid rgba(124,92,252,.15);color:#b0a0d0}
-  .tag-r{background:rgba(255,94,107,.08);border-color:rgba(255,94,107,.15);color:#ff8a94}
-  .tag-g{background:rgba(107,203,138,.08);border-color:rgba(107,203,138,.15);color:#8bdaa4}
-  .tag-b{background:rgba(91,154,255,.08);border-color:rgba(91,154,255,.15);color:#8bb8ff}
-  .tag-y{background:rgba(212,160,87,.08);border-color:rgba(212,160,87,.15);color:#e0c080}
-
-  .hero{text-align:center;padding:32px 0 16px}
-  .hero::after{content:'';display:block;width:60px;height:1.5px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin:12px auto 0}
-  .hero .cn{font-size:.8rem;color:var(--muted);letter-spacing:4px}
-  .hero .info{font-size:.82rem;color:#b0a0c8;margin-top:5px}
-
-  .portrait-wrap{width:100%;max-width:320px;margin:16px auto;border-radius:10px;overflow:hidden;border:1px solid rgba(124,92,252,.12)}
-  .portrait-wrap img{width:100%;display:block}
-
-  .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:12px 0}
-  .info-grid .ig{background:var(--card);border:1px solid rgba(124,92,252,.06);border-radius:7px;padding:8px 12px}
-  .info-grid .ig .lb{font-size:.62rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted)}
-  .info-grid .ig .vl{font-size:1rem;font-weight:600;color:#d8ccee}
-
-  .abilities{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:12px 0}
-  .ab{text-align:center;background:var(--card);border:1px solid rgba(124,92,252,.06);border-radius:8px;padding:10px 4px}
-  .ab .n{font-size:.6rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted)}
-  .ab .v{font-size:1.2rem;font-weight:700;color:#e8ddf8}
-  .ab .m{font-size:.78rem;color:var(--muted)}
-
-  .card{background:var(--card);border:1px solid rgba(124,92,252,.06);border-radius:8px;padding:12px 14px;margin:6px 0}
-  .card .hd{font-weight:600;color:#d0bcf0;margin-bottom:3px;font-size:.88rem}
-  .card .hd .rn{font-weight:400;font-size:.68rem;color:var(--muted)}
-  .card p{font-size:.82rem;color:#b0a0c8;line-height:1.65}
-  .card .meta{font-size:.68rem;color:var(--muted);margin-top:3px}
-
-  .g2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-  .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-  .g-auto{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:5px}
-  .g-auto-s{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:4px}
-
-  .spell-group{margin-bottom:12px}
-  .spell-group .sg-title{font-size:.76rem;color:#a890d0;font-weight:500;margin-bottom:5px;border-left:3px solid var(--accent);padding-left:7px}
-  .spell{background:rgba(255,255,255,.015);border:1px solid rgba(124,92,252,.05);border-radius:5px;padding:4px 8px;font-size:.74rem}
-  .spell .sn{color:#c8b8e0}
-  .spell .ss{font-size:.6rem;color:#6a5a8a}
-
-  .chronicle{position:relative;padding-left:24px;margin:6px 0}
-  .chronicle::before{content:'';position:absolute;left:8px;top:4px;bottom:4px;width:1.5px;background:linear-gradient(180deg,var(--accent),rgba(124,92,252,.05))}
-  .chronicle-item{position:relative;padding:6px 0 6px 16px}
-  .chronicle-item::before{content:'';position:absolute;left:-18px;top:11px;width:10px;height:10px;border-radius:50%;border:2px solid var(--accent);background:rgba(124,92,252,.15)}
-  .chronicle-item .ch-title{font-weight:600;color:#d0bcf0;font-size:.85rem}
-  .chronicle-item .ch-body{font-size:.8rem;color:#b0a0c8;line-height:1.65;margin-top:2px}
-  .chronicle-item .ch-tag{display:inline-block;font-size:.58rem;padding:0 5px;border-radius:3px;margin-right:3px;font-weight:500;background:rgba(124,92,252,.15);color:var(--soft)}
-
-  .party{display:flex;flex-wrap:wrap;gap:5px}
-  .party .pc{background:var(--card);border:1px solid rgba(124,92,252,.06);border-radius:7px;padding:6px 12px;font-size:.78rem}
-  .party .pc .nm{color:#d0bcf0;font-weight:600}
-  .party .pc .cl{color:var(--muted);font-size:.7rem}
-
-  .eq{display:inline-block;background:rgba(124,92,252,.03);border:1px solid rgba(124,92,252,.06);border-radius:4px;padding:2px 7px;margin:1px;font-size:.74rem;color:#b0a0c8}
-  .eq-gold{background:rgba(212,160,87,.05);border-color:rgba(212,160,87,.08);color:#e0c080}
-
-  .note-box{background:rgba(124,92,252,.04);border-left:3px solid var(--gold);border-radius:0 7px 7px 0;padding:8px 12px;margin:8px 0;font-size:.78rem;color:#c0b0d0}
-
-  .char-note{background:rgba(124,92,252,.03);border-radius:7px;padding:10px 14px;margin:6px 0;font-size:.8rem;color:#b0a0c8;line-height:1.65}
-  .char-note .cn-hd{color:#d0bcf0;font-weight:600;font-size:.82rem}
-  .char-note .cn-tag{font-size:.6rem;color:var(--muted)}
+  .btn-save{background:var(--accent);color:#fff}
+  .btn-save:hover{background:#8a6cff}
+  .btn-reset{background:rgba(124,92,252,.1);color:var(--muted)}
+  .btn-reset:hover{background:rgba(124,92,252,.2);color:var(--soft)}
+  .edit-success{color:var(--green);font-size:.7rem;text-align:center;padding:4px;opacity:0;transition:opacity .3s}
+  .edit-success.show{opacity:1}
 
   @media(max-width:480px){
     html{font-size:14px}
@@ -213,8 +119,50 @@
     .g-auto{grid-template-columns:repeat(2,1fr)}
     .g-auto-s{grid-template-columns:repeat(2,1fr)}
     .music-bar{bottom:12px;right:12px;padding:6px 12px 6px 10px}
-    .music-label{max-width:80px}
+    .edit-panel{width:100vw;right:-100vw}
   }
+
+  /* ═══ EXISTING ═══ */
+  h1{font-size:1.8rem;font-weight:900;letter-spacing:3px;background:linear-gradient(135deg,#f0e6ff,#7c5cfc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  h2{font-size:1.15rem;font-weight:700;color:var(--soft);margin:28px 0 10px;padding-bottom:5px;border-bottom:1.5px solid rgba(124,92,252,.2);display:flex;align-items:center;gap:8px}
+  h2::before{content:"◇";font-size:.7rem;color:var(--accent)}
+  h3{font-size:.95rem;color:#d0bcf0;margin:14px 0 6px}
+  .sub{font-size:.75rem;color:var(--muted);margin-bottom:12px;letter-spacing:1px}
+  .tag{display:inline-block;padding:1px 7px;border-radius:4px;font-size:.68rem;font-weight:400;margin:1px;background:rgba(124,92,252,.1);border:1px solid rgba(124,92,252,.15);color:#b0a0d0}
+  .tag-r{background:rgba(255,94,107,.08);border-color:rgba(255,94,107,.15);color:#ff8a94}
+  .tag-g{background:rgba(107,203,138,.08);border-color:rgba(107,203,138,.15);color:#8bdaa4}
+  .tag-b{background:rgba(91,154,255,.08);border-color:rgba(91,154,255,.15);color:#8bb8ff}
+  .tag-y{background:rgba(212,160,87,.08);border-color:rgba(212,160,87,.15);color:#e0c080}
+  .hero{text-align:center;padding:32px 0 16px}
+  .hero::after{content:'';display:block;width:60px;height:1.5px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin:12px auto 0}
+  .hero .cn{font-size:.8rem;color:var(--muted);letter-spacing:4px}
+  .hero .info{font-size:.82rem;color:#b0a0c8;margin-top:5px;cursor:default}
+  .portrait-wrap{width:100%;max-width:320px;margin:16px auto;border-radius:10px;overflow:hidden;border:1px solid rgba(124,92,252,.12)}
+  .portrait-wrap img{width:100%;display:block}
+  .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:12px 0}
+  .info-grid .ig{background:var(--card);border:1px solid rgba(124,92,252,.06);border-radius:7px;padding:8px 12px}
+  .info-grid .ig .lb{font-size:.62rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted)}
+  .info-grid .ig .vl{font-size:1rem;font-weight:600;color:#d8ccee}
+  .abilities{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:12px 0}
+  .ab{text-align:center;background:var(--card);border:1px solid rgba(124,92,252,.06);border-radius:8px;padding:10px 4px}
+  .ab .n{font-size:.6rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted)}
+  .ab .v{font-size:1.2rem;font-weight:700;color:#e8ddf8}
+  .ab .m{font-size:.78rem;color:var(--muted)}
+  .card{background:var(--card);border:1px solid rgba(124,92,252,.06);border-radius:8px;padding:12px 14px;margin:6px 0}
+  .card .hd{font-weight:600;color:#d0bcf0;margin-bottom:3px;font-size:.88rem}
+  .card .hd .rn{font-weight:400;font-size:.68rem;color:var(--muted)}
+  .card p{font-size:.82rem;color:#b0a0c8;line-height:1.65}
+  .card .meta{font-size:.68rem;color:var(--muted);margin-top:3px}
+  .g2,.g3{display:grid;gap:6px}
+  .g2{grid-template-columns:1fr 1fr}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g-auto{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:5px}
+  .g-auto-s{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:4px}
+  .spell-group{margin-bottom:12px}
+  .spell-group .sg-title{font-size:.76rem;color:#a890d0;font-weight:500;margin-bottom:5px;border-left:3px solid var(--accent);padding-left:7px}
+  .spell{background:rgba(255,255,255,.015);border:1px solid rgba(124,92,252,.05);border-radius:5px;padding:4px 8px;font-size:.74rem}
+  .spell .sn{color:#c8b8e0}
+  .spell .ss{font-size:.6rem;color:#6a5a8a}
 
   /* ═══ SPELL CARDS ═══ */
   .spell-block{margin:14px 0}
@@ -227,16 +175,80 @@
   .sc-meta{font-size:.62rem;color:#5a4a7a;margin-top:3px;font-family:monospace}
   .inst-card{border:1px solid rgba(124,92,252,.05);border-radius:5px;padding:5px 8px;background:rgba(255,255,255,.012)}
   @media(max-width:560px){.spell-row{grid-template-columns:1fr}}
+
+  .chronicle{position:relative;padding-left:24px;margin:6px 0}
+  .chronicle::before{content:'';position:absolute;left:8px;top:4px;bottom:4px;width:1.5px;background:linear-gradient(180deg,var(--accent),rgba(124,92,252,.05))}
+  .chronicle-item{position:relative;padding:6px 0 6px 16px}
+  .chronicle-item::before{content:'';position:absolute;left:-18px;top:11px;width:10px;height:10px;border-radius:50%;border:2px solid var(--accent);background:rgba(124,92,252,.15)}
+  .chronicle-item .ch-title{font-weight:600;color:#d0bcf0;font-size:.85rem}
+  .chronicle-item .ch-body{font-size:.8rem;color:#b0a0c8;line-height:1.65;margin-top:2px}
+  .chronicle-item .ch-tag{display:inline-block;font-size:.58rem;padding:0 5px;border-radius:3px;margin-right:3px;font-weight:500;background:rgba(124,92,252,.15);color:var(--soft)}
+  .party{display:flex;flex-wrap:wrap;gap:5px}
+  .party .pc{background:var(--card);border:1px solid rgba(124,92,252,.06);border-radius:7px;padding:6px 12px;font-size:.78rem}
+  .party .pc .nm{color:#d0bcf0;font-weight:600}
+  .party .pc .cl{color:var(--muted);font-size:.7rem}
+  .eq{display:inline-block;background:rgba(124,92,252,.03);border:1px solid rgba(124,92,252,.06);border-radius:4px;padding:2px 7px;margin:1px;font-size:.74rem;color:#b0a0c8}
+  .eq-gold{background:rgba(212,160,87,.05);border-color:rgba(212,160,87,.08);color:#e0c080}
+  .note-box{background:rgba(124,92,252,.04);border-left:3px solid var(--gold);border-radius:0 7px 7px 0;padding:8px 12px;margin:8px 0;font-size:.78rem;color:#c0b0d0}
+  .char-note{background:rgba(124,92,252,.03);border-radius:7px;padding:10px 14px;margin:6px 0;font-size:.8rem;color:#b0a0c8;line-height:1.65}
+  .char-note .cn-hd{color:#d0bcf0;font-weight:600;font-size:.82rem}
+  .char-note .cn-tag{font-size:.6rem;color:var(--muted)}
+
+  /* ═══ EDITABLE HIGHLIGHT ═══ */
+  .editable-hl{cursor:pointer;transition:background .2s;border-radius:3px;padding:0 2px}
+  .editable-hl:hover{background:rgba(124,92,252,.08);outline:1px dashed rgba(124,92,252,.2)}
+  .editing .editable-hl{background:rgba(124,92,252,.05);outline:1px dashed var(--accent)}
 </style>
 </head>
 <body>
 
-<!-- ═══════════════════ FEATHER CONTAINER ═══════════════════ -->
 <div id="feather-container"></div>
 
-<!-- ═══════════════════ MUSIC CONTROLS ═══════════════════ -->
+<!-- ═══ EDIT BUTTON ═══ -->
+<div class="edit-btn" id="editBtn" title="编辑人物卡">✏️</div>
+
+<!-- ═══ EDIT PANEL ═══ -->
+<div class="edit-panel" id="editPanel">
+  <h3>📋 基本信息</h3>
+  <div class="edit-group">
+    <div class="edit-field half"><label>等级</label><input id="e-lvl" /></div>
+    <div class="edit-field half"><label>熟练加值</label><input id="e-prof" /></div>
+    <div class="edit-field half"><label>HP</label><input id="e-hp" /></div>
+    <div class="edit-field half"><label>AC</label><input id="e-ac" /></div>
+    <div class="edit-field half"><label>先攻</label><input id="e-init" /></div>
+    <div class="edit-field half"><label>速度</label><input id="e-speed" /></div>
+    <div class="edit-field half"><label>被动察觉</label><input id="e-pp" /></div>
+    <div class="edit-field half"><label>诗人激励</label><input id="e-bi" /></div>
+  </div>
+
+  <h3>⚔️ 属性</h3>
+  <div class="edit-group">
+    <div class="edit-field half"><label>力量</label><input id="e-str" /></div>
+    <div class="edit-field half"><label>敏捷</label><input id="e-dex" /></div>
+    <div class="edit-field half"><label>体质</label><input id="e-con" /></div>
+    <div class="edit-field half"><label>智力</label><input id="e-int" /></div>
+    <div class="edit-field half"><label>感知</label><input id="e-wis" /></div>
+    <div class="edit-field half"><label>魅力</label><input id="e-cha" /></div>
+  </div>
+
+  <h3>✨ 法术</h3>
+  <div class="edit-group">
+    <div class="edit-field half"><label>法术DC</label><input id="e-dc" /></div>
+    <div class="edit-field half"><label>法术攻击</label><input id="e-atk" /></div>
+    <div class="edit-field full"><label>法术位（逗号分隔 如 4,3,3）</label><input id="e-slots" /></div>
+  </div>
+
+  <div class="edit-actions">
+    <button class="btn-save" id="saveBtn">💾 保存</button>
+    <button class="btn-reset" id="resetBtn">↺ 重置</button>
+  </div>
+  <div class="edit-success" id="editSuccess">✅ 已保存！刷新页面后数值会更新（仅在你当前浏览器生效）</div>
+</div>
+
+<!-- ═══ MUSIC ═══ -->
+<audio id="bgAudio" preload="auto" style="display:none"></audio>
 <div class="music-bar" id="musicBar">
-  <button class="music-btn" id="musicToggle" title="播放/暂停音乐">▶</button>
+  <button class="music-btn" id="musicToggle" title="播放/暂停">▶</button>
   <div class="progress-wrap">
     <div class="progress-bar" id="progressBar">
       <div class="progress-fill" id="progressFill"></div>
@@ -248,16 +260,13 @@
   </div>
 </div>
 
-<audio id="bgAudio" preload="auto" style="display:none"></audio>
-
-<!-- ═══════════════════ PAGE CONTENT ═══════════════════ -->
 <div class="pg">
 
 <!-- HEADER -->
 <div class="hero">
   <h1>星期日</h1>
   <div class="cn">S U N D A Y · 梦 之 铎 音</div>
-  <div class="info">6级 歌织者（吟游诗人）· 阿斯莫 · 守序中立</div>
+  <div class="info" id="classLine">6级 歌织者（吟游诗人）· 阿斯莫 · 守序中立</div>
 </div>
 
 <!-- PORTRAIT -->
@@ -268,41 +277,35 @@
   </picture>
 </div>
 
-<!-- 基本数据 -->
-<div class="info-grid">
-  <div class="ig"><div class="lb">护甲等级</div><div class="vl">15</div></div>
-  <div class="ig"><div class="lb">生命值</div><div class="vl">45（20+5d8）</div></div>
-  <div class="ig"><div class="lb">先攻加值</div><div class="vl">+4</div></div>
-  <div class="ig"><div class="lb">速度</div><div class="vl">30尺（变身可飞行30尺）</div></div>
-  <div class="ig"><div class="lb">熟练加值</div><div class="vl">+3</div></div>
-  <div class="ig"><div class="lb">被动察觉</div><div class="vl">16</div></div>
-  <div class="ig"><div class="lb">黑暗视觉</div><div class="vl">60尺</div></div>
-  <div class="ig"><div class="lb">体型/种族</div><div class="vl">中型 · 阿斯莫</div></div>
+<!-- 属性 -->
+<div class="abilities" id="abilitiesContainer">
+  <div class="ab"><div class="n">力量</div><div class="v" id="str-val">12</div><div class="m" id="str-mod">（+1）</div></div>
+  <div class="ab"><div class="n">敏捷</div><div class="v" id="dex-val">18</div><div class="m" id="dex-mod">（+4）</div></div>
+  <div class="ab"><div class="n">体质</div><div class="v" id="con-val">15</div><div class="m" id="con-mod">（+2）</div></div>
+  <div class="ab"><div class="n">智力</div><div class="v" id="int-val">14</div><div class="m" id="int-mod">（+2）</div></div>
+  <div class="ab"><div class="n">感知</div><div class="v" id="wis-val">16</div><div class="m" id="wis-mod">（+3）</div></div>
+  <div class="ab"><div class="n">魅力</div><div class="v" id="cha-val">20</div><div class="m" id="cha-mod">（+5）</div></div>
 </div>
 
-<!-- 属性 -->
-<div class="abilities">
-  <div class="ab"><div class="n">力量</div><div class="v">12</div><div class="m">（+1）</div></div>
-  <div class="ab"><div class="n">敏捷</div><div class="v">18</div><div class="m">（+4）</div></div>
-  <div class="ab"><div class="n">体质</div><div class="v">15</div><div class="m">（+2）</div></div>
-  <div class="ab"><div class="n">智力</div><div class="v">14</div><div class="m">（+2）</div></div>
-  <div class="ab"><div class="n">感知</div><div class="v">16</div><div class="m">（+3）</div></div>
-  <div class="ab"><div class="n">魅力</div><div class="v">20</div><div class="m">（+5）</div></div>
+<!-- 基本数据 -->
+<div class="info-grid" id="statsGrid">
+  <div class="ig"><div class="lb">护甲等级</div><div class="vl" id="s-ac">15</div></div>
+  <div class="ig"><div class="lb">生命值</div><div class="vl" id="s-hp">45（20+5d8）</div></div>
+  <div class="ig"><div class="lb">先攻加值</div><div class="vl" id="s-init">+4</div></div>
+  <div class="ig"><div class="lb">速度</div><div class="vl" id="s-speed">30尺（变身可飞行30尺）</div></div>
+  <div class="ig"><div class="lb">熟练加值</div><div class="vl" id="s-prof">+3</div></div>
+  <div class="ig"><div class="lb">被动察觉</div><div class="vl" id="s-pp">16</div></div>
+  <div class="ig"><div class="lb">黑暗视觉</div><div class="vl">60尺</div></div>
+  <div class="ig"><div class="lb">体型/种族</div><div class="vl">中型 · 阿斯莫</div></div>
 </div>
 
 <!-- 豁免与技能 -->
 <div class="g2">
   <div class="card">
     <div class="hd">豁免检定 <span class="rn">Saving Throws</span></div>
-    <p><span class="tag tag-r">敏捷 +7</span> <span class="tag tag-r">魅力 +8</span></p>
+    <p id="savesDisplay"><span class="tag tag-r">敏捷 +7</span> <span class="tag tag-r">魅力 +8</span></p>
     <div class="hd" style="margin-top:6px;font-size:.82rem">技能熟练</div>
-    <p>
-      <span class="tag tag-b">游说 +11（专精）</span>
-      <span class="tag tag-b">表演 +11（专精）</span>
-      <span class="tag tag-g">察觉 +6</span>
-      <span class="tag tag-g">洞察 +6</span>
-      <span class="tag">奥秘 +5</span>
-    </p>
+    <p id="skillsDisplay"><span class="tag tag-b">游说 +11（专精）</span><span class="tag tag-b">表演 +11（专精）</span><span class="tag tag-g">察觉 +6</span><span class="tag tag-g">洞察 +6</span><span class="tag">奥秘 +5</span></p>
     <div class="meta">万事通：所有未熟练的技能检定+1</div>
   </div>
   <div class="card">
@@ -310,536 +313,128 @@
     <p><span class="tag tag-r">火焰伤害抗性</span></p>
     <p style="margin-top:3px"><span class="tag">钢琴</span><span class="tag">里拉琴</span><span class="tag">鲁特琴</span><span class="tag">风笛</span><span class="tag">提琴</span><span class="tag">鼓</span><span class="tag">工匠工具</span></p>
     <p style="margin-top:3px"><span class="tag">通用语</span><span class="tag">天界语</span><span class="tag">通用手语</span></p>
-    <div class="meta">诗人激励：八面骰 · 每天5次（短休恢复）</div>
+    <div class="meta" id="biDisplay">诗人激励：八面骰 · 每天5次（短休恢复）</div>
   </div>
 </div>
 
 <!-- 种族特性 -->
 <h2>阿斯莫种族特性</h2>
 <div class="g3">
-  <div class="card">
-    <div class="hd">治愈之手</div>
-    <p>触碰一个生物，用手上的圣光为其恢复2d4点生命值。每天能用一次。</p>
-  </div>
-  <div class="card">
-    <div class="hd">天启变身</div>
-    <p>用附赠动作变身，背后展开灵体飞翼。变身期间每回合一次，造成伤害时额外附带3点光耀伤害。每天能用一次。</p>
-  </div>
-  <div class="card">
-    <div class="hd">天堂飞翼</div>
-    <p>天启变身期间获得30尺飞行速度。</p>
-  </div>
+  <div class="card"><div class="hd">治愈之手</div><p>触碰一个生物，用手上的圣光为其恢复2d4点生命值。每天能用一次。</p></div>
+  <div class="card"><div class="hd">天启变身</div><p>用附赠动作变身，背后展开灵体飞翼。变身期间每回合一次，造成伤害时额外附带3点光耀伤害。每天能用一次。</p></div>
+  <div class="card"><div class="hd">天堂飞翼</div><p>天启变身期间获得30尺飞行速度。</p></div>
 </div>
 
 <!-- 专长 -->
 <h2>专长</h2>
 <div class="g2">
-  <div class="card">
-    <div class="hd">音乐家 <span class="tag tag-y">1级起源专长</span></div>
-    <p><strong>乐器训练。</strong>获得三种自选乐器的使用熟练。</p>
-    <p><strong>鼓舞之歌。</strong>休息时演奏歌曲，最多3名同伴获得英雄激励（可以重骰一次）。</p>
-  </div>
-  <div class="card">
-    <div class="hd">领袖之证 <span class="tag tag-y">4级通用专长</span></div>
-    <p><strong>魅力+1</strong>（提升至20）。</p>
-    <p><strong>激励演出。</strong>休息结束时做一场表演，最多6名同伴获得临时生命值，数值等于你的角色等级+魅力调整值。</p>
-  </div>
+  <div class="card"><div class="hd">音乐家 <span class="tag tag-y">1级起源专长</span></div><p><strong>乐器训练。</strong>获得三种自选乐器的使用熟练。<br><strong>鼓舞之歌。</strong>休息时演奏歌曲，最多3名同伴获得英雄激励。</p></div>
+  <div class="card"><div class="hd">领袖之证 <span class="tag tag-y">4级通用专长</span></div><p><strong>魅力+1</strong>（提升至20）。<br><strong>激励演出。</strong>休息时表演，最多6名同伴获得临时生命值。</p></div>
 </div>
 
 <!-- 职业特性 -->
 <h2>吟游诗人 · 歌织者</h2>
-
-<div class="card">
-  <div class="hd">美梦祝福 <span class="tag tag-r">每天一次</span></div>
-  <p>你或30尺内所有同伴进行豁免检定时，可以投掷两次并使用较高的结果。</p>
-</div>
-
-<div class="card">
-  <div class="hd">诗人激励 <span class="tag tag-b">八面骰 · 每天5次</span></div>
-  <p>用附赠动作，让30尺内一个同伴获得一枚激励骰（八面骰），10分钟内可用于属性检定、攻击检定或豁免检定。</p>
-</div>
-
-<div class="g2">
-  <div class="card"><div class="hd">万事通</div><p>将熟练加值的一半（+1）加入所有未熟练的技能检定。</p></div>
-  <div class="card"><div class="hd">技能专精</div><p>游说和表演获得双倍熟练加值（+6）。</p></div>
-</div>
-
-<div class="card">
-  <div class="hd">织曲入术 <span class="tag tag-r">每天一次</span></div>
-  <p>当一个同伴使用了你的诗人激励骰后，你可以立刻用一个反应施放一个法术。</p>
-</div>
-
-<div class="card">
-  <div class="hd">咏术入织</div>
-  <p>当你施放一个需要消耗法术位的法术时，可以额外消耗一次诗人激励次数。根据法术学派触发不同效果：</p>
-  <div class="g-auto-s" style="margin-top:5px">
-    <div><span class="tag tag-r">防护</span> <span style="font-size:.72rem;color:#b0a0c8">60尺内一同伴恢复两枚激励骰的生命</span></div>
-    <div><span class="tag tag-b">咒法</span> <span style="font-size:.72rem;color:#b0a0c8">60尺内一同伴速度+10尺、护甲+1，持续1分钟</span></div>
-    <div><span class="tag tag-g">预言</span> <span style="font-size:.72rem;color:#b0a0c8">60尺内指定生物被近战攻击时额外受到3点力场伤害</span></div>
-    <div><span class="tag">惑控</span> <span style="font-size:.72rem;color:#b0a0c8">60尺内一生物受心灵伤害并陷入恐慌</span></div>
-    <div><span class="tag tag-r">塑能</span> <span style="font-size:.72rem;color:#b0a0c8">120尺远程法术攻击，命中受2枚激励骰+5点力场伤害</span></div>
-    <div><span class="tag tag-b">幻术</span> <span style="font-size:.72rem;color:#b0a0c8">自己隐形直到下回合结束</span></div>
-    <div><span class="tag tag-g">死灵</span> <span style="font-size:.72rem;color:#b0a0c8">所有伤害额外+3暗蚀伤害，持续1分钟</span></div>
-    <div><span class="tag tag-y">变化</span> <span style="font-size:.72rem;color:#b0a0c8">传送至多30尺</span></div>
-  </div>
-</div>
+<div class="card"><div class="hd">美梦祝福 <span class="tag tag-r">每天一次</span></div><p>你或30尺内所有同伴进行豁免检定时，可以投掷两次并使用较高的结果。</p></div>
+<div class="card"><div class="hd">诗人激励 <span class="tag tag-b">八面骰 · 每天5次</span></div><p>用附赠动作，让30尺内一个同伴获得一枚激励骰（八面骰）。</p></div>
+<div class="g2"><div class="card"><div class="hd">万事通</div><p>将熟练加值的一半加入所有未熟练的技能检定。</p></div><div class="card"><div class="hd">技能专精</div><p>游说和表演获得双倍熟练加值。</p></div></div>
+<div class="card"><div class="hd">织曲入术 <span class="tag tag-r">每天一次</span></div><p>当一个同伴使用了你的诗人激励骰后，你可以立刻用一个反应施放一个法术。</p></div>
+<div class="card"><div class="hd">咏术入织</div><p>当你施放一个需要消耗法术位的法术时，可以额外消耗一次诗人激励次数。根据法术学派触发不同效果。</p><div class="g-auto-s" style="margin-top:5px"><div><span class="tag tag-r">防护</span><span style="font-size:.72rem;color:#b0a0c8">60尺内一同伴恢复2d6生命</span></div><div><span class="tag tag-b">咒法</span><span style="font-size:.72rem;color:#b0a0c8">60尺内一同伴速度+10、ac+1</span></div><div><span class="tag tag-g">预言</span><span style="font-size:.72rem;color:#b0a0c8">60尺内目标被近战命中额外3力场</span></div><div><span class="tag">惑控</span><span style="font-size:.72rem;color:#b0a0c8">60尺内一生物心灵伤害+恐慌</span></div><div><span class="tag tag-r">塑能</span><span style="font-size:.72rem;color:#b0a0c8">120尺远程法术攻击+力场伤害</span></div><div><span class="tag tag-b">幻术</span><span style="font-size:.72rem;color:#b0a0c8">自己隐形直到下回合结束</span></div><div><span class="tag tag-g">死灵</span><span style="font-size:.72rem;color:#b0a0c8">所有伤害额外+3暗蚀</span></div><div><span class="tag tag-y">变化</span><span style="font-size:.72rem;color:#b0a0c8">传送至多30尺</span></div></div></div>
 
 <!-- 法术 -->
 <h2>法术</h2>
 <div class="card" style="margin-bottom:6px">
-  <p><span class="tag tag-b">施法属性</span> 魅力 <span class="tag tag-b">法术难度等级</span> 16 <span class="tag tag-b">法术攻击加值</span> +8</p>
+  <p><span class="tag tag-b">施法属性</span> 魅力 <span class="tag tag-b" id="spellDCDisplay">法术难度等级：16</span> <span class="tag tag-b" id="spellAtkDisplay">法术攻击加值：+8</span></p>
 </div>
 
-<div class="spell-group">
-  <div class="sg-title">法术详述</h2>
-<div style="margin-bottom:6px">
-  <span class="tag tag-b">施法属性：魅力</span>
-  <span class="tag tag-b">法术难度等级（DC）：16</span>
-  <span class="tag tag-b">法术攻击加值：+8</span>
-  <span class="tag" style="color:var(--muted)">施法位数量：4/3/3（1环/2环/3环）</span>
-</div>
+<div class="spell-block"><div class="sb-hd">戏法（0环）— 可随意施放</div>
+<div class="spell-row">
+<div class="spell-card"><div class="sc-hd">光亮术 <span class="sc-school">· 塑能</span></div><div class="sc-desc">触碰一个物件，使其发出半径20尺的明亮光照+20尺微光。持续1小时。</div><div class="sc-meta">施法：动作 · 触碰 · V、S · 1小时</div></div>
+<div class="spell-card"><div class="sc-hd">修复术 <span class="sc-school">· 变化</span></div><div class="sc-desc">修复一个破损物件上的单处断裂或裂缝。</div><div class="sc-meta">施法：1分钟 · 触碰 · V、S、M · 立即</div></div>
+<div class="spell-card"><div class="sc-hd">恶言相加 <span class="sc-school">· 惑控</span></div><div class="sc-desc">对施法距离内一个生物说出魔法侮辱，造成1d4心灵伤害。</div><div class="sc-meta">施法：附赠 · 60尺 · V · 立即</div></div>
+<div class="spell-card"><div class="sc-hd">流光闪灵 <span class="sc-school">· 塑能</span></div><div class="sc-desc">歌织者专属戏法。远程法术攻击，命中造成1d8光耀伤害。</div><div class="sc-meta">施法：动作 · 120尺 · V、S · 立即</div></div>
+<div class="spell-card"><div class="sc-hd">魔法伎俩 <span class="sc-school">· 变化</span></div><div class="sc-desc">基础的魔法把戏。改变颜色/温度、清洁/弄脏物件等。</div><div class="sc-meta">施法：动作 · 30尺 · V、S · 至多1小时</div></div>
+</div></div>
 
-<div class="spell-block">
-  <div class="sb-hd">戏法（0环）— 可随意施放，不消耗法术位</div>
-  <div class="spell-row">
-    <div class="spell-card">
-      <div class="sc-hd">光亮术 <span class="sc-school">· 塑能</span></div>
-      <div class="sc-desc">你触碰一个物件，使其发出半径20尺的明亮光照 + 20尺微光光照。可以设定颜色。持续1小时，可被解除魔法驱散。</div>
-      <div class="sc-meta">施法：动作 · 距离：触碰 · 成分：V、S · 持续：1小时</div>
-    </div>
-    <div class="spell-card">
-      <div class="sc-hd">修复术 <span class="sc-school">· 变化</span></div>
-      <div class="sc-desc">修复一个破损物件上的单处断裂或裂缝，例如断链、磨损的绳索、破洞等。裂隙不超过1尺时完全修复。不能修复魔法物品。</div>
-      <div class="sc-meta">施法：1分钟 · 距离：触碰 · 成分：V、S、M · 持续：立即</div>
-    </div>
-    <div class="spell-card">
-      <div class="sc-hd">恶言相加 <span class="sc-school">· 惑控</span></div>
-      <div class="sc-desc">你对施法距离内一个能听见你声音的生物说出一段蕴含魔法力量的侮辱。目标必须通过感知豁免，否则受到1d4点心灵伤害，并在其下一回合结束前的首次攻击检定中承受劣势。</div>
-      <div class="sc-meta">施法：附赠 · 距离：60尺 · 成分：V · 持续：立即 · 强化（5/11/17级）：伤害+1d4</div>
-    </div>
-    <div class="spell-card">
-      <div class="sc-hd">流光闪灵 <span class="sc-school">· 塑能</span></div>
-      <div class="sc-desc">歌织者的专属戏法。你创造一颗闪耀的魔法星火射向目标。远程法术攻击，命中造成1d8点光耀伤害，并且目标在下一回合结束前无法受益于隐形效果。</div>
-      <div class="sc-meta">施法：动作 · 距离：120尺 · 成分：V、S · 持续：立即 · 强化：5/11/17级+1d8</div>
-    </div>
-    <div class="spell-card">
-      <div class="sc-hd">魔法伎俩 <span class="sc-school">· 变化</span></div>
-      <div class="sc-desc">一种基础的魔法把戏。你可以在一回合内做出以下效应之一：让物件改变颜色/温度、清洁或弄脏物件、制造一小撮无害的味道/声音/火花、点燃或吹熄蜡烛。</div>
-      <div class="sc-meta">施法：动作 · 距离：30尺 · 成分：V、S · 持续：至多1小时</div>
-    </div>
-  </div>
-</div>
+<div class="spell-block"><div class="sb-hd" style="border-left-color:var(--blue)">1环法术（4个法术位）</div>
+<div class="spell-row">
+<div class="spell-card"><div class="sc-hd">命令术 <span class="sc-school">· 惑控</span></div><div class="sc-desc">命令一个生物服从单字指令：靠近/丢弃/逃跑/跪地/停步。</div><div class="sc-meta">施法：动作 · 60尺 · V · 1轮</div></div>
+<div class="spell-card"><div class="sc-hd">治愈真言 <span class="sc-school">· 防护</span></div><div class="sc-desc">一个可见生物恢复1d4+魅力调整值的生命。最快战斗治疗。</div><div class="sc-meta">施法：附赠 · 60尺 · V · 立即</div></div>
+<div class="spell-card"><div class="sc-hd">羽落术 <span class="sc-school">· 变化</span></div><div class="sc-desc">最多5个生物的坠落速度急剧减慢，不受坠落伤害。</div><div class="sc-meta">施法：反应 · 60尺 · V、M · 1分钟</div></div>
+<div class="spell-card"><div class="sc-hd">妖火 <span class="sc-school">· 塑能</span></div><div class="sc-desc">20尺立方内的生物被蓝绿火光描出轮廓，攻击者获得优势。</div><div class="sc-meta">施法：动作 · 60尺 · V · 专注·至多1分钟</div></div>
+</div></div>
 
-<div class="spell-block">
-  <div class="sb-hd" style="border-left-color:var(--blue)">1环法术（4个法术位）</div>
-  <div class="spell-row">
-    <div class="spell-card">
-      <div class="sc-hd">命令术 <span class="sc-school">· 惑控</span></div>
-      <div class="sc-desc">你对施法距离内一个生物说出一个单字命令。目标必须通过感知豁免，否则必须立即服从命令执行行动，可选命令有：Approach（靠近）、Drop（丢弃）、Flee（逃跑）、Grovel（跪地）、Halt（停步）、Beckon（过来）。</div>
-      <div class="sc-meta">施法：动作 · 距离：60尺 · 成分：V · 持续：1轮 · 升环（2+环）：每升1环多影响1目标</div>
-    </div>
-    <div class="spell-card">
-      <div class="sc-hd">治愈真言 <span class="sc-school">· 防护</span></div>
-      <div class="sc-desc">你念诵一段简短而充满力量的治愈祷言。施法距离内一个你可见的生物恢复1d4+你的施法属性调整值（魅力+5）点生命值。这是战斗中最快最省动作的治疗手段。</div>
-      <div class="sc-meta">施法：附赠 · 距离：60尺 · 成分：V · 持续：立即 · 升环：每升1环+1d4</div>
-    </div>
-    <div class="spell-card">
-      <div class="sc-hd">羽落术 <span class="sc-school">· 变化</span></div>
-      <div class="sc-desc">当你或有生物坠落的瞬间施放此法术。最多5个生物的坠落速度急剧减慢，不受坠落伤害。以反应施放，用于应对突然的坠落、陷阱或被打下悬崖。</div>
-      <div class="sc-meta">施法：反应 · 距离：60尺 · 成分：V、M · 持续：1分钟</div>
-    </div>
-    <div class="spell-card">
-      <div class="sc-hd">妖火 <span class="sc-school">· 塑能</span></div>
-      <div class="sc-desc">施法距离内20尺立方区域内的生物被蓝绿色火光勾勒出轮廓。失败敏捷豁免的生物发出微光，攻击者对其攻击检定获得优势（advantage）。隐形生物也清晰可见。</div>
-      <div class="sc-meta">施法：动作 · 距离：60尺 · 成分：V · 持续：专注至多1分钟 · 升环（2+环）+1d6区域</div>
-    </div>
-  </div>
-</div>
+<div class="spell-block"><div class="sb-hd" style="border-left-color:var(--green)">2环法术（3个法术位）</div>
+<div class="spell-row">
+<div class="spell-card"><div class="sc-hd">沉默术 <span class="sc-school">· 幻术</span></div><div class="sc-desc">40尺半径球状区域被绝对寂静笼罩，无法施法（需言语成分）。</div><div class="sc-meta">施法：动作 · 120尺 · V、S · 专注·至多10分钟</div></div>
+<div class="spell-card"><div class="sc-hd">人类定身术 <span class="sc-school">· 惑控</span></div><div class="sc-desc">一个人形生物被麻痹，每回合结束可重试豁免。</div><div class="sc-meta">施法：动作 · 60尺 · V、S、M · 专注·至多1分钟</div></div>
+<div class="spell-card"><div class="sc-hd">暗示术 <span class="sc-school">· 惑控</span></div><div class="sc-desc">用一句话暗示一个生物执行指令。指令需合理。</div><div class="sc-meta">施法：动作 · 30尺 · V、M · 专注·至多8小时</div></div>
+<div class="spell-card"><div class="sc-hd">识破隐形 <span class="sc-school">· 预言</span></div><div class="sc-desc">看透隐形、灵体及隐藏魔法陷阱。必备反潜行法术。</div><div class="sc-meta">施法：动作 · 自身 · V、S、M · 专注·至多1小时</div></div>
+</div></div>
 
-<div class="spell-block">
-  <div class="sb-hd" style="border-left-color:var(--green)">2环法术（3个法术位）</div>
-  <div class="spell-row">
-    <div class="spell-card">
-      <div class="sc-hd">沉默术 <span class="sc-school">· 幻术</span></div>
-      <div class="sc-desc">施法距离内某处40尺半径球状区域被绝对的寂静笼罩。区域内所有声音消失，完全阻隔交谈、法术施放（需要言语成分的法术无法施放），也无法发出声音。对施法者极为有效的控制手段。</div>
-      <div class="sc-meta">施法：动作 · 距离：120尺 · 成分：V、S · 持续：专注至多10分钟</div>
-    </div>
-    <div class="spell-card">
-      <div class="sc-hd">人类定身术 <span class="sc-school">· 惑控</span></div>
-      <div class="sc-desc">选择施法距离内一个人形生物，目标必须通过感知豁免，否则被麻痹——完全无法移动、无法说话、无法做任何动作。每回合结束时目标可再尝试一次豁免解除。对类人生物特攻。</div>
-      <div class="sc-meta">施法：动作 · 距离：60尺 · 成分：V、S、M · 持续：专注至多1分钟 · 升环（3+环）：每升1环多影响1目标</div>
-    </div>
-    <div class="spell-card">
-      <div class="sc-hd">暗示术 <span class="sc-school">· 惑控</span></div>
-      <div class="sc-desc">你用一句简短的话暗示一个生物。目标必须通过感知豁免，否则会竭尽全力去执行你的指令。指令必须简短且合理（例如"把你的钥匙给我""带我们去你们的营地"）——伤害自身或明显荒谬的指令会结束法术。</div>
-      <div class="sc-meta">施法：动作 · 距离：30尺 · 成分：V、M · 持续：专注至多8小时 · 升环（3+环）+1目标</div>
-    </div>
-    <div class="spell-card">
-      <div class="sc-hd">识破隐形 <span class="sc-school">· 预言</span></div>
-      <div class="sc-desc">你获得看透隐形、灵体及隐藏魔法陷阱的能力。持续期间你能看到所有隐形的生物和物件、看到灵体位面的生物、及任何隐藏的魔法陷阱。探索和反潜行的必备法术。</div>
-      <div class="sc-meta">施法：动作 · 距离：自身 · 成分：V、S、M · 持续：专注至多1小时</div>
-    </div>
-  </div>
-</div>
+<div class="spell-block"><div class="sb-hd" style="border-left-color:var(--red)">3环法术（3个法术位）</div>
+<div class="spell-row">
+<div class="spell-card"><div class="sc-hd">解除魔法 <span class="sc-school">· 防护</span></div><div class="sc-desc">终止一个生物、物件或魔法效应上的法术。</div><div class="sc-meta">施法：动作 · 120尺 · V、S · 立即</div></div>
+<div class="spell-card"><div class="sc-hd">死者交谈 <span class="sc-school">· 死灵</span></div><div class="sc-desc">触碰一具尸体，以它理解的语言问5个问题。</div><div class="sc-meta">施法：动作 · 触碰 · V、S、M · 10分钟</div></div>
+<div class="spell-card"><div class="sc-hd">举目皆敌 <span class="sc-school">· 惑控</span></div><div class="sc-desc">扭曲一个生物的感知，让它视周围所有生物为敌人。</div><div class="sc-meta">施法：动作 · 120尺 · V、S · 专注·至多1分钟</div></div>
+</div></div>
 
-<div class="spell-block">
-  <div class="sb-hd" style="border-left-color:var(--red)">3环法术（3个法术位）</div>
-  <div class="spell-row">
-    <div class="spell-card">
-      <div class="sc-hd">解除魔法 <span class="sc-school">· 防护</span></div>
-      <div class="sc-desc">选择施法距离内一个生物、物件或魔法效应，终止其上持续中的任何法术，环阶等于或低于施法位等级的直接解除。高阶法术需进行DC10+法术环阶的魅力检定（你的施法属性）。</div>
-      <div class="sc-meta">施法：动作 · 距离：120尺 · 成分：V、S · 持续：立即 · 升环：自动解除等于施法位环阶的法术</div>
-    </div>
-    <div class="spell-card">
-      <div class="sc-hd">死者交谈 <span class="sc-school">· 死灵</span></div>
-      <div class="sc-desc">你触碰一具尸体（不能是无心智的不死生物或没有嘴巴），以天界语、通用语等它能理解的语言与之交谈。允许问5个问题，尸体所知仅为生前信息，不受欺骗/蛊惑类法术影响。</div>
-      <div class="sc-meta">施法：动作 · 距离：触碰 · 成分：V、S、M · 持续：10分钟 · 目标：一具尸体</div>
-    </div>
-    <div class="spell-card">
-      <div class="sc-hd">举目皆敌 <span class="sc-school">· 惑控</span></div>
-      <div class="sc-desc">你扭曲一个生物的感知，让它认为周围所有人都是敌人。目标必须通过感知豁免，否则对施法距离内所有生物视为敌人。目标的回合内，它必须攻击离它最近的生物，否则将用尽移动力靠近威胁。每回合结束时可重复豁免。</div>
-      <div class="sc-meta">施法：动作 · 距离：120尺 · 成分：V、S · 持续：专注至多1分钟</div>
-    </div>
-  </div>
-</div>
+<div class="spell-block"><div class="sb-hd" style="border-left-color:var(--gold);color:var(--gold)">🎵 克里里拉琴 · 乐器法术（每日各一次）</div>
+<div class="spell-row">
+<div class="inst-card"><div class="sc-hd">飞行术 <span class="sc-school">· 变化</span></div><div class="sc-desc">触碰同伴，60尺飞行速度。</div><div class="sc-meta">动作·触碰·专注至多10分钟</div></div>
+<div class="inst-card"><div class="sc-hd">隐形术 <span class="sc-school">· 幻术</span></div><div class="sc-desc">触碰一个生物使其完全隐形。</div><div class="sc-meta">动作·触碰·专注至多1小时</div></div>
+<div class="inst-card"><div class="sc-hd">浮空术 <span class="sc-school">· 变化</span></div><div class="sc-desc">一生物或物件垂直升降。</div><div class="sc-meta">动作·60尺·专注至多10分钟</div></div>
+<div class="inst-card"><div class="sc-hd">防护善恶 <span class="sc-school">· 防护</span></div><div class="sc-desc">抵御异界/元素/精类/魔族/不死。</div><div class="sc-meta">动作·触碰·专注至多10分钟</div></div>
+<div class="inst-card"><div class="sc-hd">塑石术 <span class="sc-school">· 变化</span></div><div class="sc-desc">改变5尺立方的石头形状。</div><div class="sc-meta">动作·触碰·立即</div></div>
+<div class="inst-card"><div class="sc-hd">火墙术 <span class="sc-school">· 塑能</span></div><div class="sc-desc">5d8火焰伤害，阻隔通道。</div><div class="sc-meta">动作·120尺·专注至多1分钟</div></div>
+<div class="inst-card"><div class="sc-hd">风墙术 <span class="sc-school">· 塑能</span></div><div class="sc-desc">阻挡所有远程武器和气体攻击。</div><div class="sc-meta">动作·120尺·专注至多1分钟</div></div>
+</div></div>
 
-<div class="spell-block">
-  <div class="sb-hd" style="border-left-color:var(--gold);color:var(--gold)">✦ 克里里拉琴 · 乐器法术</div>
-  <div class="spell-row">
-    <div class="inst-card">
-      <div class="sc-hd">飞行术 <span class="sc-school">· 变化</span></div>
-      <div class="sc-desc">你触碰一个同伴，对方获得60尺飞行速度。可控制飞行方向和高度，持续到法术结束。</div>
-      <div class="sc-meta">施法：动作 · 触碰 · 专注至多10分钟</div>
-    </div>
-    <div class="inst-card">
-      <div class="sc-hd">隐形术 <span class="sc-school">· 幻术</span></div>
-      <div class="sc-desc">触碰一个生物使其完全看不见——包括它身上的装备和物品。攻击或施放伤害性法术后隐形结束。</div>
-      <div class="sc-meta">施法：动作 · 触碰 · 专注至多1小时</div>
-    </div>
-    <div class="inst-card">
-      <div class="sc-hd">浮空术 <span class="sc-school">· 变化</span></div>
-      <div class="sc-desc">选择一生物或物件垂直上升不超过20尺，在该位置悬浮整个持续期间。可左右轻微摆动但不能横向移动。</div>
-      <div class="sc-meta">施法：动作 · 60尺 · 专注至多10分钟</div>
-    </div>
-    <div class="inst-card">
-      <div class="sc-hd">防护善恶 <span class="sc-school">· 防护</span></div>
-      <div class="sc-desc">触碰一个同伴，对方获得针对天界生物/元素/精类/魔族/不死亡灵的防护：对方攻击该生物时劣势，该生物攻击被防护者时优势。同时免疫魅惑、恐惧和附身。</div>
-      <div class="sc-meta">施法：动作 · 触碰 · 专注至多10分钟</div>
-    </div>
-    <div class="inst-card">
-      <div class="sc-hd">塑石术 <span class="sc-school">· 变化</span></div>
-      <div class="sc-desc">施法距离内一块5尺立方的石头改变形状。可用于造门、封墙、架桥、雕刻等。不能造成伤害或创造精细机关。</div>
-      <div class="sc-meta">施法：动作 · 触碰 · 持续：立即</div>
-    </div>
-    <div class="inst-card">
-      <div class="sc-hd">火墙术 <span class="sc-school">· 塑能</span></div>
-      <div class="sc-desc">你创造一道火焰组成的墙。穿越火墙的生物受到5d8火焰伤害。火墙会遮蔽视线，持续期间阻隔通道。可用作控制战场或保护阵地。</div>
-      <div class="sc-meta">施法：动作 · 120尺 · 专注至多1分钟</div>
-    </div>
-    <div class="inst-card">
-      <div class="sc-hd">风墙术 <span class="sc-school">· 塑能</span></div>
-      <div class="sc-desc">你创造一道呼啸的强风气墙。穿墙的远程武器攻击自动失效（箭矢、弩矢等），小型飞行生物无法穿越。气体状的攻击也被完全阻隔。</div>
-      <div class="sc-meta">施法：动作 · 120尺 · 专注至多1分钟</div>
-    </div>
-  </div>
-  <div style="font-size:.65rem;color:var(--muted);margin-top:4px">※ 以上法术每日各可使用一次，次日黎明恢复。</div>
-</div>
+<!-- 装备 -->
+<h2>装备与物品</h2>
+<div class="card"><p><span class="eq eq-gold">641金币</span><span class="eq">钢琴</span><span class="eq">里拉琴</span><span class="eq">鲁特琴</span><span class="eq">风笛</span><span class="eq">提琴</span><span class="eq">鼓</span><span class="eq">皮甲</span><span class="eq">两把匕首</span><span class="eq">艺人套装</span><span class="eq">旅行背包</span><span class="eq eq-gold">2瓶治疗药水</span><span class="eq eq-gold">雷石×1</span></p></div>
+<div class="g2"><div class="card"><div class="hd" style="font-size:.82rem;color:var(--gold)">克里里拉琴 Cli Lyre</div><p>稀有级吟游诗人魔法乐器（需同调）。内含七道法术，每日各一次。</p><div class="meta">飞行术·隐形术·浮空术·防护善恶·塑石术·火墙术·风墙术</div></div><div class="card"><div class="hd">火焰抗性戒指</div><p>佩戴后获得对火焰伤害的抗性。</p></div></div>
+<div class="card"><div class="hd">雷石</div><p>投掷至20尺内某处，10尺范围生物体质豁免DC15，否则耳聋1分钟。</p></div>
 
-<hr style="border:none;border-top:1px solid rgba(124,92,252,.08);margin:16px 0">
-
-<!-- ══════════════════════ EQUIPMENT ══════════════════════ -->
-<h2>✦ <h2>装备与物品</h2>
-<div class="card">
-  <p>
-    <span class="eq eq-gold">641金币</span>
-    <span class="eq">钢琴</span><span class="eq">里拉琴</span><span class="eq">鲁特琴</span>
-    <span class="eq">风笛</span><span class="eq">提琴</span><span class="eq">鼓</span>
-    <span class="eq">皮甲</span><span class="eq">两把匕首</span>
-    <span class="eq">艺人套装</span><span class="eq">旅行背包</span>
-    <span class="eq eq-gold">2瓶治疗药水</span>
-    <span class="eq eq-gold">雷石×1</span>
-  </p>
-</div>
-
-<div class="g2">
-  <div class="card">
-    <div class="hd" style="font-size:.82rem;color:var(--gold)">克里里拉琴 Cli Lyre</div>
-    <p>稀有级别的吟游诗人魔法乐器（需要同调）。内含七道法术，每个法术每天可以使用一次。</p>
-    <div class="meta">飞行术 · 隐形术 · 浮空术 · 防护善恶 · 塑石术 · 火墙术 · 风墙术</div>
-  </div>
-  <div class="card">
-    <div class="hd">火焰抗性戒指</div>
-    <p>佩戴后获得对火焰伤害的抗性。</p>
-  </div>
-</div>
-
-<div class="card">
-  <div class="hd">雷石</div>
-  <p>投掷至20尺内某处，碰撞后发出震耳欲聋的巨响。10尺范围内所有生物必须通过体质豁免（难度15），否则耳聋1分钟，耳聋期间所有豁免检定处于劣势。</p>
-</div>
-
-<!-- 建卡初衷 -->
+<!-- 背景 -->
 <h2>冒险的初衷</h2>
 <div class="card" style="border-left:3px solid var(--accent);border-radius:0 8px 8px 0;background:rgba(124,92,252,.03)">
-  <p style="font-size:.82rem;line-height:1.7">
-    星期日出生于<strong>卡林港</strong>的<strong>橡木密教</strong>，这是一个世代侍奉梦女神蕾拉的神裔家族。他天生能听见他人心底的软弱，触碰梦境的涟漪。他有一个妹妹，<strong>知更鸟</strong>——她的歌声像星光一样能平息最狂乱的噩梦。
-  </p>
-  <p style="font-size:.82rem;line-height:1.7;margin-top:8px">
-    童年平静而温柔：练钢琴、学梦境聆听、帮母亲打理花园、和妹妹在卡林港的阳光下喂鸽子。母亲常说：<em>"我们橡木之人，是梦的牧者，要安抚痛苦，而非制造枷锁。"</em>
-  </p>
-  <p style="font-size:.82rem;line-height:1.7;margin-top:8px">
-    直到一颗<strong>异界星辰</strong>砸进卡林港大剧院——街区崩塌、梦境失控、人们溺死在自己的恐惧里。母亲为护住他与妹妹，在梦境裂隙中<strong>消散</strong>。一夜之间，他们成了孤儿，被密教家主<strong>歌斐木</strong>收养。歌斐木严厉却公正，教星期日编织梦境、安抚幻惑、治愈圣光，称他为<strong>"铎音"</strong>——梦之倾听者。妹妹则成为密教的同谐歌者，用歌声抚慰伤痛。
-  </p>
-  <p style="font-size:.82rem;line-height:1.7;margin-top:8px">
-    星期日开始在卡林港的底层行走：贫民窟、奴隶市场、逐梦人的小巷。他听见工人的疲惫、孤儿的哭泣、难民的绝望——而神明从不回应，贵族视而不见。一颗阴霾的种子由心而发：<em>温柔救不了人，善良挡不住痛苦。</em>
-  </p>
-  <p style="font-size:.82rem;line-height:1.7;margin-top:8px">
-    有一天，他和妹妹救下一只<strong>断翅白鸽</strong>。妹妹说："治好它，让它飞，自由比安稳重要。"白鸽最终飞走，却<strong>坠死</strong>在他们窗前。星期日开始在书本里寻找答案：梦界理论、秩序典籍、古代神谕。如果不能消除痛苦，那就给他们一个没有痛苦的梦；如果自由带来伤害，那就给他们安全的牢笼。但彼时的他，还只是一个<em>温柔、敏感、害怕失去、想保护所有人</em>的少年，尚未走向极端。
-  </p>
-  <p style="font-size:.82rem;line-height:1.7;margin-top:8px">
-    16岁那年，妹妹受邀前往<strong>深水城</strong>巡演。星期日也离开卡林港，带着乐器、日记本和妹妹的照片，出发去寻找"既能保护弱者、又不剥夺自由"的答案。彼时的他，<em>非独裁者，非家主，亦非梦之暴君，只是一个想治愈世界、却尚未找到方法的少年阿斯莫。</em>
-  </p>
-</div>
+<p style="font-size:.82rem;line-height:1.7">星期日出生于<strong>卡林港</strong>的<strong>橡木密教</strong>，世代侍奉梦女神蕾拉的神裔家族。天生能听见他人心底的软弱，触碰梦境的涟漪。妹妹<strong>知更鸟</strong>——她的歌声能平息最狂乱的噩梦。</p>
+<p style="font-size:.82rem;line-height:1.7;margin-top:8px">童年平静温柔。直到一颗<strong>异界星辰</strong>砸进卡林港大剧院——母亲在梦境裂隙中<strong>消散</strong>。被密教家主<strong>歌斐木</strong>收养，称他为<strong>"铎音"</strong>——梦之倾听者。</p>
+<p style="font-size:.82rem;line-height:1.7;margin-top:8px">他开始在底层行走：听见工人的疲惫、孤儿的哭泣、难民的绝望。<em>温柔救不了人，善良挡不住痛苦。</em>一只<strong>断翅白鸽</strong>被救活后飞走，却<strong>坠死</strong>在窗前。他在书本里寻找答案——如果不能消除痛苦，那就给他们一个没有痛苦的梦。</p>
+<p style="font-size:.82rem;line-height:1.7;margin-top:8px">16岁那年妹妹受邀前往<strong>深水城</strong>巡演。星期日离开卡林港，出发去寻找"既能保护弱者、又不剥夺自由"的答案。<em>非独裁者，非家主，亦非梦之暴君——只是一个想治愈世界的少年阿斯莫。</em></p></div>
 
-<!-- 旅伴 -->
-<h2>旅伴（长期同行的队友）</h2>
-<div class="party">
-  <div class="pc"><span class="nm">加洛奈斯</span> <span class="cl">希拉西风宗</span></div>
-  <div class="pc"><span class="nm">马洛</span> <span class="cl">阿斯莫 · 审判领域</span></div>
-  <div class="pc"><span class="nm">艾特拉</span> <span class="cl">人类 · 复生幽影术</span></div>
-</div>
+<h2>旅伴</h2>
+<div class="party"><div class="pc"><span class="nm">加洛奈斯</span><span class="cl">希拉西风宗</span></div><div class="pc"><span class="nm">马洛</span><span class="cl">阿斯莫·审判领域</span></div><div class="pc"><span class="nm">艾特拉</span><span class="cl">人类·复生幽影术</span></div></div>
 
-<!-- 冒险纪事 -->
 <h2>冒险纪事 · 焚天之战</h2>
-<div class="note-box">以下是星期日离开卡林港后，在旅途中遇到的人和发生的事。以他日记中的记录为序。</div>
-
 <div class="chronicle">
-
-  <div class="chronicle-item">
-    <span class="ch-tag">旅人</span>
-    <div class="ch-title">同伴集结</div>
-    <div class="ch-body">在旅途初期，星期日先后遇到了<strong>加洛奈斯</strong>（希拉西风宗）、<strong>马洛</strong>（阿斯莫审判领域圣武士）和<strong>艾特拉</strong>（复生幽影术师）。三人各有自己的目的，却都与即将到来的风暴息息相关。
-    <br><span style="color:var(--muted);font-size:.7rem">※ 加洛奈斯的老师名为乌尔，将火焰之鹿封印在火焰森林中；艾特拉、马洛、加洛奈斯在一次意外中释放了天灾。</span></div>
-  </div>
-
-  <div class="chronicle-item">
-    <span class="ch-tag">汐坤</span>
-    <div class="ch-title">莱希姆学院 · 学城的暗流</div>
-    <div class="ch-body">一行人抵达汐坤——<strong>莱希姆学院</strong>所在的学术之城。学院院长<strong>戈哈纳赫</strong>取走了火法师的吊坠，似乎在研究永生的秘密。学院内有叛徒：防护法师<strong>基尔南</strong>和神秘的<strong>李</strong>与拉格西亚有染，用操控天气的神器挑拨沙哈拉斯提与汐坤的关系。<strong>克里斯蒂娜</strong>（预言法师，父哈丁）和<strong>雷纳德</strong>（黑马二把手）是在这里遇到的友人。</div>
-  </div>
-
-  <div class="chronicle-item">
-    <span class="ch-tag">难民</span>
-    <div class="ch-title">拉格西亚的逃亡者</div>
-    <div class="ch-body">在汐坤的难民营中，星期日遇到了来自不同国度的难民。拉格西亚难民的大姐头<strong>杰西</strong>是一名<strong>欲魔</strong>，她告知星期日：戈哈纳赫已经掌握了长生的秘密，而她的姐妹<strong>卡兹克</strong>被关押在莱希姆学院内。达森的难民由<strong>蒂莫尔夫人</strong>领导，正在游说汐坤对抗格拉西亚。此外还有辛达尔的难民和回声之魂的圣鹰十字团骑士。
-    <br><span style="color:var(--muted);font-size:.7rem">※ 杰西的情报还揭露了基尔南和李的背叛行为，以及拉格西亚利用神器操控天气的计划。</span></div>
-  </div>
-
-  <div class="chronicle-item">
-    <span class="ch-tag">外交</span>
-    <div class="ch-title">沙哈拉斯提的使者</div>
-    <div class="ch-body">沙哈拉斯提公主<strong>沙洛沙</strong>携侍女塞娅娜来到汐坤，希望与汐坤结盟对抗格拉西亚。然而院长戈哈纳赫拒绝了沙洛沙的请求。星期日目睹了这场外交博弈——<strong>沙哈拉斯提</strong>和<strong>格拉西亚</strong>之间的战争一触即发，而汐坤夹在中间，每个选择都可能引发灾难。
-    <br><span style="color:var(--muted);font-size:.7rem">※ 此前星期日一行人与沙洛沙公主的舰队有交集，曾共同阻止李摧毁沙哈莱斯提的船队。</span></div>
-  </div>
-
-  <div class="chronicle-item">
-    <span class="ch-tag">女皇</span>
-    <div class="ch-title">莱丝卡的崛起</div>
-    <div class="ch-body"><strong>莱丝卡</strong>——原是女神判官（审判官的领导者），如今即将成为<strong>格拉西亚的新女皇</strong>。她的立场将决定整个地区的命运。星期日不知她将带来和平还是战争。</div>
-  </div>
-
-  <div class="chronicle-item">
-    <span class="ch-tag">焚天</span>
-    <div class="ch-title">煤舌皇帝与焚天神器</div>
-    <div class="ch-body">已故的<strong>煤舌皇帝</strong>曾持有一件名为<strong>"焚天"（Skyburner）</strong>的神器。如今皇帝已死，焚天神器下落不明。拉格西亚、格拉西亚和沙哈拉斯提都在觊觎这件神器——它足以改变整个地区的力量平衡。
-    <br><span style="color:var(--muted);font-size:.7rem">※ 模组名"焚天之战"即由此而来。</span></div>
-  </div>
-
-  <div class="chronicle-item">
-    <span class="ch-tag">当前</span>
-    <div class="ch-title">各怀心事 · 重返汐坤</div>
-    <div class="ch-body">艾特拉、马洛和加洛奈斯告别了公主沙洛沙，动身返回汐坤。每个人都有自己的目的——有人要赎释放天灾之罪，有人要救被囚禁之人，有人要追寻焚天神器的真相。星期日站在命运的十字路口：<em>是选择秩序带来的安稳，还是自由带来的风险？</em>
-    <br><span style="color:var(--muted);font-size:.7rem;font-style:italic">此行是否正确？仍未可知……</span></div>
-  </div>
-
+<div class="chronicle-item"><span class="ch-tag">旅人</span><div class="ch-title">同伴集结</div><div class="ch-body">星期日先后遇到加洛奈斯、马洛和艾特拉。三人各自背负着使命与秘密。艾特拉、马洛、加洛奈斯在火焰森林释放了天灾。</div></div>
+<div class="chronicle-item"><span class="ch-tag">汐坤</span><div class="ch-title">莱希姆学院·学城的暗流</div><div class="ch-body">抵达汐坤的莱希姆学院。院长戈哈纳赫研究永生之秘，学院内有叛徒基尔南和李勾结拉格西亚。</div></div>
+<div class="chronicle-item"><span class="ch-tag">难民</span><div class="ch-title">拉格西亚的逃亡者</div><div class="ch-body">欲魔杰西请求星期日救出被囚禁在学院地牢的姐妹卡兹克。蒂莫尔夫人领导达森难民游说汐坤。</div></div>
+<div class="chronicle-item"><span class="ch-tag">外交</span><div class="ch-title">沙哈拉斯提的使者</div><div class="ch-body">沙洛沙公主来汐坤求结盟对抗格拉西亚，被戈哈纳赫拒绝。汐坤夹在两国之间危如累卵。</div></div>
+<div class="chronicle-item"><span class="ch-tag">女皇</span><div class="ch-title">莱丝卡的崛起</div><div class="ch-body">女神判官莱丝卡即将成为格拉西亚新女皇。她的立场将决定整个地区的命运。</div></div>
+<div class="chronicle-item"><span class="ch-tag">焚天</span><div class="ch-title">煤舌皇帝与焚天神器</div><div class="ch-body">已故煤舌皇帝的神器"焚天"（Skyburner）下落不明，足以改变整个大陆的力量平衡。</div></div>
+<div class="chronicle-item"><span class="ch-tag">当前</span><div class="ch-title">各怀心事·重返汐坤</div><div class="ch-body">四人告别沙洛沙公主动身返回汐坤。星期日站在命运的十字路口：<em>秩序还是自由？</em></div></div>
 </div>
 
-<!-- 其他人物 -->
 <h2>旅途中遇到的人</h2>
 <div class="g-auto">
-  <div class="card" style="padding:8px 10px">
-    <div class="hd" style="font-size:.8rem">克里斯蒂娜</div>
-    <div class="meta">预言法师 · 父哈丁 · 汐坤结识</div>
-  </div>
-  <div class="card" style="padding:8px 10px">
-    <div class="hd" style="font-size:.8rem">雷纳德</div>
-    <div class="meta">黑马二把手 · 汐坤结识</div>
-  </div>
-  <div class="card" style="padding:8px 10px">
-    <div class="hd" style="font-size:.8rem">莱丝卡</div>
-    <div class="meta">女神判官 → 格拉西亚新女皇</div>
-  </div>
-  <div class="card" style="padding:8px 10px">
-    <div class="hd" style="font-size:.8rem">煤舌皇帝</div>
-    <div class="meta">已故 · 曾持焚天神器</div>
-  </div>
-  <div class="card" style="padding:8px 10px">
-    <div class="hd" style="font-size:.8rem">杰西</div>
-    <div class="meta">欲魔 · 拉格西亚难民领袖</div>
-  </div>
-  <div class="card" style="padding:8px 10px">
-    <div class="hd" style="font-size:.8rem">沙洛沙公主</div>
-    <div class="meta">沙哈拉斯提 · 寻求结盟</div>
-  </div>
-  <div class="card" style="padding:8px 10px">
-    <div class="hd" style="font-size:.8rem">戈哈纳赫</div>
-    <div class="meta">莱希姆学院院长 · 研究永生</div>
-  </div>
-  <div class="card" style="padding:8px 10px">
-    <div class="hd" style="font-size:.8rem">基尔南 &amp; 李</div>
-    <div class="meta">学院叛徒 · 勾结拉格西亚</div>
-  </div>
-  <div class="card" style="padding:8px 10px">
-    <div class="hd" style="font-size:.8rem">卡兹克</div>
-    <div class="meta">被囚禁在莱希姆学院地牢</div>
-  </div>
-  <div class="card" style="padding:8px 10px">
-    <div class="hd" style="font-size:.8rem">知更鸟</div>
-    <div class="meta">妹妹 · 同谐歌者 · 深水城巡演中</div>
-  </div>
-  <div class="card" style="padding:8px 10px">
-    <div class="hd" style="font-size:.8rem">塞娅娜</div>
-    <div class="meta">沙洛沙公主的侍女</div>
-  </div>
-  <div class="card" style="padding:8px 10px">
-    <div class="hd" style="font-size:.8rem">蒂莫尔夫人</div>
-    <div class="meta">达森难民领袖</div>
-  </div>
+<div class="card" style="padding:8px 10px"><div class="hd" style="font-size:.8rem">克里斯蒂娜</div><div class="meta">预言法师·汐坤结识</div></div>
+<div class="card" style="padding:8px 10px"><div class="hd" style="font-size:.8rem">雷纳德</div><div class="meta">黑马二把手·汐坤结识</div></div>
+<div class="card" style="padding:8px 10px"><div class="hd" style="font-size:.8rem">莱丝卡</div><div class="meta">女神判官→格拉西亚新女皇</div></div>
+<div class="card" style="padding:8px 10px"><div class="hd" style="font-size:.8rem">杰西</div><div class="meta">欲魔·拉格西亚难民领袖</div></div>
+<div class="card" style="padding:8px 10px"><div class="hd" style="font-size:.8rem">沙洛沙公主</div><div class="meta">沙哈拉斯提·寻求结盟</div></div>
+<div class="card" style="padding:8px 10px"><div class="hd" style="font-size:.8rem">戈哈纳赫</div><div class="meta">莱希姆学院院长·研究永生</div></div>
+<div class="card" style="padding:8px 10px"><div class="hd" style="font-size:.8rem">基尔南 &amp; 李</div><div class="meta">学院叛徒·勾结拉格西亚</div></div>
+<div class="card" style="padding:8px 10px"><div class="hd" style="font-size:.8rem">卡兹克</div><div class="meta">被囚禁在学院地牢</div></div>
+<div class="card" style="padding:8px 10px"><div class="hd" style="font-size:.8rem">知更鸟</div><div class="meta">妹妹·同谐歌者·深水城巡演中</div></div>
 </div>
 
-<!-- 未解之谜 -->
-<h2>尚未揭晓的谜团</h2>
-<div class="g2">
-  <div class="char-note"><span class="cn-hd">焚天神器</span><br><span class="cn-tag">已故煤舌皇帝的神器"焚天"究竟在谁手中？它将如何影响三国之间的战争？</span></div>
-  <div class="char-note"><span class="cn-hd">戈哈纳赫的长生实验</span><br><span class="cn-tag">莱希姆学院院长在秘密研究生死之谜，他到底想做什么？</span></div>
-  <div class="char-note"><span class="cn-hd">杰西的请求</span><br><span class="cn-tag">欲魔杰西的姐妹卡兹克被关押在学院地牢，她掌握着什么秘密？</span></div>
-  <div class="char-note"><span class="cn-hd">知更鸟的旅程</span><br><span class="cn-tag">妹妹在深水城的巡演——她是否也感受到了兄长内心日益沉重的阴影？</span></div>
+<div style="text-align:center;color:var(--muted);font-size:.65rem;letter-spacing:2px;padding:24px 0 12px;border-top:1px solid rgba(124,92,252,.06);margin-top:20px">D&amp;D 5R · 歌织者 · 梦之铎音 · 星期日<br>长团模组：焚天之战</div>
 </div>
 
-<!-- FOOTER -->
-<div style="text-align:center;color:var(--muted);font-size:.65rem;letter-spacing:2px;padding:24px 0 12px;border-top:1px solid rgba(124,92,252,.06);margin-top:20px">
-  D&amp;D 5R · 歌织者 · 梦之铎音 · 星期日<br>
-  长团模组：焚天之战
-</div>
-
-</div>
-
-<!-- ═══════════════════ JAVASCRIPT ═══════════════════ -->
 <script>
 (function(){
-  'use strict';
-
-  /* ═══════════════════════════ CONFIG ═══════════════════════════ */
-  // ═══════════════════════════ 人物数据（升级改这里）═══════════════════════════
-  const CHAR = {
-    name: '星期日',
-    title: '歌织者·梦之铎音',
-    level: '6级',
-    class: '歌织者（吟游诗人）',
-    race: '阿斯莫',
-    alignment: '守序中立',
-    hp: '45（20+5d8）',
-    ac: '15',
-    init: '+4',
-    speed: '30尺（变身可飞行30尺）',
-    prof: '+3',
-    passivePerception: '16',
-    darkvision: '60尺',
-    size: '中型 · 阿斯莫',
-    str: { val: 12, mod: '+1' },
-    dex: { val: 18, mod: '+4' },
-    con: { val: 15, mod: '+2' },
-    int: { val: 14, mod: '+2' },
-    wis: { val: 16, mod: '+3' },
-    cha: { val: 20, mod: '+5' },
-    saves: ['敏捷 +7','魅力 +8'],
-    skills: ['游说 +11（专精）','表演 +11（专精）','察觉 +6','洞察 +6','奥秘 +5'],
-    bardicInspiration: '八面骰 · 每天5次（短休恢复）',
-    spellDC: '16',
-    spellAtk: '+8',
-    slots: ['4/3/3（1环/2环/3环）'],
-  };
-
-  const CONFIG = {
-    BVID: 'BV1eo4oeLEbZ',
-    FEATHER_COUNT: 25,     // 羽毛数量（改这个调浓密）
-    FEATHER_SPAWN_INTERVAL: 1800, // 羽毛生成间隔(ms)
-  };
-
-  /* ═══════════════════════════ FEATHERS ═══════════════════════════ */
-  const container = document.getElementById('feather-container');
-  if (!container) return;
-
-  function createFeather() {
-    const el = document.createElement('div');
-    el.className = 'feather';
-
-    const size = 12 + Math.random() * 16;        // 12–28px
-    const startX = Math.random() * 100;           // 0–100vw
-    const duration = 6 + Math.random() * 8;       // 6–14s fall time
-    const delay = Math.random() * 2;
-    const drift = -30 + Math.random() * 60;       // horizontal drift px
-    const rotation = Math.random() * 360;
-    const spinSpeed = -120 + Math.random() * 240; // deg/s
-    const opacity = 0.3 + Math.random() * 0.5;
-    const blur = Math.random() * 1.5;
-
-    el.style.cssText = `
-      left:${startX}%;width:${size}px;height:${size*0.45}px;
-      opacity:0;filter:blur(${blur}px);
-      --drift:${drift}px;--rotation:${rotation}deg;
-      --spin:${spinSpeed}deg;
-    `;
-
-    // Animate via Web Animations API for smooth running
-    const keyframes = [
-      { opacity: 0, transform: `translateY(0) translateX(0) rotate(${rotation}deg)`, offset: 0 },
-      { opacity: opacity, transform: `translateY(10vh) translateX(${drift*0.2}px) rotate(${rotation + spinSpeed*0.15}deg)`, offset: 0.08 },
-      { opacity: opacity, transform: `translateY(40vh) translateX(${drift*0.5}px) rotate(${rotation + spinSpeed*0.4}deg)`, offset: 0.35 },
-      { opacity: opacity*0.8, transform: `translateY(70vh) translateX(${drift*0.8}px) rotate(${rotation + spinSpeed*0.7}deg)`, offset: 0.65 },
-      { opacity: 0, transform: `translateY(105vh) translateX(${drift}px) rotate(${rotation + spinSpeed}deg)`, offset: 1 },
-    ];
-
-    const timing = {
-      duration: duration * 1000,
-      delay: delay * 1000,
-      easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-      fill: 'forwards',
-    };
-
-    container.appendChild(el);
-    const anim = el.animate(keyframes, timing);
-    anim.onfinish = () => { el.remove(); };
-  }
-
-  // Spawn initial batch
-  for (let i = 0; i < Math.min(CONFIG.FEATHER_COUNT, 12); i++) {
-    setTimeout(createFeather, i * 400);
-  }
-
-  // Continuous spawning
-  let spawnTimer = setInterval(createFeather, CONFIG.FEATHER_SPAWN_INTERVAL);
-
-  // Pause spawning when tab hidden
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      clearInterval(spawnTimer);
-    } else {
-      spawnTimer = setInterval(createFeather, CONFIG.FEATHER_SPAWN_INTERVAL);
-    }
-  });
-
-  /* ═══════════════════════════ MUSIC PLAYER (HTML5 Audio) ═══════════════════════════ */
   const audio = document.getElementById('bgAudio');
   const toggleBtn = document.getElementById('musicToggle');
   const progressBar = document.getElementById('progressBar');
@@ -847,138 +442,155 @@
   const timeDisplay = document.getElementById('timeDisplay');
   const volSlider = document.getElementById('volControl');
 
-  // Audio source: Bilibili direct streaming URL (CORS enabled)
   audio.src = 'https://upos-sz-mirrorcosov.bilivideo.com/upgcxcode/66/13/26715031366/26715031366-1-192.mp4?e=ig8euxZM2rNcNbRjhwdVhwdlhWTVhwdVhoNvNC8BqJIzNbfq9rVEuxTEnE8L5F6VnEsSTx0vkX8fqJeYTj_lta53NCM=&deadline=1782362053&platform=html5&uipk=5&trid=22824c0522544382bb2cb22412f52ceh&gen=playurlv3&og=hw&mid=0&oi=2366345797&nbs=1&os=cosovbv&upsig=d23a430097e8fed015465016ea973b02&uparams=e,deadline,platform,uipk,trid,gen,og,mid,oi,nbs,os&bvc=vod&nettype=0&bw=1280910&lrs=0&dl=0&f=h_0_0&aggr=0&buvid=&build=0&orderid=0,1';
   audio.volume = 0.3;
+  let isPlaying = false, isSeeking = false;
 
-  let isPlaying = false;
-  let isSeeking = false;
+  function fmt(t){return t&&!isNaN(t)?Math.floor(t/60)+':'+(Math.floor(t%60)+'').padStart(2,'0'):'0:00'}
+  toggleBtn.addEventListener('click',()=>{if(isPlaying)audio.pause();else{if(audio.ended)audio.currentTime=0;audio.play().catch(()=>{})}});
+  audio.addEventListener('play',()=>{isPlaying=1;toggleBtn.textContent='⏸';toggleBtn.classList.add('playing')});
+  audio.addEventListener('pause',()=>{isPlaying=0;toggleBtn.textContent='▶';toggleBtn.classList.remove('playing')});
+  audio.addEventListener('timeupdate',()=>{if(audio.duration&&!isSeeking){progressFill.style.width=(audio.currentTime/audio.duration*100)+'%';timeDisplay.textContent=fmt(audio.currentTime)+' / '+fmt(audio.duration)}});
+  audio.addEventListener('loadedmetadata',()=>timeDisplay.textContent='0:00 / '+fmt(audio.duration));
+  audio.addEventListener('ended',()=>{isPlaying=0;toggleBtn.textContent='▶';toggleBtn.classList.remove('playing');progressFill.style.width='0%';timeDisplay.textContent='0:00 / '+fmt(audio.duration)});
+  progressBar.addEventListener('mousedown',e=>{isSeeking=1;seek(e)});
+  document.addEventListener('mousemove',e=>{if(isSeeking)seek(e)});
+  document.addEventListener('mouseup',()=>{isSeeking=0});
+  progressBar.addEventListener('touchstart',e=>{isSeeking=1;seekT(e)},{passive:1});
+  document.addEventListener('touchmove',e=>{if(isSeeking)seekT(e)},{passive:1});
+  document.addEventListener('touchend',()=>{isSeeking=0});
+  function seek(e){if(!audio.duration)return;var r=progressBar.getBoundingClientRect(),x=Math.max(0,Math.min(e.clientX-r.left,r.width)),p=x/r.width;audio.currentTime=p*audio.duration;progressFill.style.width=(p*100)+'%';timeDisplay.textContent=fmt(audio.currentTime)+' / '+fmt(audio.duration)}
+  function seekT(e){if(!audio.duration||!e.touches[0])return;var r=progressBar.getBoundingClientRect(),x=Math.max(0,Math.min(e.touches[0].clientX-r.left,r.width)),p=x/r.width;audio.currentTime=p*audio.duration;progressFill.style.width=(p*100)+'%';timeDisplay.textContent=fmt(audio.currentTime)+' / '+fmt(audio.duration)}
+  volSlider.addEventListener('input',()=>audio.volume=parseFloat(volSlider.value));
+  document.addEventListener('keydown',e=>{if((e.key==='m'||e.key==='M')&&!e.ctrlKey&&!e.metaKey&&!e.altKey){e.preventDefault();toggleBtn.click();toggleBtn.style.transform='scale(1.2)';setTimeout(()=>toggleBtn.style.transform='',150)}});
 
-  function formatTime(sec) {
-    if (!sec || isNaN(sec)) return '0:00';
-    const m = Math.floor(sec / 60);
-    const s = Math.floor(sec % 60);
-    return m + ':' + (s < 10 ? '0' : '') + s;
-  }
+  // ═══ FEATHERS ═══
+  var fc=document.getElementById('feather-container');
+  if(fc){(function(){var c=fc;
+  function f(){var e=document.createElement('div');e.className='feather';var sz=12+Math.random()*16,sx=Math.random()*100,du=6+Math.random()*8,de=Math.random()*2,dr=-30+Math.random()*60,ro=Math.random()*360,sp=-120+Math.random()*240,op=.3+Math.random()*.5,bl=Math.random()*1.5;e.style.cssText='left:'+sx+'%;width:'+sz+'px;height:'+sz*.45+'px;opacity:0;filter:blur('+bl+'px);--drift:'+dr+'px;--rotation:'+ro+'deg;--spin:'+sp+'deg';var kf=[{opacity:0,transform:'translateY(0) translateX(0) rotate('+ro+'deg)',offset:0},{opacity:op,transform:'translateY(10vh) translateX('+dr*.2+'px) rotate('+(ro+sp*.15)+'deg)',offset:.08},{opacity:op,transform:'translateY(40vh) translateX('+dr*.5+'px) rotate('+(ro+sp*.4)+'deg)',offset:.35},{opacity:op*.8,transform:'translateY(70vh) translateX('+dr*.8+'px) rotate('+(ro+sp*.7)+'deg)',offset:.65},{opacity:0,transform:'translateY(105vh) translateX('+dr+'px) rotate('+(ro+sp)+'deg)',offset:1}];var ti={duration:du*1000,delay:de*1000,easing:'cubic-bezier(0.25,0.46,0.45,0.94)',fill:'forwards'};c.appendChild(e);var an=e.animate(kf,ti);an.onfinish=function(){e.remove()}}
+  for(var i=0;i<12;i++)setTimeout(f,i*400);var st=setInterval(f,1800);document.addEventListener('visibilitychange',function(){if(document.hidden)clearInterval(st);else st=setInterval(f,1800)})})()}
 
-  function updateProgress() {
-    if (audio.duration && !isSeeking) {
-      const pct = (audio.currentTime / audio.duration) * 100;
-      progressFill.style.width = pct + '%';
-      timeDisplay.textContent = formatTime(audio.currentTime) + ' / ' + formatTime(audio.duration);
+  // ═══ EDIT MODE ═══
+  (function(){
+    var editBtn=document.getElementById('editBtn');
+    var panel=document.getElementById('editPanel');
+    var saveBtn=document.getElementById('saveBtn');
+    var resetBtn=document.getElementById('resetBtn');
+    var success=document.getElementById('editSuccess');
+    var open=false;
+
+    // Default values
+    var defaults={
+      lvl:'6',prof:'+3',hp:'45（20+5d8）',ac:'15',init:'+4',
+      speed:'30尺（变身可飞行30尺）',pp:'16',bi:'八面骰 · 每天5次（短休恢复）',
+      str:'12',dex:'18',con:'15',int:'14',wis:'16',cha:'20',
+      dc:'16',atk:'+8',slots:'4,3,3'
+    };
+
+    // Load from localStorage
+    function loadData(){
+      var saved,data=defaults;
+      try{saved=JSON.parse(localStorage.getItem('sunday_sheet'));if(saved)data=saved}catch(e){}
+      return data;
     }
-  }
 
-  function toggleMusic() {
-    if (isPlaying) {
-      audio.pause();
-    } else {
-      // If ended, restart from beginning
-      if (audio.ended) {
-        audio.currentTime = 0;
-      }
-      audio.play().catch(function(e) {
-        // Autoplay blocked, need user interaction
-        timeDisplay.textContent = '点击播放';
-      });
+    function applyToPage(data){
+      document.getElementById('classLine').textContent=(data.lvl||'6')+'级 歌织者（吟游诗人）· 阿斯莫 · 守序中立';
+      document.getElementById('s-hp').textContent=data.hp||'45（20+5d8）';
+      document.getElementById('s-ac').textContent=data.ac||'15';
+      document.getElementById('s-init').textContent=data.init||'+4';
+      document.getElementById('s-speed').textContent=data.speed||'30尺';
+      document.getElementById('s-prof').textContent=data.prof||'+3';
+      document.getElementById('s-pp').textContent=data.pp||'16';
+      document.getElementById('biDisplay').textContent='诗人激励：'+(data.bi||'八面骰 · 每天5次');
+      document.getElementById('str-val').textContent=data.str||'12';
+      document.getElementById('dex-val').textContent=data.dex||'18';
+      document.getElementById('con-val').textContent=data.con||'15';
+      document.getElementById('int-val').textContent=data.int||'14';
+      document.getElementById('wis-val').textContent=data.wis||'16';
+      document.getElementById('cha-val').textContent=data.cha||'20';
+      // Recalculate mods
+      function mod(v){v=parseInt(v)||10;var m=Math.floor((v-10)/2);return m>=0?'（+'+m+'）':'（'+m+'）'}
+      document.getElementById('str-mod').textContent=mod(data.str);
+      document.getElementById('dex-mod').textContent=mod(data.dex);
+      document.getElementById('con-mod').textContent=mod(data.con);
+      document.getElementById('int-mod').textContent=mod(data.int);
+      document.getElementById('wis-mod').textContent=mod(data.wis);
+      document.getElementById('cha-mod').textContent=mod(data.cha);
+      document.getElementById('spellDCDisplay').textContent='法术难度等级：'+(data.dc||'16');
+      document.getElementById('spellAtkDisplay').textContent='法术攻击加值：'+(data.atk||'+8');
     }
-  }
 
-  // ── Audio events ──
-  audio.addEventListener('play', function() {
-    isPlaying = true;
-    toggleBtn.textContent = '⏸';
-    toggleBtn.classList.add('playing');
-  });
+    // Apply saved data on load
+    applyToPage(loadData());
 
-  audio.addEventListener('pause', function() {
-    isPlaying = false;
-    toggleBtn.textContent = '▶';
-    toggleBtn.classList.remove('playing');
-  });
+    // Toggle edit panel
+    editBtn.addEventListener('click',function(){
+      open=!open;
+      panel.classList.toggle('open',open);
+      editBtn.classList.toggle('active',open);
+      if(open)populateForm(loadData());
+    });
 
-  audio.addEventListener('timeupdate', updateProgress);
-
-  audio.addEventListener('loadedmetadata', function() {
-    timeDisplay.textContent = '0:00 / ' + formatTime(audio.duration);
-  });
-
-  audio.addEventListener('ended', function() {
-    isPlaying = false;
-    toggleBtn.textContent = '▶';
-    toggleBtn.classList.remove('playing');
-    progressFill.style.width = '0%';
-    timeDisplay.textContent = '0:00 / ' + formatTime(audio.duration);
-  });
-
-  // ── Toggle button ──
-  toggleBtn.addEventListener('click', toggleMusic);
-
-  // ── Progress bar (seek) ──
-  progressBar.addEventListener('mousedown', function(e) {
-    isSeeking = true;
-    seekAudio(e);
-  });
-
-  document.addEventListener('mousemove', function(e) {
-    if (isSeeking) seekAudio(e);
-  });
-
-  document.addEventListener('mouseup', function() {
-    isSeeking = false;
-  });
-
-  // Touch support for mobile
-  progressBar.addEventListener('touchstart', function(e) {
-    isSeeking = true;
-    seekAudioTouch(e);
-  }, {passive: true});
-
-  document.addEventListener('touchmove', function(e) {
-    if (isSeeking) seekAudioTouch(e);
-  }, {passive: true});
-
-  document.addEventListener('touchend', function() {
-    isSeeking = false;
-  });
-
-  function seekAudio(e) {
-    if (!audio.duration) return;
-    const rect = progressBar.getBoundingClientRect();
-    const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
-    const pct = x / rect.width;
-    audio.currentTime = pct * audio.duration;
-    progressFill.style.width = (pct * 100) + '%';
-    timeDisplay.textContent = formatTime(audio.currentTime) + ' / ' + formatTime(audio.duration);
-  }
-
-  function seekAudioTouch(e) {
-    if (!audio.duration) return;
-    const touch = e.touches[0];
-    if (!touch) return;
-    const rect = progressBar.getBoundingClientRect();
-    const x = Math.max(0, Math.min(touch.clientX - rect.left, rect.width));
-    const pct = x / rect.width;
-    audio.currentTime = pct * audio.duration;
-    progressFill.style.width = (pct * 100) + '%';
-    timeDisplay.textContent = formatTime(audio.currentTime) + ' / ' + formatTime(audio.duration);
-  }
-
-  // ── Volume control ──
-  volSlider.addEventListener('input', function() {
-    audio.volume = parseFloat(volSlider.value);
-  });
-
-  // ── Keyboard shortcut ──
-  document.addEventListener('keydown', function(e) {
-    if ((e.key === 'm' || e.key === 'M') && !e.ctrlKey && !e.metaKey && !e.altKey) {
-      e.preventDefault();
-      toggleMusic();
-      toggleBtn.style.transform = 'scale(1.2)';
-      setTimeout(function() { toggleBtn.style.transform = ''; }, 150);
+    function populateForm(data){
+      document.getElementById('e-lvl').value=data.lvl||'';
+      document.getElementById('e-prof').value=data.prof||'';
+      document.getElementById('e-hp').value=data.hp||'';
+      document.getElementById('e-ac').value=data.ac||'';
+      document.getElementById('e-init').value=data.init||'';
+      document.getElementById('e-speed').value=data.speed||'';
+      document.getElementById('e-pp').value=data.pp||'';
+      document.getElementById('e-bi').value=data.bi||'';
+      document.getElementById('e-str').value=data.str||'';
+      document.getElementById('e-dex').value=data.dex||'';
+      document.getElementById('e-con').value=data.con||'';
+      document.getElementById('e-int').value=data.int||'';
+      document.getElementById('e-wis').value=data.wis||'';
+      document.getElementById('e-cha').value=data.cha||'';
+      document.getElementById('e-dc').value=data.dc||'';
+      document.getElementById('e-atk').value=data.atk||'';
+      document.getElementById('e-slots').value=data.slots||'';
     }
-  });
 
+    function collectForm(){
+      return {
+        lvl:document.getElementById('e-lvl').value,
+        prof:document.getElementById('e-prof').value,
+        hp:document.getElementById('e-hp').value,
+        ac:document.getElementById('e-ac').value,
+        init:document.getElementById('e-init').value,
+        speed:document.getElementById('e-speed').value,
+        pp:document.getElementById('e-pp').value,
+        bi:document.getElementById('e-bi').value,
+        str:document.getElementById('e-str').value,
+        dex:document.getElementById('e-dex').value,
+        con:document.getElementById('e-con').value,
+        int:document.getElementById('e-int').value,
+        wis:document.getElementById('e-wis').value,
+        cha:document.getElementById('e-cha').value,
+        dc:document.getElementById('e-dc').value,
+        atk:document.getElementById('e-atk').value,
+        slots:document.getElementById('e-slots').value
+      };
+    }
+
+    saveBtn.addEventListener('click',function(){
+      var data=collectForm();
+      localStorage.setItem('sunday_sheet',JSON.stringify(data));
+      applyToPage(data);
+      success.classList.add('show');
+      setTimeout(function(){success.classList.remove('show')},2500);
+    });
+
+    resetBtn.addEventListener('click',function(){
+      localStorage.removeItem('sunday_sheet');
+      applyToPage(defaults);
+      populateForm(defaults);
+      success.textContent='🔄 已重置为默认值';
+      success.classList.add('show');
+      setTimeout(function(){success.textContent='✅ 已保存！刷新页面后数值会更新';success.classList.remove('show')},2500);
+    });
+  })();
 })();
 </script>
 
