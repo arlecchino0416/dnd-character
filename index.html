@@ -301,9 +301,9 @@ function render(d){
 
     '<h2>阿斯莫种族特性</h2><div class="g3 tc-grid">'+(d.race||[]).map(function(r,i){var c=['tag-r','tag-g','tag-b','tag-y','tag','tag-r','tag-g','tag-b'][i%8];return '<div class="tc"><span class="tag '+c+'">'+esc(r.n)+'</span><div class="tc-eg">'+(r.effects||[]).map(function(e){return '<span class="tc-ef"><b>'+esc(e.label)+'</b> '+esc(e.desc)+'</span>'}).join('')+'</div></div>'}).join('')+'</div>'+
 
-    '<h2>专长</h2><div class="g2 tc-grid">'+(d.feats||[]).map(function(f,i){var c=['tag-y','tag','tag-b','tag-r','tag-g'][i%5];return '<div class="tc"><span class="tag '+c+'">'+esc(f.n)+' · '+esc(f.t||'')+'</span><div class="tc-eg">'+(f.effects||[]).map(function(e){return '<span class="tc-ef"><b>'+esc(e.label)+'</b> '+esc(e.desc)+'</span>'}).join('')+'</div></div>'}).join('')++'</div>'+
+    '<h2>专长</h2><div class="g2 tc-grid">'+(d.feats||[]).map(function(f,i){var c=['tag-y','tag','tag-b','tag-r','tag-g'][i%5];return '<div class="tc"><span class="tag '+c+'">'+esc(f.n)+' · '+esc(f.t||'')+'</span><div class="tc-eg">'+(f.effects||[]).map(function(e){return '<span class="tc-ef"><b>'+esc(e.label)+'</b> '+esc(e.desc)+'</span>'}).join('')+'</div></div>'}).join('')+'</div>'+
 
-    '<h2>吟游诗人·歌织者</h2><div class="g2 tc-grid">'+(d.features||[]).map(function(f,i){var c=['tag-r','tag-b','tag-g','tag-y','tag','tag-r','tag-b'][i%7];return '<div class="tc"><span class="tag '+c+'">'+esc(f.n)+' · '+esc(f.t||'')+'</span><div class="tc-eg">'+(f.effects||[]).map(function(e){return '<span class="tc-ef tc-ef-sm"><b>'+esc(e.label)+'</b> '+esc(e.desc)+'</span>'}).join('')+'</div></div>'}).join('')+'</div>
+    '<h2>吟游诗人·歌织者</h2><div class="g2 tc-grid">'+(d.features||[]).map(function(f,i){var c=['tag-r','tag-b','tag-g','tag-y','tag','tag-r','tag-b'][i%7];return '<div class="tc"><span class="tag '+c+'">'+esc(f.n)+' · '+esc(f.t||'')+'</span><div class="tc-eg">'+(f.effects||[]).map(function(e){return '<span class="tc-ef tc-ef-sm"><b>'+esc(e.label)+'</b> '+esc(e.desc)+'</span>'}).join('')+'</div></div>'}).join('')+'</div>'+
 
     '<h2>法术</h2><div class="card" style="margin-bottom:6px"><p><span class="tag tag-b">施法属性：魅力</span> <span class="tag tag-b">法术难度等级（DC）：'+esc(d.dc||'')+'</span> <span class="tag tag-b">法术攻击加值：'+esc(d.atk||'')+'</span> <span class="tag" style="color:var(--muted)">法术位数量：'+esc(d.slots||'')+'</span></p></div>'+sh+
 
