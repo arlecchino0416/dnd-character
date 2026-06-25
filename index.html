@@ -470,7 +470,24 @@ function collect(){
 // ═══ Init ═══
 render(ld());
 buildTabs();
-// // Remote sync disabled - save button syncs character-data.json
+// // Remote sync: pull latest data from GitHub for multi-device sync
+setTimeout(function(){
+  var x=new XMLHttpRequest();
+  x.open('GET','character-data.json?'+Date.now(),true);
+  x.overrideMimeType('application/json');
+  x.onload=function(){
+    if(x.status!==200)return;
+    try{
+      var r=JSON.parse(x.responseText);
+      if(!r||!r.lvl)return;
+      r=migrate(r);
+      sv(r);render(r);buildTabs();
+      var ok=document.getElementById('editOk');
+      if(ok){ok.textContent='✅ 已同步GitHub最新数据';ok.classList.add('show');setTimeout(function(){ok.classList.remove('show');ok.textContent='✅ 已保存'},3000)}
+    }catch(e){}
+  };
+  x.send();
+},800);
 
 // Restore saved token and auto-save on input
 var savedToken=localStorage.getItem('gh_token');
