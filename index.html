@@ -4,6 +4,32 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title>星期日 · 歌织者·梦之铎音 — D&D 5R 人物卡</title>
+<!--
+  ✦ 编辑指南 ✦
+  
+  升级改数值的方法：
+  1. 打开 https://github.com/arlecchino0416/dnd-character
+  2. 点 index.html → 点铅笔图标 ✏️ 编辑
+  3. 搜索下面的关键字直接改：
+  
+  等级/职业       → 搜索 "6级"
+  生命值 / HP     → 搜索 "45（20"
+  护甲等级 / AC   → 搜索 "护甲等级"
+  属性值          → 搜索 "力量" "敏捷" "体质" 等
+  熟练加值        → 搜索 "+3"
+  法术位          → 搜索 "4个法术位" "3个法术位"
+  诗人激励次数    → 搜索 "每天5次"
+  专长/特性       → 搜索对应名称
+  冒险纪事/日记   → 搜索 "冒险纪事"
+  BGM链接         → 搜索 "sunday_audio"
+  金羽毛/特效开关 → 搜索 "FEATHER_COUNT"
+  
+  4. 改完后拉到下面点 "Commit changes" → "Commit directly"
+  5. 等1-2分钟，GitHub Pages 自动更新
+  
+  💡 批量替换：按 Ctrl+F (Mac: Cmd+F) 搜关键字
+  ⚠️ 改数字注意格式一致，比如 "12" 和 "（+1）" 一起改
+-->
 <style>
   /* ═══════════════════ BASE ═══════════════════ */
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -714,10 +740,40 @@
   'use strict';
 
   /* ═══════════════════════════ CONFIG ═══════════════════════════ */
+  // ═══════════════════════════ 人物数据（升级改这里）═══════════════════════════
+  const CHAR = {
+    name: '星期日',
+    title: '歌织者·梦之铎音',
+    level: '6级',
+    class: '歌织者（吟游诗人）',
+    race: '阿斯莫',
+    alignment: '守序中立',
+    hp: '45（20+5d8）',
+    ac: '15',
+    init: '+4',
+    speed: '30尺（变身可飞行30尺）',
+    prof: '+3',
+    passivePerception: '16',
+    darkvision: '60尺',
+    size: '中型 · 阿斯莫',
+    str: { val: 12, mod: '+1' },
+    dex: { val: 18, mod: '+4' },
+    con: { val: 15, mod: '+2' },
+    int: { val: 14, mod: '+2' },
+    wis: { val: 16, mod: '+3' },
+    cha: { val: 20, mod: '+5' },
+    saves: ['敏捷 +7','魅力 +8'],
+    skills: ['游说 +11（专精）','表演 +11（专精）','察觉 +6','洞察 +6','奥秘 +5'],
+    bardicInspiration: '八面骰 · 每天5次（短休恢复）',
+    spellDC: '16',
+    spellAtk: '+8',
+    slots: ['4/3/3（1环/2环/3环）'],
+  };
+
   const CONFIG = {
     BVID: 'BV1eo4oeLEbZ',
-    FEATHER_COUNT: 25,
-    FEATHER_SPAWN_INTERVAL: 1800,
+    FEATHER_COUNT: 25,     // 羽毛数量（改这个调浓密）
+    FEATHER_SPAWN_INTERVAL: 1800, // 羽毛生成间隔(ms)
   };
 
   /* ═══════════════════════════ FEATHERS ═══════════════════════════ */
