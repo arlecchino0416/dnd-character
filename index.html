@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-CN">
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
@@ -254,8 +254,7 @@ spellLevelColor:{'戏法':'var(--accent)','1环':'var(--blue)','2环':'var(--gre
 
 var STORAGE_KEY='sunday_sheet_data';
 
-function ld(){var d=null;try{d=JSON.parse(localStorage.getItem(STORAGE_KEY))}catch(e){}if(!d||!d.lvl)d=JSON.parse(JSON.stringify(D));d=migrate(d);sv(d);return d}
-function loadRemoteData(cb){var x=new XMLHttpRequest();x.open('GET','character-data.json?'+Date.now(),true);x.overrideMimeType('application/json');x.onload=function(){if(x.status===200){try{var d=JSON.parse(x.responseText);if(d&&d.lvl){d=migrate(d);sv(d);render(d);buildTabs();if(cb)cb(true);return}}catch(e){}}};x.onerror=function(){if(cb)cb(false)};x.send()}
+function ld(){try{var d=JSON.parse(localStorage.getItem(STORAGE_KEY));if(d&&d.lvl){d=migrate(d);sv(d);return d}}catch(e){}return JSON.parse(JSON.stringify(D))}
 function migrate(d){if(d.people){d.people=d.people.map(function(p){if(typeof p==='string'){var a=p.split('|');var desc=a[1]||'';var rg='其他';if(desc.indexOf('汐坤')>=0)rg='汐坤';else if(desc.indexOf('格拉西亚')>=0)rg='格拉西亚';else if(desc.indexOf('沙哈')>=0)rg='沙哈拉斯提';else if(desc.indexOf('拉格西亚')>=0)rg='拉格西亚';else if(desc.indexOf('隘门')>=0)rg='隘门关';else if(desc.indexOf('达森')>=0)rg='达森';return{name:a[0],desc:desc,region:rg}}return{name:p.name||'',desc:p.desc||'',region:p.region||'其他'}})};return d}
 function sv(d){localStorage.setItem(STORAGE_KEY,JSON.stringify(d))}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
@@ -459,8 +458,30 @@ function collect(){
 // ═══ Init ═══
 render(ld());
 buildTabs();
-// Fetch remote data from GitHub (async, will update page if newer data exists)
-setTimeout(function(){loadRemoteData()},500);
+// Try to load remote data from GitHub for multi-device sync
+setTimeout(function(){
+  var x=new XMLHttpRequest();
+  x.open('GET','character-data.json?'+Date.now(),true);
+  x.overrideMimeType('application/json');
+  x.onload=function(){
+    if(x.status!==200)return;
+    try{
+      var remote=JSON.parse(x.responseText);
+      if(!remote||!remote.lvl)return;
+      remote=migrate(remote);
+      // Only apply if this device has no local data (first visit)
+      try{
+        var local=JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if(local&&local.lvl)return; // Already has local data, don't override
+      }catch(e){}
+      // Apply remote data
+      sv(remote);render(remote);buildTabs();
+      var ok=document.getElementById('editOk');
+      if(ok){ok.textContent='✅ 已从GitHub加载最新数据';ok.classList.add('show');setTimeout(function(){ok.classList.remove('show');ok.textContent='✅ 已保存'},3000)}
+    }catch(e){}
+  };
+  x.send();
+},1000);
 
 // Restore saved token and auto-save on input
 var savedToken=localStorage.getItem('gh_token');
@@ -478,13 +499,15 @@ document.getElementById('saveBtn').addEventListener('click',function(){
   var d=collect();sv(d);render(d);
   var ok=document.getElementById('editOk');ok.classList.add('show');
   setTimeout(function(){ok.classList.remove('show')},2000);
+  // Sync to GitHub: push only character-data.json
   var ghToken=localStorage.getItem('gh_token');
   if(!ghToken||ghToken.length<20)return;
   var st=document.getElementById('publishStatus');
   if(!st)return;
-  st.textContent='☁️ 同步中...';st.style.color='var(--muted)';
-  var jsonData=JSON.stringify(d);
-  var b64=btoa(unescape(encodeURIComponent(jsonData)));
+  st.textContent='☁️ 同步中...';
+  st.style.color='var(--muted)';
+  var jsonStr=JSON.stringify(d);
+  var b64=btoa(unescape(encodeURIComponent(jsonStr)));
   var x=new XMLHttpRequest();
   x.open('GET','https://api.github.com/repos/arlecchino0416/dnd-character/contents/character-data.json',true);
   x.setRequestHeader('Authorization','token '+ghToken);
@@ -495,13 +518,11 @@ document.getElementById('saveBtn').addEventListener('click',function(){
     var x2=new XMLHttpRequest();
     x2.open('PUT','https://api.github.com/repos/arlecchino0416/dnd-character/contents/character-data.json',true);
     x2.setRequestHeader('Authorization','token '+ghToken);
-    x2.setRequestHeader('User-Agent','coco');
     x2.setRequestHeader('Content-Type','application/json');
-    x2.onload=function(){if(x2.status===200||x2.status===201){st.textContent='✅ 已同步！所有设备刷新即同步';st.style.color='var(--green)'}else{st.textContent='❌ 同步失败';st.style.color='var(--red)'}};
+    x2.onload=function(){if(x2.status===200||x2.status===201){st.textContent='✅ 已同步！其他设备刷新即可';st.style.color='var(--green)'}else{st.textContent='❌ '+((JSON.parse(x2.responseText)||{}).message||'失败');st.style.color='var(--red)'}};
     x2.onerror=function(){st.textContent='❌ 网络错误'};
     x2.send(JSON.stringify(payload));
   };
-  x.onerror=function(){st.textContent='❌ 网络错误'};
   x.send();
 });
 
