@@ -254,8 +254,8 @@ spellLevelColor:{'戏法':'var(--accent)','1环':'var(--blue)','2环':'var(--gre
 
 var STORAGE_KEY='sunday_sheet_data';
 
-function ld(){try{var d=JSON.parse(localStorage.getItem(STORAGE_KEY));if(d&&d.lvl){d=migrate(d);sv(d);return d}return d}catch(e){}return JSON.parse(JSON.stringify(D))}
-function migrate(d){if(d.people){d.people=d.people.map(function(p){if(typeof p==='string'){var a=p.split('|');var desc=a[1]||'';var rg='其他';if(desc.indexOf('汐坤')>=0)rg='汐坤';else if(desc.indexOf('格拉西亚')>=0)rg='格拉西亚';else if(desc.indexOf('沙哈')>=0)rg='沙哈拉斯提';else if(desc.indexOf('拉格西亚')>=0)rg='拉格西亚';else if(desc.indexOf('隘门')>=0)rg='隘门关';else if(desc.indexOf('达森')>=0)rg='达森';return{name:a[0],desc:desc,region:rg}}return{name:p.name||'',desc:p.desc||'',region:p.region||'其他'}})};return d
+function ld(){try{var d=JSON.parse(localStorage.getItem(STORAGE_KEY));if(d&&d.lvl){d=migrate(d);sv(d);return d}}catch(e){}return JSON.parse(JSON.stringify(D))}
+function migrate(d){if(d.people){d.people=d.people.map(function(p){if(typeof p==='string'){var a=p.split('|');var desc=a[1]||'';var rg='其他';if(desc.indexOf('汐坤')>=0)rg='汐坤';else if(desc.indexOf('格拉西亚')>=0)rg='格拉西亚';else if(desc.indexOf('沙哈')>=0)rg='沙哈拉斯提';else if(desc.indexOf('拉格西亚')>=0)rg='拉格西亚';else if(desc.indexOf('隘门')>=0)rg='隘门关';else if(desc.indexOf('达森')>=0)rg='达森';return{name:a[0],desc:desc,region:rg}}return{name:p.name||'',desc:p.desc||'',region:p.region||'其他'}})};return d}
 function sv(d){localStorage.setItem(STORAGE_KEY,JSON.stringify(d))}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 function md(v){var s=parseInt(v)||10;var m=Math.floor((s-10)/2);return m>=0?'（+'+m+'）':'（'+m+'）'}
