@@ -1,3 +1,4 @@
+<!-- v2 -->
 <!doctype html>
 <html lang="zh-CN">
 <meta charset="utf-8" />
@@ -157,6 +158,8 @@ h2::before{content:"◇";font-size:.7rem;color:var(--accent)}
 </div>
 <div class="pg" id="pg"></div>
 <script>
+
+try{
 var D={
 lvl:'6',prof:'+3',hp:'45（20+5d8）',ac:'15',init:'+4',
 speed:'30尺（变身可飞行30尺）',pp:'16',bi:'八面骰·每天5次（短休恢复）',
@@ -572,6 +575,8 @@ e.style.cssText='left:'+sx+'%;width:'+sz+'px;height:'+sz*.45+'px;opacity:0;filte
 var kf=[{opacity:0,transform:'translateY(0) translateX(0) rotate('+ro+'deg)',offset:0},{opacity:op,transform:'translateY(10vh) translateX('+dr*.2+'px) rotate('+(ro+sp*.15)+'deg)',offset:.08},{opacity:op,transform:'translateY(40vh) translateX('+dr*.5+'px) rotate('+(ro+sp*.4)+'deg)',offset:.35},{opacity:op*.8,transform:'translateY(70vh) translateX('+dr*.8+'px) rotate('+(ro+sp*.7)+'deg)',offset:.65},{opacity:0,transform:'translateY(105vh) translateX('+dr+'px) rotate('+(ro+sp)+'deg)',offset:1}];
 var ti={duration:du*1000,delay:de*1000,easing:'cubic-bezier(0.25,0.46,0.45,0.94)',fill:'forwards'};c.appendChild(e);var an=e.animate(kf,ti);an.onfinish=function(){e.remove()}}
 for(var i=0;i<12;i++)setTimeout(f,i*400);var st=setInterval(f,1800);document.addEventListener('visibilitychange',function(){if(document.hidden)clearInterval(st);else st=setInterval(f,1800)});})();
+
+}catch(e){document.getElementById("pg").innerHTML="<div style='color:#ff6b9d;padding:20px;font-family:sans-serif'>⚠️ Error: "+e.message+"</div>"}
 </script>
 </body>
 </html>
