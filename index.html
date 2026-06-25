@@ -12,61 +12,66 @@ body{background:var(--bg);color:var(--fg);font-family:"Microsoft YaHei","Noto Sa
 #feather-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:hidden}
 .feather{position:absolute;top:-60px;width:18px;height:8px;background:radial-gradient(ellipse at 30% 50%,rgba(255,248,220,.85),rgba(212,160,87,.2) 60%,transparent 80%);border-radius:50% 50% 50% 50%/60% 60% 40% 40%;opacity:0;box-shadow:0 0 8px 3px rgba(212,160,87,.08),0 0 2px 1px rgba(255,248,220,.04);will-change:transform,opacity}
 .feather::after{content:'';position:absolute;top:2px;left:50%;width:1px;height:6px;background:linear-gradient(to bottom,rgba(255,248,200,.4),transparent);transform:translateX(-50%)}
-.music-bar{position:fixed;bottom:24px;right:24px;z-index:100;display:flex;align-items:center;gap:10px;background:rgba(21,18,32,.88);border:1px solid rgba(124,92,252,.15);border-radius:50px;padding:8px 16px 8px 12px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 4px 20px rgba(0,0,0,.4);transition:all .3s}
-.music-btn{width:32px;height:32px;border-radius:50%;background:rgba(124,92,252,.15);border:1px solid rgba(124,92,252,.2);color:var(--soft);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s;flex-shrink:0}
-.music-btn:hover{background:rgba(124,92,252,.3);border-color:var(--accent);transform:scale(1.08)}
+.music-bar{position:fixed;bottom:24px;right:24px;z-index:100;display:flex;align-items:center;gap:10px;background:rgba(21,18,32,.88);border:1px solid rgba(124,92,252,.15);border-radius:50px;padding:8px 16px 8px 12px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 4px 20px rgba(0,0,0,.4)}
+.music-btn{width:32px;height:32px;border-radius:50%;background:rgba(124,92,252,.15);border:1px solid rgba(124,92,252,.2);color:var(--soft);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.music-btn:hover{background:rgba(124,92,252,.3);border-color:var(--accent)}
 .music-btn.playing{background:rgba(124,92,252,.25);border-color:var(--accent)}
 .progress-wrap{display:flex;align-items:center;gap:6px;flex:1;min-width:0}
-.progress-bar{flex:1;height:4px;border-radius:2px;background:rgba(124,92,252,.12);cursor:pointer;position:relative;min-width:40px;transition:height .15s}
+.progress-bar{flex:1;height:4px;border-radius:2px;background:rgba(124,92,252,.12);cursor:pointer;position:relative;min-width:40px}
 .progress-bar:hover{height:6px}
-.progress-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--gold));width:0%;position:relative}
-.progress-fill::after{content:'';position:absolute;right:-4px;top:-3px;width:10px;height:10px;border-radius:50%;background:var(--gold);opacity:0;transition:opacity .15s}
-.progress-bar:hover .progress-fill::after{opacity:1}
-.time-display{font-size:.6rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;min-width:55px;text-align:center}
-.music-bar .vol-slider{width:0;overflow:hidden;transition:width .3s;display:flex;align-items:center}
-.music-bar:hover .vol-slider,.vol-slider.open{width:80px}
+.progress-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--gold));width:0%}
+.time-display{font-size:.6rem;color:var(--muted);font-variant-numeric:tabular-nums;min-width:55px;text-align:center}
+.vol-slider{width:0;overflow:hidden;transition:width .3s;display:flex;align-items:center}
+.music-bar:hover .vol-slider{width:80px}
 .vol-slider input[type=range]{width:72px;height:3px;-webkit-appearance:none;appearance:none;background:rgba(124,92,252,.2);border-radius:2px;outline:none;margin-left:6px}
 .vol-slider input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:10px;height:10px;border-radius:50%;background:var(--accent);cursor:pointer;border:none}
 .vol-slider input[type=range]::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:var(--accent);cursor:pointer;border:none}
-.edit-btn{position:fixed;bottom:76px;right:24px;z-index:100;background:rgba(21,18,32,.88);border:1px solid rgba(124,92,252,.2);color:var(--soft);border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(0,0,0,.3);transition:all .25s}
-.edit-btn:hover{background:rgba(124,92,252,.25);border-color:var(--accent);transform:scale(1.08)}
-.edit-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-.edit-panel{position:fixed;top:0;right:-440px;width:420px;height:100vh;z-index:99;background:rgba(13,11,24,.98);border-left:1px solid rgba(124,92,252,.15);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:right .35s cubic-bezier(0.22,1,0.36,1);padding:60px 18px 100px;overflow-y:auto;font-size:.82rem;box-shadow:-4px 0 30px rgba(0,0,0,.3)}
+
+/* Edit button + panel */
+.edit-btn{position:fixed;bottom:76px;right:24px;z-index:100;background:rgba(21,18,32,.88);border:1px solid rgba(124,92,252,.2);color:var(--soft);border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(0,0,0,.3)}
+.edit-btn:hover{background:rgba(124,92,252,.25);border-color:var(--accent)}
+.edit-btn.active{background:var(--accent);color:#fff}
+.edit-panel{position:fixed;top:0;right:-460px;width:440px;height:100vh;z-index:99;background:rgba(12,10,22,.98);border-left:1px solid rgba(124,92,252,.15);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:right .35s cubic-bezier(0.22,1,0.36,1);padding:60px 16px 100px;overflow-y:auto;font-size:.82rem;box-shadow:-4px 0 30px rgba(0,0,0,.4)}
 .edit-panel.open{right:0}
 .edit-panel h3{color:var(--gold);font-size:.9rem;margin:18px 0 8px;border-bottom:1px solid rgba(212,160,87,.1);padding-bottom:4px}
 .edit-panel h4{color:var(--soft);font-size:.8rem;margin:12px 0 4px}
-.edit-group{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;margin-bottom:8px}
-.edit-field{display:flex;flex-direction:column;gap:2px}
-.edit-field label{font-size:.62rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
-.edit-field input,.edit-field textarea,.edit-field select{background:rgba(124,92,252,.06);border:1px solid rgba(124,92,252,.1);border-radius:4px;padding:4px 7px;color:var(--fg);font-size:.78rem;font-family:inherit;outline:none;transition:border .2s}
-.edit-field input:focus,.edit-field textarea:focus{border-color:var(--accent)}
-.edit-field.half{grid-column:span 1}
-.edit-field.full{grid-column:span 2}
-.edit-field textarea{min-height:50px;resize:vertical}
-.edit-actions{position:sticky;bottom:0;display:flex;gap:8px;margin-top:16px;padding:12px 0;border-top:1px solid rgba(124,92,252,.1);background:rgba(13,11,24,.98)}
-.edit-actions button{flex:1;padding:8px;border-radius:6px;border:none;cursor:pointer;font-size:.78rem;font-weight:600;transition:all .2s}
-.btn-save{background:var(--accent);color:#fff}
-.btn-save:hover{background:#8a6cff}
-.btn-reset{background:rgba(124,92,252,.1);color:var(--muted)}
-.btn-reset:hover{background:rgba(124,92,252,.2);color:var(--soft)}
-.btn-export{background:rgba(91,154,255,.15);color:var(--blue)}
-.btn-export:hover{background:rgba(91,154,255,.25)}
-.edit-success{color:var(--green);font-size:.7rem;text-align:center;padding:4px;opacity:0;transition:opacity .3s}
-.edit-success.show{opacity:1}
-.cr-add{background:rgba(124,92,252,.08);border:1px dashed rgba(124,92,252,.15);border-radius:6px;padding:8px;margin:6px 0;cursor:pointer;text-align:center;color:var(--muted);font-size:.72rem;transition:all .2s}
-.cr-add:hover{background:rgba(124,92,252,.15);border-color:var(--accent);color:var(--soft)}
-.cr-item{border:1px solid rgba(124,92,252,.06);border-radius:5px;padding:6px 8px;margin:4px 0;position:relative}
-.cr-item .cr-del{position:absolute;top:4px;right:4px;width:18px;height:18px;border-radius:50%;background:rgba(255,94,107,.1);border:1px solid rgba(255,94,107,.15);color:var(--red);cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
-.cr-item:hover .cr-del{opacity:1}
-.cr-item .cr-del:hover{background:rgba(255,94,107,.2)}
-.spell-item{background:rgba(124,92,252,.03);border:1px solid rgba(124,92,252,.05);border-radius:4px;padding:4px 6px;margin:2px 0;font-size:.7rem;color:#b0a0c8;display:flex;align-items:center;gap:4px}
-.spell-item .sp-del{width:16px;height:16px;border-radius:50%;background:rgba(255,94,107,.1);border:none;color:var(--red);cursor:pointer;font-size:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.edit-g{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;margin-bottom:8px}
+.edit-f{display:flex;flex-direction:column;gap:2px}
+.edit-f label{font-size:.6rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+.edit-f input,.edit-f textarea,.edit-f select{background:rgba(124,92,252,.06);border:1px solid rgba(124,92,252,.1);border-radius:4px;padding:4px 7px;color:var(--fg);font-size:.78rem;font-family:inherit;outline:none}
+.edit-f input:focus,.edit-f textarea:focus{border-color:var(--accent)}
+.edit-f.half{grid-column:span 1}
+.edit-f.full{grid-column:span 2}
+.edit-f textarea{min-height:45px;resize:vertical}
+.edit-act{position:sticky;bottom:0;display:flex;gap:8px;margin-top:16px;padding:12px 0;border-top:1px solid rgba(124,92,252,.1);background:rgba(12,10,22,.98)}
+.edit-act button{flex:1;padding:8px;border-radius:6px;border:none;cursor:pointer;font-size:.78rem;font-weight:600}
+.btn-s{background:var(--accent);color:#fff}
+.btn-r{background:rgba(124,92,252,.1);color:var(--muted)}
+.btn-x{background:rgba(91,154,255,.15);color:var(--blue)}
+.edit-ok{color:var(--green);font-size:.7rem;text-align:center;padding:4px;opacity:0}
+.edit-ok.show{opacity:1}
+.cr-a{background:rgba(124,92,252,.08);border:1px dashed rgba(124,92,252,.15);border-radius:6px;padding:8px;margin:6px 0;cursor:pointer;text-align:center;color:var(--muted);font-size:.72rem}
+.cr-a:hover{background:rgba(124,92,252,.15);border-color:var(--accent);color:var(--soft)}
+.cr-i{border:1px solid rgba(124,92,252,.06);border-radius:5px;padding:6px 8px;margin:4px 0;position:relative}
+.cr-d{position:absolute;top:4px;right:4px;width:18px;height:18px;border-radius:50%;background:rgba(255,94,107,.1);border:1px solid rgba(255,94,107,.15);color:var(--red);cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;opacity:0}
+.cr-i:hover .cr-d{opacity:1}
+.sec-i{border:1px solid rgba(124,92,252,.06);border-radius:5px;padding:6px 8px;margin:4px 0;position:relative}
+.sec-d{position:absolute;top:4px;right:4px;width:18px;height:18px;border-radius:50%;background:rgba(255,94,107,.1);border:1px solid rgba(255,94,107,.15);color:var(--red);cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;opacity:0}
+.sec-i:hover .sec-d{opacity:1}
+.tab-bar{display:flex;gap:4px;margin-bottom:12px;flex-wrap:wrap}
+.tab{background:rgba(124,92,252,.08);border:1px solid rgba(124,92,252,.1);border-radius:5px;padding:4px 10px;cursor:pointer;font-size:.7rem;color:var(--muted)}
+.tab:hover{background:rgba(124,92,252,.15);color:var(--soft)}
+.tab.act{background:var(--accent);color:#fff;border-color:var(--accent)}
+.tab-p{display:none}
+.tab-p.open{display:block}
 @media(max-width:560px){.edit-panel{width:100vw;right:-100vw}}
+
+/* Page styles */
 h1{font-size:1.8rem;font-weight:900;letter-spacing:3px;background:linear-gradient(135deg,#f0e6ff,#7c5cfc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 h2{font-size:1.15rem;font-weight:700;color:var(--soft);margin:28px 0 10px;padding-bottom:5px;border-bottom:1.5px solid rgba(124,92,252,.2);display:flex;align-items:center;gap:8px}
 h2::before{content:"◇";font-size:.7rem;color:var(--accent)}
 h3{font-size:.95rem;color:#d0bcf0;margin:14px 0 6px}
-.tag{display:inline-block;padding:1px 7px;border-radius:4px;font-size:.68rem;font-weight:400;margin:1px;background:rgba(124,92,252,.1);border:1px solid rgba(124,92,252,.15);color:#b0a0d0}
+.tag{display:inline-block;padding:1px 7px;border-radius:4px;font-size:.68rem;margin:1px;background:rgba(124,92,252,.1);border:1px solid rgba(124,92,252,.15);color:#b0a0d0}
 .tag-r{background:rgba(255,94,107,.08);border-color:rgba(255,94,107,.15);color:#ff8a94}
 .tag-g{background:rgba(107,203,138,.08);border-color:rgba(107,203,138,.15);color:#8bdaa4}
 .tag-b{background:rgba(91,154,255,.08);border-color:rgba(91,154,255,.15);color:#8bb8ff}
@@ -79,33 +84,32 @@ h3{font-size:.95rem;color:#d0bcf0;margin:14px 0 6px}
 .portrait-wrap img{width:100%;display:block}
 .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:12px 0}
 .info-grid .ig{background:var(--card);border:1px solid rgba(124,92,252,.06);border-radius:7px;padding:8px 12px}
-.info-grid .ig .lb{font-size:.62rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted)}
+.info-grid .ig .lb{font-size:.62rem;letter-spacing:1.5px;color:var(--muted)}
 .info-grid .ig .vl{font-size:1rem;font-weight:600;color:#d8ccee}
 .abilities{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:12px 0}
 .ab{text-align:center;background:var(--card);border:1px solid rgba(124,92,252,.06);border-radius:8px;padding:10px 4px}
-.ab .n{font-size:.6rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted)}
+.ab .n{font-size:.6rem;letter-spacing:2px;color:var(--muted)}
 .ab .v{font-size:1.2rem;font-weight:700;color:#e8ddf8}
 .ab .m{font-size:.78rem;color:var(--muted)}
-.card{background:var(--card);border:1px solid rgba(124,92,252,.06);border-radius:8px;padding:12px 14px;margin:6px 0}
-.card .hd{font-weight:600;color:#d0bcf0;margin-bottom:3px;font-size:.88rem}
-.card .hd .rn{font-weight:400;font-size:.68rem;color:var(--muted)}
-.card p{font-size:.82rem;color:#b0a0c8;line-height:1.65}
-.card .meta{font-size:.68rem;color:var(--muted);margin-top:3px}
-.g2,.g3{display:grid;gap:6px}
-.g2{grid-template-columns:1fr 1fr}
-.g3{grid-template-columns:repeat(3,1fr)}
-.g-auto{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:5px}
-.g-auto-s{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:4px}
+.card{background:var(--card);border:1px solid rgba(124,92,252,.06);border-radius:8px;padding:10px 12px;margin:6px 0}
+.card .hd{font-weight:600;color:#d0bcf0;margin-bottom:3px;font-size:.85rem}
+.card .hd .rn{font-weight:400;font-size:.65rem;color:var(--muted)}
+.card p{font-size:.8rem;color:#b0a0c8;line-height:1.6}
+.card .meta{font-size:.65rem;color:var(--muted);margin-top:3px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.g-a{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:5px}
+.g-as{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:4px}
 .spell-block{margin:14px 0}
-.sb-hd{font-size:.8rem;font-weight:600;color:var(--soft);padding:4px 0 2px;margin-bottom:2px;border-left:3px solid var(--accent);padding-left:8px}
+.sb-hd{font-size:.8rem;font-weight:600;color:var(--soft);padding:4px 0 2px;border-left:3px solid var(--accent);padding-left:8px;margin-bottom:2px}
 .spell-row{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .spell-card{border:1px solid rgba(124,92,252,.05);border-radius:5px;padding:6px 9px;background:rgba(255,255,255,.012)}
 .sc-hd{font-size:.76rem;color:#c8b8e0;font-weight:500}
-.sc-school{font-size:.62rem;color:#6a5a8a;font-weight:400}
+.sc-school{font-size:.62rem;color:#6a5a8a}
 .sc-desc{font-size:.7rem;color:#b0a0c8;line-height:1.55;margin-top:3px}
-.sc-meta{font-size:.62rem;color:#5a4a7a;margin-top:3px;font-family:monospace}
+.sc-meta{font-size:.6rem;color:#5a4a7a;margin-top:3px;font-family:monospace}
 .inst-card{border:1px solid rgba(124,92,252,.05);border-radius:5px;padding:5px 8px;background:rgba(255,255,255,.012)}
-@media(max-width:560px){.spell-row{grid-template-columns:1fr}}
+@media(max-width:560px){.g2,.spell-row{grid-template-columns:1fr}.abilities{grid-template-columns:1fr 1fr}}
 .chronicle{position:relative;padding-left:24px;margin:6px 0}
 .chronicle::before{content:'';position:absolute;left:8px;top:4px;bottom:4px;width:1.5px;background:linear-gradient(180deg,var(--accent),rgba(124,92,252,.05))}
 .chronicle-item{position:relative;padding:6px 0 6px 16px}
@@ -120,346 +124,431 @@ h3{font-size:.95rem;color:#d0bcf0;margin:14px 0 6px}
 .eq{display:inline-block;background:rgba(124,92,252,.03);border:1px solid rgba(124,92,252,.06);border-radius:4px;padding:2px 7px;margin:1px;font-size:.74rem;color:#b0a0c8}
 .eq-gold{background:rgba(212,160,87,.05);border-color:rgba(212,160,87,.08);color:#e0c080}
 .note-box{background:rgba(124,92,252,.04);border-left:3px solid var(--gold);border-radius:0 7px 7px 0;padding:8px 12px;margin:8px 0;font-size:.78rem;color:#c0b0d0}
-.char-note{background:rgba(124,92,252,.03);border-radius:7px;padding:10px 14px;margin:6px 0;font-size:.8rem;color:#b0a0c8;line-height:1.65}
-.char-note .cn-hd{color:#d0bcf0;font-weight:600;font-size:.82rem}
-.char-note .cn-tag{font-size:.6rem;color:var(--muted)}
 </style>
 </head>
 <body>
 <div id="feather-container"></div>
-
-<!-- EDIT BUTTON -->
-<div class="edit-btn" id="editBtn" title="编辑人物卡">✏️</div>
-
-<!-- EDIT PANEL -->
+<div class="edit-btn" id="editBtn">✏️</div>
 <div class="edit-panel" id="editPanel">
-  <h3>📋 基本信息</h3>
-  <div class="edit-group">
-    <div class="edit-field half"><label>等级</label><input id="e-lvl" /></div>
-    <div class="edit-field half"><label>熟练加值</label><input id="e-prof" /></div>
-    <div class="edit-field half"><label>生命值</label><input id="e-hp" placeholder="如 45（20+5d8）" /></div>
-    <div class="edit-field half"><label>AC</label><input id="e-ac" /></div>
-    <div class="edit-field half"><label>先攻</label><input id="e-init" /></div>
-    <div class="edit-field half"><label>速度</label><input id="e-speed" /></div>
-    <div class="edit-field half"><label>被动察觉</label><input id="e-pp" /></div>
-    <div class="edit-field half"><label>诗人激励</label><input id="e-bi" /></div>
+  <div class="tab-bar" id="tabBar"></div>
+  <div id="tabContent"></div>
+  <div class="edit-act">
+    <button class="btn-s" id="saveBtn">💾 保存</button>
+    <button class="btn-x" id="exportBtn">📤 导出</button>
+    <button class="btn-r" id="resetBtn">↺ 重置</button>
   </div>
-
-  <h3>⚔️ 属性</h3>
-  <div class="edit-group">
-    <div class="edit-field half"><label>力量</label><input id="e-str" type="number" /></div>
-    <div class="edit-field half"><label>敏捷</label><input id="e-dex" type="number" /></div>
-    <div class="edit-field half"><label>体质</label><input id="e-con" type="number" /></div>
-    <div class="edit-field half"><label>智力</label><input id="e-int" type="number" /></div>
-    <div class="edit-field half"><label>感知</label><input id="e-wis" type="number" /></div>
-    <div class="edit-field half"><label>魅力</label><input id="e-cha" type="number" /></div>
-  </div>
-
-  <h3>✨ 法术</h3>
-  <div class="edit-group">
-    <div class="edit-field half"><label>法术DC</label><input id="e-dc" /></div>
-    <div class="edit-field half"><label>法术攻击</label><input id="e-atk" /></div>
-    <div class="edit-field full"><label>法术位（逗号分隔）</label><input id="e-slots" placeholder="如 4,3,3" /></div>
-  </div>
-  <div id="spellEditor"></div>
-
-  <h3>📜 冒险纪事</h3>
-  <div id="chronicleEditor"></div>
-  <div class="cr-add" id="addChronicleBtn">+ 新增纪事条目</div>
-
-  <div class="edit-actions">
-    <button class="btn-save" id="saveBtn">💾 保存并应用</button>
-    <button class="btn-export" id="exportBtn">📤 导出数据</button>
-    <button class="btn-reset" id="resetBtn">↺ 重置</button>
-  </div>
-  <div class="edit-success" id="editSuccess">✅ 已保存</div>
+  <div class="edit-ok" id="editOk">✅ 已保存</div>
 </div>
-
-<!-- AUDIO -->
 <audio id="bgAudio" preload="auto" style="display:none"></audio>
-<div class="music-bar" id="musicBar">
-  <button class="music-btn" id="musicToggle" title="播放/暂停">▶</button>
-  <div class="progress-wrap">
-    <div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
-    <span class="time-display" id="timeDisplay">0:00 / 4:57</span>
-  </div>
-  <div class="vol-slider" id="volSlider">
-    <input type="range" id="volControl" min="0" max="1" step="0.05" value="0.3" />
-  </div>
+<div class="music-bar"><button class="music-btn" id="musicToggle">▶</button>
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div><span class="time-display" id="timeDisplay">0:00 / 4:57</span></div>
+  <div class="vol-slider"><input type="range" id="volControl" min="0" max="1" step="0.05" value="0.3" /></div>
 </div>
-
-<div class="pg" id="pageContent"></div>
-
+<div class="pg" id="pg"></div>
 <script>
-(function(){
-const DEFAULTS = {
-  lvl:'6', prof:'+3', hp:'45（20+5d8）', ac:'15', init:'+4',
-  speed:'30尺（变身可飞行30尺）', pp:'16',
-  bi:'八面骰 · 每天5次（短休恢复）',
-  str:12, dex:18, con:15, int:14, wis:16, cha:20,
-  dc:'16', atk:'+8', slots:'4,3,3',
-  spells: {
-    cantrips:[
-      {n:'光亮术',s:'塑能',d:'触碰一个物件，发出半径20尺光照+20尺微光。',m:'动作·触碰·V、S·1小时'},
-      {n:'修复术',s:'变化',d:'修复一个破损物件的单处断裂或裂缝。',m:'1分钟·触碰·V、S、M·立即'},
-      {n:'恶言相加',s:'惑控',d:'对一个生物说出魔法侮辱，造成1d4心灵伤害。',m:'附赠·60尺·V·立即'},
-      {n:'流光闪灵',s:'塑能·歌织者',d:'远程法术攻击，命中1d8光耀伤害。',m:'动作·120尺·V、S·立即'},
-      {n:'魔法伎俩',s:'变化',d:'改变颜色/温度、清洁/弄脏等基础把戏。',m:'动作·30尺·V、S·至多1小时'}
-    ],
-    level1:[
-      {n:'命令术',s:'惑控',d:'命令一个生物服从单字指令。',m:'动作·60尺·V·1轮'},
-      {n:'治愈真言',s:'防护',d:'一个可见生物恢复1d4+魅力调整值。',m:'附赠·60尺·V·立即'},
-      {n:'羽落术',s:'变化',d:'最多5个生物不受坠落伤害。',m:'反应·60尺·V、M·1分钟'},
-      {n:'妖火',s:'塑能',d:'20尺立方内生物被描出轮廓，攻击者优势。',m:'动作·60尺·V·专注·至多1分钟'}
-    ],
-    level2:[
-      {n:'沉默术',s:'幻术',d:'40尺半径球状区域绝对寂静，无法施法。',m:'动作·120尺·V、S·专注·至多10分钟'},
-      {n:'人类定身术',s:'惑控',d:'一个人形生物被麻痹。',m:'动作·60尺·V、S、M·专注·至多1分钟'},
-      {n:'暗示术',s:'惑控',d:'用一句话暗示生物执行合理指令。',m:'动作·30尺·V、M·专注·至多8小时'},
-      {n:'识破隐形',s:'预言',d:'看透隐形、灵体及隐藏魔法陷阱。',m:'动作·自身·V、S、M·专注·至多1小时'}
-    ],
-    level3:[
-      {n:'解除魔法',s:'防护',d:'终止生物/物件/魔法效应上的法术。',m:'动作·120尺·V、S·立即'},
-      {n:'死者交谈',s:'死灵',d:'触碰一具尸体问5个问题。',m:'动作·触碰·V、S、M·10分钟'},
-      {n:'举目皆敌',s:'惑控',d:'扭曲一个生物的感知，视周围所有生物为敌。',m:'动作·120尺·V、S·专注·至多1分钟'}
-    ],
-    instrument:[
-      {n:'飞行术',s:'变化·60尺飞行',m:'动作·触碰·专注至多10分钟'},
-      {n:'隐形术',s:'幻术·触碰隐形',m:'动作·触碰·专注至多1小时'},
-      {n:'浮空术',s:'变化·垂直升降',m:'动作·60尺·专注至多10分钟'},
-      {n:'防护善恶',s:'防护·抵御异界',m:'动作·触碰·专注至多10分钟'},
-      {n:'塑石术',s:'变化·改变5尺石材',m:'动作·触碰·立即'},
-      {n:'火墙术',s:'塑能·5d8火墙',m:'动作·120尺·专注至多1分钟'},
-      {n:'风墙术',s:'塑能·阻挡远程武器',m:'动作·120尺·专注至多1分钟'}
-    ]
-  },
-  chronicle:[
-    {tag:'旅人',title:'同伴集结',body:'星期日先后遇到加洛奈斯、马洛和艾特拉。艾特拉、马洛、加洛奈斯在火焰森林释放了天灾。'},
-    {tag:'汐坤',title:'莱希姆学院',body:'抵达汐坤的莱希姆学院。院长戈哈纳赫研究永生之秘，学院内有叛徒勾结拉格西亚。'},
-    {tag:'难民',title:'拉格西亚逃亡者',body:'欲魔杰西请求救出被囚禁的姐妹卡兹克。蒂莫尔夫人领导达森难民游说汐坤。'},
-    {tag:'外交',title:'沙哈拉斯提使者',body:'沙洛沙公主求结盟对抗格拉西亚，被戈哈纳赫拒绝。'},
-    {tag:'女皇',title:'莱丝卡的崛起',body:'女神判官莱丝卡即将成为格拉西亚新女皇。'},
-    {tag:'焚天',title:'煤舌皇帝与焚天',body:'已故煤舌皇帝的神器"焚天"下落不明，足以改变大陆力量平衡。'},
-    {tag:'当前',title:'重返汐坤',body:'四人告别沙洛沙公主返回汐坤。星期日站在命运的十字路口。'}
+var D={
+lvl:'6',prof:'+3',hp:'45（20+5d8）',ac:'15',init:'+4',
+speed:'30尺（变身可飞行30尺）',pp:'16',bi:'八面骰 · 每天5次（短休恢复）',
+str:'12',dex:'18',con:'15',int:'14',wis:'16',cha:'20',dc:'16',atk:'+8',slots:'4,3,3',
+saves:'敏捷+7；魅力+8',
+skills:'游说+11（专精）；表演+11（专精）；察觉+6；洞察+6；奥秘+5',
+resist:'火焰伤害抗性',tools:'钢琴·里拉琴·鲁特琴·风笛·提琴·鼓·工匠工具',
+langs:'通用语·天界语·通用手语',
+race:[
+  {n:'治愈之手',d:'触碰一个生物恢复2d4生命值。每天一次。'},
+  {n:'天启变身',d:'附赠动作变身，造成伤害+3光耀。每天一次。'},
+  {n:'天堂飞翼',d:'天启变身期间获得30尺飞行速度。'}
+],
+feats:[
+  {n:'音乐家',t:'1级起源',d:'乐器训练：三种乐器熟练。鼓舞之歌：休息时演奏，最多3名同伴获得英雄激励。'},
+  {n:'领袖之证',t:'4级通用',d:'魅力+1（提升至20）。激励演出：休息时表演，最多6名同伴获得临时生命值。'}
+],
+features:[
+  {n:'美梦祝福',t:'每天一次',d:'你或30尺内所有同伴豁免投掷两次取高。'},
+  {n:'诗人激励',t:'d8·每天5次',d:'附赠动作，30尺内同伴获得激励骰。'},
+  {n:'万事通',t:'被动',d:'熟练加值的一半加入未熟练技能检定。'},
+  {n:'技能专精',t:'被动',d:'游说和表演获得双倍熟练加值。'},
+  {n:'织曲入术',t:'每天一次',d:'同伴使用激励骰后，你能以反应施法。'},
+  {n:'咏术入织',t:'常驻',d:'施法时消耗激励次数，根据学派触发效果：防护→60尺内一同伴恢复2d6生命；咒法→60尺一同伴速度+10、ac+1；预言→60尺内目标被近战额外3力场；惑控→心灵伤害+恐慌；塑能→120尺远程法术攻击；幻术→自隐直到下回合；死灵→所有伤害+3暗蚀；变化→传送至多30尺。'}
+],
+bg:'星期日出生于卡林港的橡木密教，世代侍奉梦女神蕾拉的神裔家族。天生能听见他人心底的软弱，触碰梦境的涟漪。妹妹知更鸟——她的歌声能平息最狂乱的噩梦。童年平静温柔。直到一颗异界星辰砸进卡林港大剧院——母亲在梦境裂隙中消散。被密教家主歌斐木收养，称他为"铎音"——梦之倾听者。他开始在底层行走：听见工人的疲惫、孤儿的哭泣、难民的绝望。温柔救不了人，善良挡不住痛苦。一只断翅白鸽被救活后飞走，却坠死在窗前。16岁那年妹妹受邀前往深水城巡演。星期日离开卡林港，出发去寻找答案。',
+equip:'641金币·钢琴·里拉琴·鲁特琴·风笛·提琴·鼓·皮甲·两把匕首·艺人套装·旅行背包·2瓶治疗药水·雷石×1',
+magic:[
+  {n:'克里里拉琴 Cli Lyre',d:'稀有级吟游诗人魔法乐器（需同调）。内含七道法术：飞行术·隐形术·浮空术·防护善恶·塑石术·火墙术·风墙术，每日各一次。'},
+  {n:'火焰抗性戒指',d:'佩戴后获得对火焰伤害的抗性。'}
+],
+party:[{n:'加洛奈斯',c:'希拉西风宗·战士'},{n:'马洛',c:'阿斯莫·审判领域·圣武士'},{n:'艾特拉',c:'人类·复生幽影术·术士'}],
+people:['克里斯蒂娜|预言法师·汐坤结识','雷纳德|黑马二把手·汐坤结识','莱丝卡|女神判官→格拉西亚新女皇','杰西|欲魔·拉格西亚难民领袖','沙洛沙公主|沙哈拉斯提·寻求结盟','戈哈纳赫|莱希姆学院院长','基尔南&李|学院叛徒','卡兹克|被囚禁在学院地牢','知更鸟|妹妹·同谐歌者·深水城巡演中'],
+chronicle:[
+  {tag:'旅人',title:'同伴集结',body:'星期日先后遇到加洛奈斯、马洛和艾特拉。三人各自背负着使命与秘密。'},
+  {tag:'汐坤',title:'莱希姆学院',body:'抵达汐坤的莱希姆学院。院长戈哈纳赫研究永生之秘，学院内有叛徒勾结拉格西亚。'},
+  {tag:'难民',title:'拉格西亚逃亡者',body:'欲魔杰西请求救出被囚禁的姐妹卡兹克。蒂莫尔夫人领导达森难民游说汐坤。'},
+  {tag:'外交',title:'沙哈拉斯提使者',body:'沙洛沙公主求结盟对抗格拉西亚，被戈哈纳赫拒绝。'},
+  {tag:'女皇',title:'莱丝卡的崛起',body:'女神判官莱丝卡即将成为格拉西亚新女皇。'},
+  {tag:'焚天',title:'煤舌皇帝与焚天',body:'已故煤舌皇帝的神器"焚天"下落不明。'},
+  {tag:'当前',title:'重返汐坤',body:'四人告别沙洛沙公主返回汐坤。星期日站在命运的十字路口。'}
+],
+spells:{
+  cantrips:[
+    {n:'光亮术',s:'塑能',d:'触碰一个物件，发出20尺光照+20尺微光。',m:'动作·触碰·V,S·1小时'},
+    {n:'修复术',s:'变化',d:'修复一个破损物件的单处断裂或裂缝。',m:'1分钟·触碰·V,S,M·立即'},
+    {n:'恶言相加',s:'惑控',d:'对一个生物说出魔法侮辱，造成1d4心灵伤害。',m:'附赠·60尺·V·立即'},
+    {n:'流光闪灵',s:'塑能',d:'远程法术攻击，命中1d8光耀伤害。',m:'动作·120尺·V,S·立即'},
+    {n:'魔法伎俩',s:'变化',d:'改变颜色/温度、清洁/弄脏等基础把戏。',m:'动作·30尺·V,S·至多1小时'}
   ],
-  equipment:'641金币 · 钢琴·里拉琴·鲁特琴·风笛·提琴·鼓 · 皮甲·两把匕首 · 艺人套装·旅行背包 · 2瓶治疗药水 · 雷石×1',
-  party:[{n:'加洛奈斯',c:'希拉西风宗·战士'},{n:'马洛',c:'阿斯莫·审判领域·圣武士'},{n:'艾特拉',c:'人类·复生幽影术·术士'}],
-  people:[
-    '克里斯蒂娜|预言法师·汐坤结识','雷纳德|黑马二把手·汐坤结识','莱丝卡|女神判官→格拉西亚新女皇',
-    '杰西|欲魔·拉格西亚难民领袖','沙洛沙公主|沙哈拉斯提·寻求结盟','戈哈纳赫|莱希姆学院院长',
-    '基尔南&李|学院叛徒·勾结拉格西亚','卡兹克|被囚禁在学院地牢','知更鸟|妹妹·同谐歌者·深水城巡演中'
+  L1:[{n:'命令术',s:'惑控',d:'命令生物服从单字指令。',m:'动作·60尺·V·1轮'},{n:'治愈真言',s:'防护',d:'一个生物恢复1d4+魅力值。',m:'附赠·60尺·V·立即'},{n:'羽落术',s:'变化',d:'最多5个生物免受坠落伤害。',m:'反应·60尺·V,M·1分钟'},{n:'妖火',s:'塑能',d:'20尺立方内生物被描出轮廓攻击者优势。',m:'动作·60尺·V·专注至多1分钟'}],
+  L2:[{n:'沉默术',s:'幻术',d:'40尺半径球状区域绝对寂静无法施法。',m:'动作·120尺·V,S·专注至多10分钟'},{n:'人类定身术',s:'惑控',d:'一个人形生物被麻痹。',m:'动作·60尺·V,S,M·专注至多1分钟'},{n:'暗示术',s:'惑控',d:'用一句话暗示生物执行合理指令。',m:'动作·30尺·V,M·专注至多8小时'},{n:'识破隐形',s:'预言',d:'看透隐形灵体及隐藏魔法陷阱。',m:'动作·自身·V,S,M·专注至多1小时'}],
+  L3:[{n:'解除魔法',s:'防护',d:'终止生物/物件/魔法效应上的法术。',m:'动作·120尺·V,S·立即'},{n:'死者交谈',s:'死灵',d:'触碰一具尸体问5个问题。',m:'动作·触碰·V,S,M·10分钟'},{n:'举目皆敌',s:'惑控',d:'扭曲生物感知视周围所有生物为敌。',m:'动作·120尺·V,S·专注至多1分钟'}],
+  inst:[
+    {n:'飞行术',s:'变化·60尺飞行',m:'动作·触碰·专注至多10分钟'},{n:'隐形术',s:'幻术·触碰隐形',m:'动作·触碰·专注至多1小时'},
+    {n:'浮空术',s:'变化·垂直升降',m:'动作·60尺·专注至多10分钟'},{n:'防护善恶',s:'防护·抵御异界',m:'动作·触碰·专注至多10分钟'},
+    {n:'塑石术',s:'变化·改变5尺石材',m:'动作·触碰·立即'},{n:'火墙术',s:'塑能·5d8火墙',m:'动作·120尺·专注至多1分钟'},
+    {n:'风墙术',s:'塑能·阻挡远程武器',m:'动作·120尺·专注至多1分钟'}
   ]
-};
+}};
+var KEY='sun5_data';
+function ld(){try{var d=JSON.parse(localStorage.getItem(KEY));return d||JSON.parse(JSON.stringify(D))}catch(e){return JSON.parse(JSON.stringify(D))}}
+function sv(d){localStorage.setItem(KEY,JSON.stringify(d))}
+function md(v){var m=Math.floor((parseInt(v)||10-10)/2);return m>=0?'（+'+m+'）':'（'+m+'）'}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 
-// ═══ Load/Save ═══
-function load(){try{var d=JSON.parse(localStorage.getItem('sunday_data'));return d||JSON.parse(JSON.stringify(DEFAULTS))}catch(e){return JSON.parse(JSON.stringify(DEFAULTS))}}
-function save(data){localStorage.setItem('sunday_data',JSON.stringify(data))}
-function mod(v){v=parseInt(v)||10;var m=Math.floor((v-10)/2);return m>=0?'（+'+m+'）':'（'+m+'）'}
+function rn(d){
+  if(!d)d=ld();
+  var dd=d.spells||{},sl=(d.slots||'4,3,3').split(',').map(function(x){return x.trim()});
+  var slt={
+    cantrips:{l:'戏法（0环）',c:'var(--accent)'},
+    L1:{l:'1环法术（'+(sl[0]||4)+'个法术位）',c:'var(--blue)'},
+    L2:{l:'2环法术（'+(sl[1]||3)+'个法术位）',c:'var(--green)'},
+    L3:{l:'3环法术（'+(sl[2]||3)+'个法术位）',c:'var(--red)'},
+    inst:{l:'🎵 克里里拉琴·乐器法术（每日各一次）',c:'var(--gold)'}
+  };
+  var sh='';
+  Object.keys(slt).forEach(function(k){
+    if(!dd[k]||!dd[k].length)return;
+    sh+='<div class="spell-block"><div class="sb-hd" style="border-left-color:'+slt[k].c+'">'+slt[k].l+'</div><div class="spell-row">';
+    dd[k].forEach(function(s){
+      sh+='<div class="'+(k==='inst'?'inst-card':'spell-card')+'"><div class="sc-hd">'+esc(s.n)+' <span class="sc-school">· '+esc(s.s||'')+'</span></div>'+
+        (s.d?'<div class="sc-desc">'+esc(s.d)+'</div>':'')+'<div class="sc-meta">'+esc(s.m||'')+'</div></div>';
+    });
+    sh+='</div></div>';
+  });
 
-// ═══ Render Page ═══
-function render(d){
-  var pg=document.getElementById('pageContent');
-  var cd=d.chronicle||[];
-  pg.innerHTML=
-    '<div class="hero"><h1>星期日</h1><div class="cn">S U N D A Y · 梦 之 铎 音</div><div class="info" id="classLine">'+(d.lvl||'6')+'级 歌织者（吟游诗人）· 阿斯莫 · 守序中立</div></div>'+
-    '<div class="portrait-wrap"><picture><source srcset="sunday_splash.webp" type="image/webp" /><img src="sunday_splash.jpg" alt="星期日" /></picture></div>'+
+  var h='<div class="hero"><h1>星期日</h1><div class="cn">S U N D A Y · 梦之铎音</div><div class="info">'+esc(d.lvl||'6')+'级 歌织者（吟游诗人）· 阿斯莫 · 守序中立</div></div>'+
+    '<div class="portrait-wrap"><picture><source srcset="sunday_splash.webp" type="image/webp"><img src="sunday_splash.jpg" alt="星期日"></picture></div>'+
     '<div class="abilities">'+
-      '<div class="ab"><div class="n">力量</div><div class="v">'+(d.str||12)+'</div><div class="m">'+mod(d.str)+'</div></div>'+
-      '<div class="ab"><div class="n">敏捷</div><div class="v">'+(d.dex||18)+'</div><div class="m">'+mod(d.dex)+'</div></div>'+
-      '<div class="ab"><div class="n">体质</div><div class="v">'+(d.con||15)+'</div><div class="m">'+mod(d.con)+'</div></div>'+
-      '<div class="ab"><div class="n">智力</div><div class="v">'+(d.int||14)+'</div><div class="m">'+mod(d.int)+'</div></div>'+
-      '<div class="ab"><div class="n">感知</div><div class="v">'+(d.wis||16)+'</div><div class="m">'+mod(d.wis)+'</div></div>'+
-      '<div class="ab"><div class="n">魅力</div><div class="v">'+(d.cha||20)+'</div><div class="m">'+mod(d.cha)+'</div></div>'+
+    ['str','dex','con','int','wis','cha'].map(function(a){return '<div class="ab"><div class="n">'+(a==='str'?'力量':a==='dex'?'敏捷':a==='con'?'体质':a==='int'?'智力':a==='wis'?'感知':'魅力')+'</div><div class="v">'+esc(d[a])+'</div><div class="m">'+md(d[a])+'</div></div>'}).join('')+
     '</div>'+
     '<div class="info-grid">'+
-      '<div class="ig"><div class="lb">护甲等级</div><div class="vl">'+(d.ac||'15')+'</div></div>'+
-      '<div class="ig"><div class="lb">生命值</div><div class="vl">'+(d.hp||'45（20+5d8）')+'</div></div>'+
-      '<div class="ig"><div class="lb">先攻加值</div><div class="vl">'+(d.init||'+4')+'</div></div>'+
-      '<div class="ig"><div class="lb">速度</div><div class="vl">'+(d.speed||'30尺')+'</div></div>'+
-      '<div class="ig"><div class="lb">熟练加值</div><div class="vl">'+(d.prof||'+3')+'</div></div>'+
-      '<div class="ig"><div class="lb">被动察觉</div><div class="vl">'+(d.pp||'16')+'</div></div>'+
-      '<div class="ig"><div class="lb">黑暗视觉</div><div class="vl">60尺</div></div>'+
-      '<div class="ig"><div class="lb">体型/种族</div><div class="vl">中型 · 阿斯莫</div></div>'+
-    '</div>'+
-    '<div class="g2"><div class="card"><div class="hd">豁免检定 <span class="rn">Saving Throws</span></div><p><span class="tag tag-r">敏捷 +'+(7+Math.floor((parseInt(d.dex||18)-10)/2)-4)+'</span> <span class="tag tag-r">魅力 +'+(8+Math.floor((parseInt(d.cha||20)-10)/2)-5)+'</span></p><div class="hd" style="margin-top:6px;font-size:.82rem">技能熟练</div><p><span class="tag tag-b">游说 +11（专精）</span><span class="tag tag-b">表演 +11（专精）</span><span class="tag tag-g">察觉 +6</span><span class="tag tag-g">洞察 +6</span><span class="tag">奥秘 +5</span></p><div class="meta">万事通：所有未熟练技能检定+1</div></div>'+
-    '<div class="card"><div class="hd">抗性 · 工具 · 语言</div><p><span class="tag tag-r">火焰伤害抗性</span></p><p style="margin-top:3px"><span class="tag">钢琴</span><span class="tag">里拉琴</span><span class="tag">鲁特琴</span><span class="tag">风笛</span><span class="tag">提琴</span><span class="tag">鼓</span><span class="tag">工匠工具</span></p><p style="margin-top:3px"><span class="tag">通用语</span><span class="tag">天界语</span><span class="tag">通用手语</span></p><div class="meta">诗人激励：'+(d.bi||'八面骰 · 每天5次')+'</div></div></div>'+
+    '<div class="ig"><div class="lb">护甲等级</div><div class="vl">'+esc(d.ac||'')+'</div></div>'+
+    '<div class="ig"><div class="lb">生命值</div><div class="vl">'+esc(d.hp||'')+'</div></div>'+
+    '<div class="ig"><div class="lb">先攻加值</div><div class="vl">'+esc(d.init||'')+'</div></div>'+
+    '<div class="ig"><div class="lb">速度</div><div class="vl">'+esc(d.speed||'')+'</div></div>'+
+    '<div class="ig"><div class="lb">熟练加值</div><div class="vl">'+esc(d.prof||'')+'</div></div>'+
+    '<div class="ig"><div class="lb">被动察觉</div><div class="vl">'+esc(d.pp||'')+'</div></div>'+
+    '<div class="ig"><div class="lb">黑暗视觉</div><div class="vl">60尺</div></div>'+
+    '<div class="ig"><div class="lb">体型/种族</div><div class="vl">中型·阿斯莫</div></div></div>'+
 
-    '<h2>阿斯莫种族特性</h2><div class="g3"><div class="card"><div class="hd">治愈之手</div><p>触碰一个生物恢复2d4点生命值。每天一次。</p></div><div class="card"><div class="hd">天启变身</div><p>附赠动作变身，造成伤害时额外+3光耀。每天一次。</p></div><div class="card"><div class="hd">天堂飞翼</div><p>天启变身期间获得30尺飞行速度。</p></div></div>'+
+    '<div class="g2"><div class="card"><div class="hd">豁免检定</div><p>'+(d.saves||'').split('；').map(function(s){return '<span class="tag tag-r">'+esc(s)+'</span>'}).join(' ')+'</p>'+
+    '<div class="hd" style="margin-top:6px;font-size:.82rem">技能熟练</div><p>'+(d.skills||'').split('；').map(function(s){return '<span class="tag tag-b">'+esc(s)+'</span>'}).join(' ')+'</p><div class="meta">万事通：+1</div></div>'+
+    '<div class="card"><div class="hd">抗性·工具·语言</div><p>'+(d.resist||'').split('；').map(function(s){return '<span class="tag tag-r">'+esc(s)+'</span>'}).join(' ')+'</p><p style="margin-top:3px">'+(d.tools||'').split('·').map(function(s){return '<span class="tag">'+esc(s)+'</span>'}).join('')+'</p><p style="margin-top:3px">'+(d.langs||'').split('·').map(function(s){return '<span class="tag">'+esc(s)+'</span>'}).join('')+'</p><div class="meta">诗人激励：'+esc(d.bi||'')+'</div></div></div>'+
 
-    '<h2>专长</h2><div class="g2"><div class="card"><div class="hd">音乐家 <span class="tag tag-y">1级起源</span></div><p><strong>乐器训练。</strong>获得三种乐器熟练。<br><strong>鼓舞之歌。</strong>休息时演奏，最多3名同伴获得英雄激励。</p></div><div class="card"><div class="hd">领袖之证 <span class="tag tag-y">4级通用</span></div><p><strong>魅力+1</strong>（提升至20）。<br><strong>激励演出。</strong>休息时表演，最多6名同伴获得临时生命值。</p></div></div>'+
+    '<h2>阿斯莫种族特性</h2><div class="g3">'+(d.race||[]).map(function(r){return '<div class="card"><div class="hd">'+esc(r.n)+'</div><p>'+esc(r.d)+'</p></div>'}).join('')+'</div>'+
 
-    '<h2>吟游诗人 · 歌织者</h2>'+
-    '<div class="card"><div class="hd">美梦祝福 <span class="tag tag-r">每天一次</span></div><p>你或30尺内所有同伴豁免投掷两次取高。</p></div>'+
-    '<div class="card"><div class="hd">诗人激励 <span class="tag tag-b">d8 · 每天5次</span></div><p>附赠动作让30尺内同伴获得激励骰（d8）。</p></div>'+
-    '<div class="g2"><div class="card"><div class="hd">万事通</div><p>熟练加值的一半加入未熟练技能检定。</p></div><div class="card"><div class="hd">技能专精</div><p>游说和表演获得双倍熟练加值。</p></div></div>'+
-    '<div class="card"><div class="hd">织曲入术 <span class="tag tag-r">每天一次</span></div><p>同伴使用激励骰后，你能以反应施法。</p></div>'+
-    '<div class="card"><div class="hd">咏术入织</div><p>施法时额外消耗激励次数，根据学派触发效果。</p><div class="g-auto-s" style="margin-top:5px"><div><span class="tag tag-r">防护</span><span style="font-size:.72rem;color:#b0a0c8">60尺内一同伴恢复2d6生命</span></div><div><span class="tag tag-b">咒法</span><span style="font-size:.72rem;color:#b0a0c8">60尺一同伴速度+10、ac+1</span></div><div><span class="tag tag-g">预言</span><span style="font-size:.72rem;color:#b0a0c8">60尺内目标被近战额外3力场</span></div><div><span class="tag">惑控</span><span style="font-size:.72rem;color:#b0a0c8">心灵伤害+恐慌</span></div><div><span class="tag tag-r">塑能</span><span style="font-size:.72rem;color:#b0a0c8">120尺远程法术攻击</span></div><div><span class="tag tag-b">幻术</span><span style="font-size:.72rem;color:#b0a0c8">自隐直到下回合</span></div><div><span class="tag tag-g">死灵</span><span style="font-size:.72rem;color:#b0a0c8">所有伤害+3暗蚀</span></div><div><span class="tag tag-y">变化</span><span style="font-size:.72rem;color:#b0a0c8">传送至多30尺</span></div></div></div>'+
+    '<h2>专长</h2><div class="g2">'+(d.feats||[]).map(function(f){return '<div class="card"><div class="hd">'+esc(f.n)+' <span class="tag tag-y">'+esc(f.t||'')+'</span></div><p>'+esc(f.d)+'</p></div>'}).join('')+'</div>'+
 
-    '<h2>法术</h2><div class="card" style="margin-bottom:6px"><p><span class="tag tag-b">施法属性：魅力</span> <span class="tag tag-b">法术难度等级（DC）：'+(d.dc||'16')+'</span> <span class="tag tag-b">法术攻击加值：'+(d.atk||'+8')+'</span> <span class="tag" style="color:var(--muted)">法术位：'+(d.slots||'4/3/3')+'</span></p></div>'+
-    renderSpells(d.spells)+
+    '<h2>吟游诗人·歌织者</h2>'+(d.features||[]).map(function(f){return '<div class="card"><div class="hd">'+esc(f.n)+' <span class="tag tag-r">'+esc(f.t||'')+'</span></div><p>'+esc(f.d)+'</p></div>'}).join('')+
 
-    '<h2>装备与物品</h2><div class="card"><p>'+(d.equipment||'')+'</p></div>'+
-    '<h2>旅伴</h2><div class="party">'+(d.party||[]).map(function(p){return '<div class="pc"><span class="nm">'+p.n+'</span><span class="cl">'+p.c+'</span></div>'}).join('')+'</div>'+
+    '<h2>法术</h2><div class="card" style="margin-bottom:6px"><p><span class="tag tag-b">施法属性：魅力</span> <span class="tag tag-b">DC：'+esc(d.dc||'')+'</span> <span class="tag tag-b">攻击：'+esc(d.atk||'')+'</span> <span class="tag" style="color:var(--muted)">法术位：'+esc(d.slots||'')+'</span></p></div>'+sh+
 
-    '<h2>冒险纪事 · 焚天之战</h2><div class="chronicle">'+cd.map(function(c){return '<div class="chronicle-item"><span class="ch-tag">'+c.tag+'</span><div class="ch-title">'+c.title+'</div><div class="ch-body">'+c.body+'</div></div>'}).join('')+'</div>'+
+    '<h2>装备与物品</h2><div class="card"><p>'+(d.equip||'').split('·').map(function(e){return '<span class="eq eq-gold">'+esc(e)+'</span>'}).join('')+'</p></div>'+
+    '<div class="g2">'+(d.magic||[]).map(function(m){return '<div class="card"><div class="hd" style="font-size:.82rem;color:var(--gold)">'+esc(m.n)+'</div><p>'+esc(m.d)+'</p></div>'}).join('')+'</div>'+
 
-    '<h2>旅途中遇到的人</h2><div class="g-auto">'+(d.people||[]).map(function(p){var s=p.split('|');return '<div class="card" style="padding:8px 10px"><div class="hd" style="font-size:.8rem">'+s[0]+'</div><div class="meta">'+(s[1]||'')+'</div></div>'}).join('')+'</div>'+
+    '<h2>冒险的初衷</h2><div class="card" style="border-left:3px solid var(--accent);border-radius:0 8px 8px 0;background:rgba(124,92,252,.03)"><p style="font-size:.82rem;line-height:1.7">'+esc(d.bg||'')+'</p></div>'+
 
-    '<div style="text-align:center;color:var(--muted);font-size:.65rem;letter-spacing:2px;padding:24px 0 12px;border-top:1px solid rgba(124,92,252,.06);margin-top:20px">D&D 5R · 歌织者 · 梦之铎音 · 星期日<br>长团模组：焚天之战</div>';
+    '<h2>旅伴</h2><div class="party">'+(d.party||[]).map(function(p){return '<div class="pc"><span class="nm">'+esc(p.n)+'</span><span class="cl">'+esc(p.c)+'</span></div>'}).join('')+'</div>'+
+
+    '<h2>冒险纪事·焚天之战</h2><div class="chronicle">'+(d.chronicle||[]).map(function(c){return '<div class="chronicle-item"><span class="ch-tag">'+esc(c.tag)+'</span><div class="ch-title">'+esc(c.title)+'</div><div class="ch-body">'+esc(c.body)+'</div></div>'}).join('')+'</div>'+
+
+    '<h2>旅途中遇到的人</h2><div class="g-a">'+(d.people||[]).map(function(p){var s=p.split('|');return '<div class="card" style="padding:8px 10px"><div class="hd" style="font-size:.8rem">'+esc(s[0])+'</div><div class="meta">'+esc(s[1]||'')+'</div></div>'}).join('')+'</div>'+
+
+    '<div style="text-align:center;color:var(--muted);font-size:.65rem;padding:24px 0 12px;border-top:1px solid rgba(124,92,252,.06);margin-top:20px">D&D 5R·歌织者·梦之铎音·星期日<br>长团模组：焚天之战</div>';
+  document.getElementById('pg').innerHTML=h;
 }
 
-function renderSpells(sp){
-  if(!sp)return'';
-  var levels={cantrips:'戏法（0环）',level1:'1环法术（'+(slotsParse()[0]||4)+'个法术位）',level2:'2环法术（'+(slotsParse()[1]||3)+'个法术位）',level3:'3环法术（'+(slotsParse()[2]||3)+'个法术位）',instrument:'🎵 克里里拉琴 · 乐器法术（每日各一次）'};
-  var colors={cantrips:'var(--accent)',level1:'var(--blue)',level2:'var(--green)',level3:'var(--red)',instrument:'var(--gold)'};
-  var r='';
-  Object.keys(levels).forEach(function(k){
-    if(!sp[k]||!sp[k].length)return;
-    r+='<div class="spell-block"><div class="sb-hd" style="border-left-color:'+colors[k]+';'+(k==='instrument'?'color:var(--gold)':'')+'">'+levels[k]+'</div><div class="spell-row">';
-    sp[k].forEach(function(s){
-      r+='<div class="'+(k==='instrument'?'inst-card':'spell-card')+'"><div class="sc-hd">'+s.n+' <span class="sc-school">· '+s.s+'</span></div>'+
-        (s.d?'<div class="sc-desc">'+s.d+'</div>':'')+
-        '<div class="sc-meta">'+s.m+'</div></div>';
-    });
-    r+='</div></div>';
+// ═══ Edit panels ═══
+var tabs=[
+  {id:'stats',label:'📋基础'},
+  {id:'attrs',label:'⚔️属性'},
+  {id:'combat',label:'🛡️战斗'},
+  {id:'race',label:'🧬种族'},
+  {id:'feats',label:'🏅专长'},
+  {id:'classf',label:'📖职业'},
+  {id:'spells',label:'✨法术'},
+  {id:'equip',label:'🎒装备'},
+  {id:'story',label:'📜剧情'},
+  {id:'chronicle',label:'📖纪事'},
+  {id:'data',label:'💾数据'}
+];
+var curTab='stats';
+
+function buildTabs(){
+  var tb=document.getElementById('tabBar'),tc=document.getElementById('tabContent');
+  tb.innerHTML=tabs.map(function(t){return '<div class="tab'+(t.id===curTab?' act':'')+'" data-tab="'+t.id+'">'+t.label+'</div>'}).join('');
+  tb.querySelectorAll('.tab').forEach(function(el){
+    el.addEventListener('click',function(){curTab=this.getAttribute('data-tab');buildTabs();fillForm(ld())});
   });
-  return r;
+  var d=ld();
+  if(curTab==='stats')buildStatsTab(tc,d);
+  else if(curTab==='attrs')buildAttrsTab(tc,d);
+  else if(curTab==='combat')buildCombatTab(tc,d);
+  else if(curTab==='race')buildRaceTab(tc,d);
+  else if(curTab==='feats')buildFeatsTab(tc,d);
+  else if(curTab==='classf')buildClassTab(tc,d);
+  else if(curTab==='spells')buildSpellsTab(tc,d);
+  else if(curTab==='equip')buildEquipTab(tc,d);
+  else if(curTab==='story')buildStoryTab(tc,d);
+  else if(curTab==='chronicle')buildChronicleTab(tc,d);
+  else if(curTab==='data')buildDataTab(tc,d);
 }
 
-function slotsParse(){try{var d=load();return d.slots?d.slots.split(',').map(function(x){return x.trim()}):['4','3','3']}catch(e){return['4','3','3']}}
-
-// ═══ Populate form ═══
-function populateForm(d){
-  ['lvl','prof','hp','ac','init','speed','pp','bi','dc','atk','slots'].forEach(function(k){var el=document.getElementById('e-'+k);if(el)el.value=d[k]||''});
-  ['str','dex','con','int','wis','cha'].forEach(function(k){var el=document.getElementById('e-'+k);if(el)el.value=d[k]||''});
-  renderChronicleEditor(d.chronicle||[]);
-  renderSpellEditor(d.spells);
+function buildStatsTab(el,d){
+  el.innerHTML='<div class="edit-g">'+
+    '<div class="edit-f half"><label>等级</label><input class="f-lvl" value="'+esc(d.lvl)+'"></div>'+
+    '<div class="edit-f half"><label>熟练加值</label><input class="f-prof" value="'+esc(d.prof)+'"></div>'+
+    '<div class="edit-f half"><label>生命值</label><input class="f-hp" value="'+esc(d.hp)+'"></div>'+
+    '<div class="edit-f half"><label>护甲等级</label><input class="f-ac" value="'+esc(d.ac)+'"></div>'+
+    '<div class="edit-f half"><label>先攻加值</label><input class="f-init" value="'+esc(d.init)+'"></div>'+
+    '<div class="edit-f half"><label>速度</label><input class="f-speed" value="'+esc(d.speed)+'"></div>'+
+    '<div class="edit-f half"><label>被动察觉</label><input class="f-pp" value="'+esc(d.pp)+'"></div>'+
+    '<div class="edit-f half"><label>诗人激励</label><input class="f-bi" value="'+esc(d.bi)+'"></div>'+
+    '</div>';
 }
 
-function collectForm(){
-  var d={};
-  ['lvl','prof','hp','ac','init','speed','pp','bi','dc','atk','slots'].forEach(function(k){var el=document.getElementById('e-'+k);d[k]=el?el.value:''});
-  ['str','dex','con','int','wis','cha'].forEach(function(k){var el=document.getElementById('e-'+k);d[k]=parseInt(el?el.value:10)||10});
-  d.chronicle=collectChronicle();
-  d.spells=collectSpells();
+function buildAttrsTab(el,d){
+  el.innerHTML='<h4>属性值（改数值自动算加值）</h4><div class="edit-g">'+
+    ['str','dex','con','int','wis','cha'].map(function(a){
+      var nm={str:'力量',dex:'敏捷',con:'体质',int:'智力',wis:'感知',cha:'魅力'};
+      var m=md(d[a]||10);
+      return '<div class="edit-f half"><label>'+nm[a]+' '+m+'</label><input class="f-'+a+'" type="number" value="'+(d[a]||10)+'"></div>';
+    }).join('')+
+    '</div><h4>法术</h4><div class="edit-g">'+
+    '<div class="edit-f half"><label>法术DC</label><input class="f-dc" value="'+esc(d.dc)+'"></div>'+
+    '<div class="edit-f half"><label>法术攻击</label><input class="f-atk" value="'+esc(d.atk)+'"></div>'+
+    '<div class="edit-f full"><label>法术位（逗号分隔）</label><input class="f-slots" value="'+esc(d.slots)+'"></div>'+
+    '</div>';
+}
+
+function buildCombatTab(el,d){
+  el.innerHTML='<div class="edit-g">'+
+    '<div class="edit-f full"><label>豁免检定（用；分隔）</label><textarea class="f-saves" rows="2">'+esc(d.saves)+'</textarea></div>'+
+    '<div class="edit-f full"><label>技能熟练（用；分隔）</label><textarea class="f-skills" rows="2">'+esc(d.skills)+'</textarea></div>'+
+    '<div class="edit-f full"><label>伤害抗性（用；分隔）</label><input class="f-resist" value="'+esc(d.resist)+'"></div>'+
+    '<div class="edit-f full"><label>工具熟练（用·分隔）</label><input class="f-tools" value="'+esc(d.tools)+'"></div>'+
+    '<div class="edit-f full"><label>语言（用·分隔）</label><input class="f-langs" value="'+esc(d.langs)+'"></div>'+
+    '</div>';
+}
+
+function buildRaceTab(el,d){
+  el.innerHTML='<h4><span style="color:var(--soft);cursor:pointer" id="addRace">+ 添加特性</span></h4><div id="raceList">'+
+    (d.race||[]).map(function(r,i){return '<div class="sec-i"><div class="sec-d" data-idx="'+i+'" data-list="race">✕</div>'+
+      '<div class="edit-f" style="margin-bottom:3px"><label>名称</label><input class="f-rn" value="'+esc(r.n)+'"></div>'+
+      '<div class="edit-f"><label>描述</label><textarea class="f-rd" rows="2">'+esc(r.d)+'</textarea></div></div>'}).join('')+
+    '</div>';
+  document.getElementById('addRace').onclick=function(){addItem('race')};
+}
+
+function buildFeatsTab(el,d){
+  el.innerHTML='<h4><span style="color:var(--soft);cursor:pointer" id="addFeat">+ 添加专长</span></h4><div id="featList">'+
+    (d.feats||[]).map(function(f,i){return '<div class="sec-i"><div class="sec-d" data-idx="'+i+'" data-list="feats">✕</div>'+
+      '<div class="edit-f" style="margin-bottom:3px"><label>名称</label><input class="f-fn" value="'+esc(f.n)+'"></div>'+
+      '<div class="edit-f" style="margin-bottom:3px"><label>等级/标签</label><input class="f-ft" value="'+esc(f.t||'')+'"></div>'+
+      '<div class="edit-f"><label>描述</label><textarea class="f-fd" rows="2">'+esc(f.d)+'</textarea></div></div>'}).join('')+
+    '</div>';
+  document.getElementById('addFeat').onclick=function(){addItem('feats')};
+}
+
+function buildClassTab(el,d){
+  el.innerHTML='<h4><span style="color:var(--soft);cursor:pointer" id="addFeat">+ 添加职业特性</span></h4><div id="featList">'+
+    (d.features||[]).map(function(f,i){return '<div class="sec-i"><div class="sec-d" data-idx="'+i+'" data-list="features">✕</div>'+
+      '<div class="edit-f" style="margin-bottom:3px"><label>名称</label><input class="f-fn" value="'+esc(f.n)+'"></div>'+
+      '<div class="edit-f" style="margin-bottom:3px"><label>频率/标签</label><input class="f-ft" value="'+esc(f.t||'')+'"></div>'+
+      '<div class="edit-f"><label>描述</label><textarea class="f-fd" rows="2">'+esc(f.d)+'</textarea></div></div>'}).join('')+
+    '</div>';
+  document.getElementById('addFeat').onclick=function(){addItem('features')};
+}
+
+function buildSpellsTab(el,d){
+  var sp=d.spells||{};
+  var lvs=['cantrips','L1','L2','L3','inst'];
+  var ln={cantrips:'戏法',L1:'1环',L2:'2环',L3:'3环',inst:'乐器'};
+  el.innerHTML='<h4>法术管理</h4>';
+  lvs.forEach(function(k){
+    el.innerHTML+='<div style="margin-bottom:8px"><div style="font-size:.72rem;color:var(--muted);margin-bottom:3px">'+ln[k]+' <span style="color:var(--soft);cursor:pointer" class="sp-add" data-lv="'+k+'">+</span></div>'+
+      '<div id="splist-'+k+'">'+(sp[k]||[]).map(function(s,j){
+        return '<div class="spell-card" style="margin:3px 0;position:relative"><div class="sc-hd">'+esc(s.n)+' <span class="sc-school">'+esc(s.s||'')+'</span> <span style="position:absolute;right:4px;top:4px;cursor:pointer;color:var(--red);font-size:10px" class="sp-del" data-lv="'+k+'" data-idx="'+j+'">✕</span></div>'+
+          (s.d?'<div class="sc-desc">'+esc(s.d)+'</div>':'')+
+          '<div class="sc-meta">'+esc(s.m||'')+'</div></div>';
+      }).join('')+'</div></div>';
+  });
+  el.querySelectorAll('.sp-del').forEach(function(b){b.addEventListener('click',function(){
+    var l=this.getAttribute('data-lv'),i=parseInt(this.getAttribute('data-idx')),d2=ld();
+    if(d2.spells[l])d2.spells[l].splice(i,1);sv(d2);rn(d2);buildTabs();
+  })});
+  el.querySelectorAll('.sp-add').forEach(function(b){b.addEventListener('click',function(){
+    var l=this.getAttribute('data-lv'),nm=prompt('法术名称：');if(!nm)return;
+    var sc=prompt('学派：')||'',dc=prompt('简述：')||'',mt=prompt('施法信息：')||'';
+    var d2=ld();if(!d2.spells[l])d2.spells[l]=[];d2.spells[l].push({n:nm,s:sc,d:dc,m:mt});
+    sv(d2);rn(d2);buildTabs();
+  })});
+}
+
+function buildEquipTab(el,d){
+  el.innerHTML='<div class="edit-g">'+
+    '<div class="edit-f full"><label>装备列表（用·分隔）</label><textarea class="f-equip" rows="2">'+esc(d.equip)+'</textarea></div>'+
+    '</div><h4><span style="color:var(--soft);cursor:pointer" id="addMagic">+ 添加魔法物品</span></h4><div id="magicList">'+
+    (d.magic||[]).map(function(m,i){return '<div class="sec-i"><div class="sec-d" data-idx="'+i+'" data-list="magic">✕</div>'+
+      '<div class="edit-f" style="margin-bottom:3px"><label>名称</label><input class="f-mn" value="'+esc(m.n)+'"></div>'+
+      '<div class="edit-f"><label>描述</label><textarea class="f-md" rows="2">'+esc(m.d)+'</textarea></div></div>'}).join('')+
+    '</div>';
+  document.getElementById('addMagic').onclick=function(){addItem('magic')};
+}
+
+function buildStoryTab(el,d){
+  el.innerHTML='<div class="edit-g">'+
+    '<div class="edit-f full"><label>背景故事</label><textarea class="f-bg" rows="6">'+esc(d.bg)+'</textarea></div>'+
+    '</div><h4><span style="color:var(--soft);cursor:pointer" id="addParty">+ 添加旅伴</span></h4><div id="partyList">'+
+    (d.party||[]).map(function(p,i){return '<div class="sec-i"><div class="sec-d" data-idx="'+i+'" data-list="party">✕</div>'+
+      '<div class="edit-f" style="margin-bottom:3px"><label>名称</label><input class="f-pn" value="'+esc(p.n)+'"></div>'+
+      '<div class="edit-f"><label>职业/描述</label><input class="f-pc" value="'+esc(p.c)+'"></div></div>'}).join('')+
+    '</div><h4><span style="color:var(--soft);cursor:pointer" id="addPeople">+ 添加人物</span></h4><div id="peopleList">'+
+    (d.people||[]).map(function(p,i){return '<div class="sec-i"><div class="sec-d" data-idx="'+i+'" data-list="people">✕</div>'+
+      '<div class="edit-f"><label>格式：名字|描述</label><input class="f-ppl" value="'+esc(p)+'"></div></div>'}).join('')+
+    '</div>';
+  document.getElementById('addParty').onclick=function(){addItem('party')};
+  document.getElementById('addPeople').onclick=function(){addItem('people')};
+}
+
+function buildChronicleTab(el,d){
+  el.innerHTML='<div id="crList">'+(d.chronicle||[]).map(function(c,i){return '<div class="cr-i"><div class="cr-d" data-idx="'+i+'">✕</div>'+
+    '<div class="edit-f" style="margin-bottom:3px"><label>标签</label><input class="f-ct" value="'+esc(c.tag)+'"></div>'+
+    '<div class="edit-f" style="margin-bottom:3px"><label>标题</label><input class="f-ch" value="'+esc(c.title)+'"></div>'+
+    '<div class="edit-f"><label>内容</label><textarea class="f-cb" rows="2">'+esc(c.body)+'</textarea></div></div>'}).join('')+'</div>'+
+    '<div class="cr-a" id="addCr">+ 新增纪事条目</div>';
+  document.getElementById('addCr').onclick=function(){addItem('chronicle')};
+}
+
+function buildDataTab(el,d){
+  el.innerHTML='<p style="color:var(--muted);font-size:.7rem">你可以在这里粘贴之前导出的JSON数据来恢复。</p>'+
+    '<textarea id="jsonImport" rows="8" style="width:100%;background:rgba(124,92,252,.06);border:1px solid rgba(124,92,252,.1);border-radius:4px;padding:6px;color:var(--fg);font-family:monospace;font-size:.7rem;margin-top:6px" placeholder="粘贴JSON数据..."></textarea>'+
+    '<div style="display:flex;gap:8px;margin-top:6px"><button class="btn-s" id="importBtn" style="flex:1">📥 导入</button></div>';
+  document.getElementById('importBtn').onclick=function(){
+    try{var j=JSON.parse(document.getElementById('jsonImport').value);sv(j);rn(j);buildTabs();
+      var ok=document.getElementById('editOk');ok.textContent='✅ 导入成功';ok.classList.add('show');setTimeout(function(){ok.classList.remove('show');ok.textContent='✅ 已保存'},2000)}catch(e){alert('JSON解析失败：'+e.message)}
+  };
+}
+
+// ═══ Generic add item ═══
+function addItem(list){
+  var d2=ld();
+  if(list==='race'){if(!d2.race)d2.race=[];d2.race.push({n:'新特性',d:'描述……'});}
+  else if(list==='feats'){if(!d2.feats)d2.feats=[];d2.feats.push({n:'新专长',t:'等级标签',d:'描述……'});}
+  else if(list==='features'){if(!d2.features)d2.features=[];d2.features.push({n:'新特性',t:'频率',d:'描述……'});}
+  else if(list==='magic'){if(!d2.magic)d2.magic=[];d2.magic.push({n:'新物品',d:'描述……'});}
+  else if(list==='party'){if(!d2.party)d2.party=[];d2.party.push({n:'新旅伴',c:'职业'});}
+  else if(list==='people'){if(!d2.people)d2.people=[];d2.people.push('新人物|描述');}
+  else if(list==='chronicle'){if(!d2.chronicle)d2.chronicle=[];d2.chronicle.push({tag:'新章',title:'新纪事',body:'写下冒险经历……'});}
+  sv(d2);rn(d2);buildTabs();
+}
+
+// ═══ Collect form ═══
+function collect(){
+  var d=ld();
+  // Stats
+  ['lvl','prof','hp','ac','init','speed','pp','bi','dc','atk','slots','saves','skills','resist','tools','langs','equip','bg'].forEach(function(k){
+    var el=document.querySelector('.f-'+k);if(el)d[k]=el.value;
+  });
+  // Attrs
+  ['str','dex','con','int','wis','cha'].forEach(function(k){
+    var el=document.querySelector('.f-'+k);if(el)d[k]=el.value;
+  });
+  // Race
+  var rl=document.getElementById('raceList');
+  if(rl){d.race=[];rl.querySelectorAll('.sec-i').forEach(function(el){
+    d.race.push({n:(el.querySelector('.f-rn')||{}).value||'',d:(el.querySelector('.f-rd')||{}).value||''});
+  });}
+  // Feats
+  var fl=document.getElementById('featList');
+  if(fl){d.feats=[];fl.querySelectorAll('.sec-i').forEach(function(el){
+    d.feats.push({n:(el.querySelector('.f-fn')||{}).value||'',t:(el.querySelector('.f-ft')||{}).value||'',d:(el.querySelector('.f-fd')||{}).value||''});
+  });}
+  // Features (reuse featList id in class tab)
+  var ff=document.getElementById('featList');
+  if(ff&&curTab==='classf'){d.features=[];ff.querySelectorAll('.sec-i').forEach(function(el){
+    d.features.push({n:(el.querySelector('.f-fn')||{}).value||'',t:(el.querySelector('.f-ft')||{}).value||'',d:(el.querySelector('.f-fd')||{}).value||''});
+  });}
+  // Magic items
+  var ml=document.getElementById('magicList');
+  if(ml){d.magic=[];ml.querySelectorAll('.sec-i').forEach(function(el){
+    d.magic.push({n:(el.querySelector('.f-mn')||{}).value||'',d:(el.querySelector('.f-md')||{}).value||''});
+  });}
+  // Party
+  var pl=document.getElementById('partyList');
+  if(pl){d.party=[];pl.querySelectorAll('.sec-i').forEach(function(el){
+    d.party.push({n:(el.querySelector('.f-pn')||{}).value||'',c:(el.querySelector('.f-pc')||{}).value||''});
+  });}
+  // People
+  var pl2=document.getElementById('peopleList');
+  if(pl2){d.people=[];pl2.querySelectorAll('.sec-i').forEach(function(el){
+    d.people.push((el.querySelector('.f-ppl')||{}).value||'');
+  });}
+  // Chronicle
+  var cl=document.getElementById('crList');
+  if(cl){d.chronicle=[];cl.querySelectorAll('.cr-i').forEach(function(el){
+    d.chronicle.push({tag:(el.querySelector('.f-ct')||{}).value||'',title:(el.querySelector('.f-ch')||{}).value||'',body:(el.querySelector('.f-cb')||{}).value||''});
+  });}
   return d;
 }
 
-// ═══ Chronicle editor ═══
-function renderChronicleEditor(arr){
-  var el=document.getElementById('chronicleEditor');
-  if(!el)return;
-  el.innerHTML=arr.map(function(c,i){
-    return '<div class="cr-item">'+
-      '<div class="cr-del" data-idx="'+i+'">✕</div>'+
-      '<div class="edit-field" style="margin-bottom:3px"><label>标签</label><input class="cr-tag" value="'+c.tag+'" /></div>'+
-      '<div class="edit-field" style="margin-bottom:3px"><label>标题</label><input class="cr-title" value="'+c.title.replace(/"/g,'&quot;')+'" /></div>'+
-      '<div class="edit-field"><label>内容</label><textarea class="cr-body" rows="2">'+c.body+'</textarea></div>'+
-      '</div>';
-  }).join('');
-  el.querySelectorAll('.cr-del').forEach(function(btn){
-    btn.addEventListener('click',function(){
-      var idx=parseInt(this.getAttribute('data-idx'));
-      var d=collectForm();
-      d.chronicle.splice(idx,1);
-      save(d);render(d);populateForm(d);
-    });
-  });
-}
-
-function collectChronicle(){
-  var arr=[];
-  var items=document.querySelectorAll('#chronicleEditor .cr-item');
-  items.forEach(function(item){
-    arr.push({
-      tag:(item.querySelector('.cr-tag')||{}).value||'',
-      title:(item.querySelector('.cr-title')||{}).value||'',
-      body:(item.querySelector('.cr-body')||{}).value||''
-    });
-  });
-  return arr;
-}
-
-// ═══ Spell editor ═══
-function renderSpellEditor(sp){
-  var el=document.getElementById('spellEditor');
-  if(!el||!sp)return;
-  var levels=['cantrips','level1','level2','level3','instrument'];
-  var names={cantrips:'戏法',level1:'1环',level2:'2环',level3:'3环',instrument:'乐器'};
-  el.innerHTML='<h4>法术管理</h4>'+levels.map(function(k,i){
-    return '<div style="margin-bottom:6px"><div style="font-size:.7rem;color:var(--muted);margin-bottom:2px">'+names[k]+' <span style="color:var(--soft);cursor:pointer" class="sp-add" data-level="'+k+'">+</span></div>'+
-      (sp[k]||[]).map(function(s,j){
-        return '<div class="spell-item"><span class="sp-del" data-level="'+k+'" data-idx="'+j+'">✕</span> '+s.n+' <span style="color:var(--muted)">· '+s.s+'</span></div>';
-      }).join('')+'</div>';
-  }).join('');
-  el.querySelectorAll('.sp-del').forEach(function(btn){
-    btn.addEventListener('click',function(){
-      var level=this.getAttribute('data-level'),idx=parseInt(this.getAttribute('data-idx'));
-      var d=collectForm();
-      if(d.spells[level])d.spells[level].splice(idx,1);
-      save(d);render(d);populateForm(d);
-    });
-  });
-  el.querySelectorAll('.sp-add').forEach(function(btn){
-    btn.addEventListener('click',function(){
-      var level=this.getAttribute('data-level');
-      var name=prompt('输入法术名称：');
-      if(!name)return;
-      var school=prompt('学派（如 塑能、惑控）：')||'';
-      var desc=prompt('简述：')||'';
-      var meta=prompt('施法信息：')||'';
-      var d=collectForm();
-      if(!d.spells[level])d.spells[level]=[];
-      d.spells[level].push({n:name,s:school,d:desc,m:meta});
-      save(d);render(d);populateForm(d);
-    });
-  });
-}
-
-function collectSpells(){
-  var sp={cantrips:[],level1:[],level2:[],level3:[],instrument:[]};
-  try{
-    var d=load();
-    if(d.spells){
-      Object.keys(d.spells).forEach(function(k){sp[k]=d.spells[k]});
-    }
-  }catch(e){}
-  return sp;
-}
-
 // ═══ Init ═══
-render(load());
+rn(ld());
+buildTabs();
 
-// Edit panel
-var editBtn=document.getElementById('editBtn'),panel=document.getElementById('editPanel'),open=false;
-editBtn.addEventListener('click',function(){
-  open=!open;panel.classList.toggle('open',open);editBtn.classList.toggle('active',open);
-  if(open)populateForm(load());
+document.getElementById('editBtn').addEventListener('click',function(){
+  var p=document.getElementById('editPanel'),b=this;
+  p.classList.toggle('open');b.classList.toggle('active');
+  if(p.classList.contains('open'))fillForm(ld());
 });
 
+function fillForm(d){/*rebuild tabs handles this*/}
+
 document.getElementById('saveBtn').addEventListener('click',function(){
-  var d=collectForm();save(d);render(d);
-  var s=document.getElementById('editSuccess');s.classList.add('show');
-  setTimeout(function(){s.classList.remove('show')},2000);
+  var d=collect();sv(d);rn(d);
+  var ok=document.getElementById('editOk');ok.classList.add('show');
+  setTimeout(function(){ok.classList.remove('show')},2000);
 });
 
 document.getElementById('resetBtn').addEventListener('click',function(){
-  localStorage.removeItem('sunday_data');
-  render(DEFAULTS);populateForm(DEFAULTS);
-  var s=document.getElementById('editSuccess');s.textContent='🔄 已重置';s.classList.add('show');
-  setTimeout(function(){s.textContent='✅ 已保存';s.classList.remove('show')},2000);
+  localStorage.removeItem(KEY);var d=JSON.parse(JSON.stringify(D));rn(d);buildTabs();
+  var ok=document.getElementById('editOk');ok.textContent='🔄 已重置';ok.classList.add('show');
+  setTimeout(function(){ok.textContent='✅ 已保存';ok.classList.remove('show')},2000);
 });
 
 document.getElementById('exportBtn').addEventListener('click',function(){
-  var d=collectForm();save(d);
-  var blob=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});
-  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='sunday_data.json';a.click();
+  var d=collect();sv(d);
+  var b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='sunday_char_data.json';a.click();
 });
 
-document.getElementById('addChronicleBtn').addEventListener('click',function(){
-  var d=collectForm();
-  d.chronicle.push({tag:'新章',title:'新纪事',body:'在这里写下冒险经历……'});
-  save(d);render(d);populateForm(d);
+// Delete handlers (delegated)
+document.addEventListener('click',function(e){
+  var t=e.target;
+  if(t.classList.contains('sec-d')||t.classList.contains('cr-d')){
+    var idx=parseInt(t.getAttribute('data-idx'));
+    var list=t.getAttribute('data-list')||'chronicle';
+    var d=ld();
+    if(d[list])d[list].splice(idx,1);
+    sv(d);rn(d);buildTabs();
+  }
 });
 
 // ═══ Audio ═══
@@ -491,8 +580,6 @@ e.style.cssText='left:'+sx+'%;width:'+sz+'px;height:'+sz*.45+'px;opacity:0;filte
 var kf=[{opacity:0,transform:'translateY(0) translateX(0) rotate('+ro+'deg)',offset:0},{opacity:op,transform:'translateY(10vh) translateX('+dr*.2+'px) rotate('+(ro+sp*.15)+'deg)',offset:.08},{opacity:op,transform:'translateY(40vh) translateX('+dr*.5+'px) rotate('+(ro+sp*.4)+'deg)',offset:.35},{opacity:op*.8,transform:'translateY(70vh) translateX('+dr*.8+'px) rotate('+(ro+sp*.7)+'deg)',offset:.65},{opacity:0,transform:'translateY(105vh) translateX('+dr+'px) rotate('+(ro+sp)+'deg)',offset:1}];
 var ti={duration:du*1000,delay:de*1000,easing:'cubic-bezier(0.25,0.46,0.45,0.94)',fill:'forwards'};c.appendChild(e);var an=e.animate(kf,ti);an.onfinish=function(){e.remove()}}
 for(var i=0;i<12;i++)setTimeout(f,i*400);var st=setInterval(f,1800);document.addEventListener('visibilitychange',function(){if(document.hidden)clearInterval(st);else st=setInterval(f,1800)})})();
-
-})();
 </script>
 </body>
 </html>
