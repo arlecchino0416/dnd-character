@@ -79,6 +79,36 @@
     background:var(--accent);cursor:pointer;border:none;
   }
 
+  /* ═════ PROGRESS BAR ═════ */
+  .progress-wrap{
+    display:flex;align-items:center;gap:6px;
+    flex:1;min-width:0;
+  }
+  .progress-bar{
+    flex:1;height:4px;border-radius:2px;
+    background:rgba(124,92,252,.12);cursor:pointer;
+    position:relative;min-width:40px;
+    transition:height .15s;
+  }
+  .progress-bar:hover{height:6px}
+  .progress-fill{
+    height:100%;border-radius:2px;
+    background:linear-gradient(90deg,var(--accent),var(--gold));
+    width:0%;position:relative;
+  }
+  .progress-fill::after{
+    content:'';position:absolute;right:-4px;top:-3px;
+    width:10px;height:10px;border-radius:50%;
+    background:var(--gold);opacity:0;
+    transition:opacity .15s;
+  }
+  .progress-bar:hover .progress-fill::after{opacity:1}
+  .time-display{
+    font-size:.6rem;color:var(--muted);
+    font-variant-numeric:tabular-nums;white-space:nowrap;
+    min-width:55px;text-align:center;
+  }
+
   /* ═══════════════════ EXISTING STYLES ═══════════════════ */
   h1{font-size:1.8rem;font-weight:900;letter-spacing:3px;background:linear-gradient(135deg,#f0e6ff,#7c5cfc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
   h2{font-size:1.15rem;font-weight:700;color:var(--soft);margin:28px 0 10px;padding-bottom:5px;border-bottom:1.5px solid rgba(124,92,252,.2);display:flex;align-items:center;gap:8px}
@@ -169,14 +199,18 @@
 <!-- ═══════════════════ MUSIC CONTROLS ═══════════════════ -->
 <div class="music-bar" id="musicBar">
   <button class="music-btn" id="musicToggle" title="播放/暂停音乐">▶</button>
-  <div class="music-label">
-    <span class="track" id="trackLabel">星期日 · 主题</span>
-    <span id="musicStatus">点击播放</span>
+  <div class="progress-wrap">
+    <div class="progress-bar" id="progressBar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <span class="time-display" id="timeDisplay">0:00 / 4:57</span>
   </div>
   <div class="vol-slider" id="volSlider">
     <input type="range" id="volControl" min="0" max="1" step="0.05" value="0.3" />
   </div>
 </div>
+
+<audio id="bgAudio" preload="auto" style="display:none"></audio>
 
 <!-- ═══════════════════ PAGE CONTENT ═══════════════════ -->
 <div class="pg">
@@ -630,103 +664,145 @@
     }
   });
 
-  /* ═══════════════════════════ MUSIC PLAYER ═══════════════════════════ */
+  /* ═══════════════════════════ MUSIC PLAYER (HTML5 Audio) ═══════════════════════════ */
+  const audio = document.getElementById('bgAudio');
   const toggleBtn = document.getElementById('musicToggle');
-  const statusEl = document.getElementById('musicStatus');
+  const progressBar = document.getElementById('progressBar');
+  const progressFill = document.getElementById('progressFill');
+  const timeDisplay = document.getElementById('timeDisplay');
   const volSlider = document.getElementById('volControl');
-  const trackLabel = document.getElementById('trackLabel');
+
+  // Audio source hosted on GitHub Pages
+  audio.src = 'sunday_audio.mp4';
+  audio.volume = 0.3;
 
   let isPlaying = false;
-  let biliIframe = null;
-  let currentVolume = 0.3;
+  let isSeeking = false;
 
-  const BVID = CONFIG.BVID;
-  const EMBED_URL = `https://player.bilibili.com/player.html?bvid=${BVID}&page=1&high_quality=1&danmaku=0&dark_theme=1`;
-  trackLabel.textContent = '星期日 · 谁陨落了我的太阳';
-
-  // Hide the iframe off-screen — audio plays, video invisible
-  function createBiliIframe(autoplay) {
-    removeBiliIframe();
-    biliIframe = document.createElement('iframe');
-    const src = EMBED_URL + (autoplay ? '&autoplay=1' : '&autoplay=0');
-    biliIframe.src = src;
-    biliIframe.style.cssText = 'position:absolute;top:-9999px;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;border:none;';
-    biliIframe.allow = 'autoplay';
-    biliIframe.id = 'bili-player';
-    document.body.appendChild(biliIframe);
-
-    // Wait for load then set volume
-    biliIframe.onload = () => {
-      // Wait a bit then send volume
-      setTimeout(() => setBiliVolume(currentVolume), 500);
-    };
+  function formatTime(sec) {
+    if (!sec || isNaN(sec)) return '0:00';
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return m + ':' + (s < 10 ? '0' : '') + s;
   }
 
-  function removeBiliIframe() {
-    if (biliIframe) {
-      biliIframe.remove();
-      biliIframe = null;
-    }
-  }
-
-  function setBiliVolume(vol) {
-    if (!biliIframe || !biliIframe.contentWindow) return;
-    try {
-      biliIframe.contentWindow.postMessage({
-        command: 'setVolume',
-        value: vol
-      }, '*');
-    } catch(e) {
-      // Silently fail - B站 postMessage 有时不支持
+  function updateProgress() {
+    if (audio.duration && !isSeeking) {
+      const pct = (audio.currentTime / audio.duration) * 100;
+      progressFill.style.width = pct + '%';
+      timeDisplay.textContent = formatTime(audio.currentTime) + ' / ' + formatTime(audio.duration);
     }
   }
 
   function toggleMusic() {
     if (isPlaying) {
-      if (biliIframe && biliIframe.contentWindow) {
-        try {
-          biliIframe.contentWindow.postMessage({ command: 'pause' }, '*');
-        } catch(e) {}
-      }
-      removeBiliIframe();
-      isPlaying = false;
-      toggleBtn.textContent = '▶';
-      toggleBtn.classList.remove('playing');
-      statusEl.textContent = '已暂停';
+      audio.pause();
     } else {
-      createBiliIframe(true);
-      isPlaying = true;
-      toggleBtn.textContent = '⏸';
-      toggleBtn.classList.add('playing');
-      statusEl.textContent = '播放中';
+      // If ended, restart from beginning
+      if (audio.ended) {
+        audio.currentTime = 0;
+      }
+      audio.play().catch(function(e) {
+        // Autoplay blocked, need user interaction
+        timeDisplay.textContent = '点击播放';
+      });
     }
   }
 
+  // ── Audio events ──
+  audio.addEventListener('play', function() {
+    isPlaying = true;
+    toggleBtn.textContent = '⏸';
+    toggleBtn.classList.add('playing');
+  });
+
+  audio.addEventListener('pause', function() {
+    isPlaying = false;
+    toggleBtn.textContent = '▶';
+    toggleBtn.classList.remove('playing');
+  });
+
+  audio.addEventListener('timeupdate', updateProgress);
+
+  audio.addEventListener('loadedmetadata', function() {
+    timeDisplay.textContent = '0:00 / ' + formatTime(audio.duration);
+  });
+
+  audio.addEventListener('ended', function() {
+    isPlaying = false;
+    toggleBtn.textContent = '▶';
+    toggleBtn.classList.remove('playing');
+    progressFill.style.width = '0%';
+    timeDisplay.textContent = '0:00 / ' + formatTime(audio.duration);
+  });
+
+  // ── Toggle button ──
   toggleBtn.addEventListener('click', toggleMusic);
 
-  // Volume control via postMessage
-  volSlider.addEventListener('input', () => {
-    currentVolume = parseFloat(volSlider.value);
-    const pct = Math.round(currentVolume * 100);
-    statusEl.textContent = `音量 ${pct}%`;
-    setBiliVolume(currentVolume);
-    setTimeout(() => {
-      if (isPlaying) statusEl.textContent = '播放中';
-      else statusEl.textContent = '已暂停';
-    }, 1000);
+  // ── Progress bar (seek) ──
+  progressBar.addEventListener('mousedown', function(e) {
+    isSeeking = true;
+    seekAudio(e);
   });
 
-  // Keyboard shortcut
-  document.addEventListener('keydown', (e) => {
+  document.addEventListener('mousemove', function(e) {
+    if (isSeeking) seekAudio(e);
+  });
+
+  document.addEventListener('mouseup', function() {
+    isSeeking = false;
+  });
+
+  // Touch support for mobile
+  progressBar.addEventListener('touchstart', function(e) {
+    isSeeking = true;
+    seekAudioTouch(e);
+  }, {passive: true});
+
+  document.addEventListener('touchmove', function(e) {
+    if (isSeeking) seekAudioTouch(e);
+  }, {passive: true});
+
+  document.addEventListener('touchend', function() {
+    isSeeking = false;
+  });
+
+  function seekAudio(e) {
+    if (!audio.duration) return;
+    const rect = progressBar.getBoundingClientRect();
+    const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+    const pct = x / rect.width;
+    audio.currentTime = pct * audio.duration;
+    progressFill.style.width = (pct * 100) + '%';
+    timeDisplay.textContent = formatTime(audio.currentTime) + ' / ' + formatTime(audio.duration);
+  }
+
+  function seekAudioTouch(e) {
+    if (!audio.duration) return;
+    const touch = e.touches[0];
+    if (!touch) return;
+    const rect = progressBar.getBoundingClientRect();
+    const x = Math.max(0, Math.min(touch.clientX - rect.left, rect.width));
+    const pct = x / rect.width;
+    audio.currentTime = pct * audio.duration;
+    progressFill.style.width = (pct * 100) + '%';
+    timeDisplay.textContent = formatTime(audio.currentTime) + ' / ' + formatTime(audio.duration);
+  }
+
+  // ── Volume control ──
+  volSlider.addEventListener('input', function() {
+    audio.volume = parseFloat(volSlider.value);
+  });
+
+  // ── Keyboard shortcut ──
+  document.addEventListener('keydown', function(e) {
     if ((e.key === 'm' || e.key === 'M') && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      e.preventDefault();
       toggleMusic();
       toggleBtn.style.transform = 'scale(1.2)';
-      setTimeout(() => toggleBtn.style.transform = '', 150);
+      setTimeout(function() { toggleBtn.style.transform = ''; }, 150);
     }
   });
-
-  statusEl.textContent = '点击播放';
-  toggleBtn.disabled = false;
 
 })();
 </script>
