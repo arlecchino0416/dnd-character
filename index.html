@@ -495,7 +495,7 @@ document.addEventListener('click',function(e){
 
 // ═══ Audio ═══
 var audio=document.getElementById('bgAudio'),tb=document.getElementById('musicToggle'),pb=document.getElementById('progressBar'),pf=document.getElementById('progressFill'),td=document.getElementById('timeDisplay'),vs=document.getElementById('volControl');
-audio.src='https://upos-sz-mirrorcosov.bilivideo.com/upgcxcode/66/13/26715031366/26715031366-1-192.mp4?e=ig8euxZM2rNcNbRjhwdVhwdlhWTVhwdVhoNvNC8BqJIzNbfq9rVEuxTEnE8L5F6VnEsSTx0vkX8fqJeYTj_lta53NCM=&deadline=1782362053&platform=html5&uipk=5&trid=22824c0522544382bb2cb22412f52ceh&gen=playurlv3&og=hw&mid=0&oi=2366345797&nbs=1&os=cosovbv&upsig=d23a430097e8fed015465016ea973b02&uparams=e,deadline,platform,uipk,trid,gen,og,mid,oi,nbs,os&bvc=vod&nettype=0&bw=1280910&lrs=0&dl=0&f=h_0_0&aggr=0&buvid=&build=0&orderid=0,1';
+audio.src='sunday_bgm.mp4';
 audio.volume=0.3;var ip=false,is=false;
 function ft(t){return t&&!isNaN(t)?Math.floor(t/60)+':'+(Math.floor(t%60)+'').padStart(2,'0'):'0:00'}
 tb.addEventListener('click',function(){if(ip)audio.pause();else{if(audio.ended)audio.currentTime=0;audio.play().catch(function(){})}});
