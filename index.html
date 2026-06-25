@@ -189,6 +189,18 @@
     .music-bar{bottom:12px;right:12px;padding:6px 12px 6px 10px}
     .music-label{max-width:80px}
   }
+
+  /* ═══ SPELL CARDS ═══ */
+  .spell-block{margin:14px 0}
+  .sb-hd{font-size:.8rem;font-weight:600;color:var(--soft);padding:4px 0 2px;margin-bottom:2px;border-left:3px solid var(--accent);padding-left:8px}
+  .spell-row{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .spell-card{border:1px solid rgba(124,92,252,.05);border-radius:5px;padding:6px 9px;background:rgba(255,255,255,.012)}
+  .sc-hd{font-size:.76rem;color:#c8b8e0;font-weight:500}
+  .sc-school{font-size:.62rem;color:#6a5a8a;font-weight:400}
+  .sc-desc{font-size:.7rem;color:#b0a0c8;line-height:1.55;margin-top:3px}
+  .sc-meta{font-size:.62rem;color:#5a4a7a;margin-top:3px;font-family:monospace}
+  .inst-card{border:1px solid rgba(124,92,252,.05);border-radius:5px;padding:5px 8px;background:rgba(255,255,255,.012)}
+  @media(max-width:560px){.spell-row{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -224,13 +236,13 @@
 
 <!-- PORTRAIT -->
 <div class="portrait-wrap">
-  <img src="sunday_splash.webp" alt="星期日" />
+  <img src="sunday_splash.jpg" alt="星期日" />
 </div>
 
 <!-- 基本数据 -->
 <div class="info-grid">
   <div class="ig"><div class="lb">护甲等级</div><div class="vl">15</div></div>
-  <div class="ig"><div class="lb">生命值</div><div class="vl">45（20+5颗八面骰）</div></div>
+  <div class="ig"><div class="lb">生命值</div><div class="vl">45（20+5d8）</div></div>
   <div class="ig"><div class="lb">先攻加值</div><div class="vl">+4</div></div>
   <div class="ig"><div class="lb">速度</div><div class="vl">30尺（变身可飞行30尺）</div></div>
   <div class="ig"><div class="lb">熟练加值</div><div class="vl">+3</div></div>
@@ -350,60 +362,164 @@
 </div>
 
 <div class="spell-group">
-  <div class="sg-title">戏法（0环）— 可以随意施放</div>
-  <div class="g-auto">
-    <div class="spell"><span class="sn">光亮术</span> <span class="ss">· 塑能 · 天生施法</span></div>
-    <div class="spell"><span class="sn">修复术</span> <span class="ss">· 变化</span></div>
-    <div class="spell"><span class="sn">恶言相加</span> <span class="ss">· 惑控</span></div>
-    <div class="spell"><span class="sn">流光闪灵</span> <span class="ss">· 塑能 · 歌织者额外获得</span></div>
-    <div class="spell"><span class="sn">魔法伎俩</span> <span class="ss">· 变化</span></div>
+  <div class="sg-title">法术详述</h2>
+<div style="margin-bottom:6px">
+  <span class="tag tag-b">施法属性：魅力</span>
+  <span class="tag tag-b">法术难度等级（DC）：16</span>
+  <span class="tag tag-b">法术攻击加值：+8</span>
+  <span class="tag" style="color:var(--muted)">施法位数量：4/3/3（1环/2环/3环）</span>
+</div>
+
+<div class="spell-block">
+  <div class="sb-hd">戏法（0环）— 可随意施放，不消耗法术位</div>
+  <div class="spell-row">
+    <div class="spell-card">
+      <div class="sc-hd">光亮术 <span class="sc-school">· 塑能</span></div>
+      <div class="sc-desc">你触碰一个物件，使其发出半径20尺的明亮光照 + 20尺微光光照。可以设定颜色。持续1小时，可被解除魔法驱散。</div>
+      <div class="sc-meta">施法：动作 · 距离：触碰 · 成分：V、S · 持续：1小时</div>
+    </div>
+    <div class="spell-card">
+      <div class="sc-hd">修复术 <span class="sc-school">· 变化</span></div>
+      <div class="sc-desc">修复一个破损物件上的单处断裂或裂缝，例如断链、磨损的绳索、破洞等。裂隙不超过1尺时完全修复。不能修复魔法物品。</div>
+      <div class="sc-meta">施法：1分钟 · 距离：触碰 · 成分：V、S、M · 持续：立即</div>
+    </div>
+    <div class="spell-card">
+      <div class="sc-hd">恶言相加 <span class="sc-school">· 惑控</span></div>
+      <div class="sc-desc">你对施法距离内一个能听见你声音的生物说出一段蕴含魔法力量的侮辱。目标必须通过感知豁免，否则受到1d4点心灵伤害，并在其下一回合结束前的首次攻击检定中承受劣势。</div>
+      <div class="sc-meta">施法：附赠 · 距离：60尺 · 成分：V · 持续：立即 · 强化（5/11/17级）：伤害+1d4</div>
+    </div>
+    <div class="spell-card">
+      <div class="sc-hd">流光闪灵 <span class="sc-school">· 塑能</span></div>
+      <div class="sc-desc">歌织者的专属戏法。你创造一颗闪耀的魔法星火射向目标。远程法术攻击，命中造成1d8点光耀伤害，并且目标在下一回合结束前无法受益于隐形效果。</div>
+      <div class="sc-meta">施法：动作 · 距离：120尺 · 成分：V、S · 持续：立即 · 强化：5/11/17级+1d8</div>
+    </div>
+    <div class="spell-card">
+      <div class="sc-hd">魔法伎俩 <span class="sc-school">· 变化</span></div>
+      <div class="sc-desc">一种基础的魔法把戏。你可以在一回合内做出以下效应之一：让物件改变颜色/温度、清洁或弄脏物件、制造一小撮无害的味道/声音/火花、点燃或吹熄蜡烛。</div>
+      <div class="sc-meta">施法：动作 · 距离：30尺 · 成分：V、S · 持续：至多1小时</div>
+    </div>
   </div>
 </div>
 
-<div class="spell-group">
-  <div class="sg-title">1环法术（4个法术位）</div>
-  <div class="g-auto">
-    <div class="spell"><span class="sn">命令术</span> <span class="ss">· 惑控</span></div>
-    <div class="spell"><span class="sn">治愈真言</span> <span class="ss">· 防护</span></div>
-    <div class="spell"><span class="sn">羽落术</span> <span class="ss">· 变化</span></div>
-    <div class="spell"><span class="sn">妖火</span> <span class="ss">· 塑能</span></div>
+<div class="spell-block">
+  <div class="sb-hd" style="border-left-color:var(--blue)">1环法术（4个法术位）</div>
+  <div class="spell-row">
+    <div class="spell-card">
+      <div class="sc-hd">命令术 <span class="sc-school">· 惑控</span></div>
+      <div class="sc-desc">你对施法距离内一个生物说出一个单字命令。目标必须通过感知豁免，否则必须立即服从命令执行行动，可选命令有：Approach（靠近）、Drop（丢弃）、Flee（逃跑）、Grovel（跪地）、Halt（停步）、Beckon（过来）。</div>
+      <div class="sc-meta">施法：动作 · 距离：60尺 · 成分：V · 持续：1轮 · 升环（2+环）：每升1环多影响1目标</div>
+    </div>
+    <div class="spell-card">
+      <div class="sc-hd">治愈真言 <span class="sc-school">· 防护</span></div>
+      <div class="sc-desc">你念诵一段简短而充满力量的治愈祷言。施法距离内一个你可见的生物恢复1d4+你的施法属性调整值（魅力+5）点生命值。这是战斗中最快最省动作的治疗手段。</div>
+      <div class="sc-meta">施法：附赠 · 距离：60尺 · 成分：V · 持续：立即 · 升环：每升1环+1d4</div>
+    </div>
+    <div class="spell-card">
+      <div class="sc-hd">羽落术 <span class="sc-school">· 变化</span></div>
+      <div class="sc-desc">当你或有生物坠落的瞬间施放此法术。最多5个生物的坠落速度急剧减慢，不受坠落伤害。以反应施放，用于应对突然的坠落、陷阱或被打下悬崖。</div>
+      <div class="sc-meta">施法：反应 · 距离：60尺 · 成分：V、M · 持续：1分钟</div>
+    </div>
+    <div class="spell-card">
+      <div class="sc-hd">妖火 <span class="sc-school">· 塑能</span></div>
+      <div class="sc-desc">施法距离内20尺立方区域内的生物被蓝绿色火光勾勒出轮廓。失败敏捷豁免的生物发出微光，攻击者对其攻击检定获得优势（advantage）。隐形生物也清晰可见。</div>
+      <div class="sc-meta">施法：动作 · 距离：60尺 · 成分：V · 持续：专注至多1分钟 · 升环（2+环）+1d6区域</div>
+    </div>
   </div>
 </div>
 
-<div class="spell-group">
-  <div class="sg-title">2环法术（3个法术位）</div>
-  <div class="g-auto">
-    <div class="spell"><span class="sn">沉默术</span> <span class="ss">· 幻术</span></div>
-    <div class="spell"><span class="sn">人类定身术</span> <span class="ss">· 惑控</span></div>
-    <div class="spell"><span class="sn">暗示术</span> <span class="ss">· 惑控</span></div>
-    <div class="spell"><span class="sn">识破隐形</span> <span class="ss">· 预言</span></div>
+<div class="spell-block">
+  <div class="sb-hd" style="border-left-color:var(--green)">2环法术（3个法术位）</div>
+  <div class="spell-row">
+    <div class="spell-card">
+      <div class="sc-hd">沉默术 <span class="sc-school">· 幻术</span></div>
+      <div class="sc-desc">施法距离内某处40尺半径球状区域被绝对的寂静笼罩。区域内所有声音消失，完全阻隔交谈、法术施放（需要言语成分的法术无法施放），也无法发出声音。对施法者极为有效的控制手段。</div>
+      <div class="sc-meta">施法：动作 · 距离：120尺 · 成分：V、S · 持续：专注至多10分钟</div>
+    </div>
+    <div class="spell-card">
+      <div class="sc-hd">人类定身术 <span class="sc-school">· 惑控</span></div>
+      <div class="sc-desc">选择施法距离内一个人形生物，目标必须通过感知豁免，否则被麻痹——完全无法移动、无法说话、无法做任何动作。每回合结束时目标可再尝试一次豁免解除。对类人生物特攻。</div>
+      <div class="sc-meta">施法：动作 · 距离：60尺 · 成分：V、S、M · 持续：专注至多1分钟 · 升环（3+环）：每升1环多影响1目标</div>
+    </div>
+    <div class="spell-card">
+      <div class="sc-hd">暗示术 <span class="sc-school">· 惑控</span></div>
+      <div class="sc-desc">你用一句简短的话暗示一个生物。目标必须通过感知豁免，否则会竭尽全力去执行你的指令。指令必须简短且合理（例如"把你的钥匙给我""带我们去你们的营地"）——伤害自身或明显荒谬的指令会结束法术。</div>
+      <div class="sc-meta">施法：动作 · 距离：30尺 · 成分：V、M · 持续：专注至多8小时 · 升环（3+环）+1目标</div>
+    </div>
+    <div class="spell-card">
+      <div class="sc-hd">识破隐形 <span class="sc-school">· 预言</span></div>
+      <div class="sc-desc">你获得看透隐形、灵体及隐藏魔法陷阱的能力。持续期间你能看到所有隐形的生物和物件、看到灵体位面的生物、及任何隐藏的魔法陷阱。探索和反潜行的必备法术。</div>
+      <div class="sc-meta">施法：动作 · 距离：自身 · 成分：V、S、M · 持续：专注至多1小时</div>
+    </div>
   </div>
 </div>
 
-<div class="spell-group">
-  <div class="sg-title">3环法术（3个法术位）</div>
-  <div class="g-auto">
-    <div class="spell"><span class="sn">解除魔法</span> <span class="ss">· 防护</span></div>
-    <div class="spell"><span class="sn">死者交谈</span> <span class="ss">· 死灵</span></div>
-    <div class="spell"><span class="sn">举目皆敌</span> <span class="ss">· 惑控</span></div>
+<div class="spell-block">
+  <div class="sb-hd" style="border-left-color:var(--red)">3环法术（3个法术位）</div>
+  <div class="spell-row">
+    <div class="spell-card">
+      <div class="sc-hd">解除魔法 <span class="sc-school">· 防护</span></div>
+      <div class="sc-desc">选择施法距离内一个生物、物件或魔法效应，终止其上持续中的任何法术，环阶等于或低于施法位等级的直接解除。高阶法术需进行DC10+法术环阶的魅力检定（你的施法属性）。</div>
+      <div class="sc-meta">施法：动作 · 距离：120尺 · 成分：V、S · 持续：立即 · 升环：自动解除等于施法位环阶的法术</div>
+    </div>
+    <div class="spell-card">
+      <div class="sc-hd">死者交谈 <span class="sc-school">· 死灵</span></div>
+      <div class="sc-desc">你触碰一具尸体（不能是无心智的不死生物或没有嘴巴），以天界语、通用语等它能理解的语言与之交谈。允许问5个问题，尸体所知仅为生前信息，不受欺骗/蛊惑类法术影响。</div>
+      <div class="sc-meta">施法：动作 · 距离：触碰 · 成分：V、S、M · 持续：10分钟 · 目标：一具尸体</div>
+    </div>
+    <div class="spell-card">
+      <div class="sc-hd">举目皆敌 <span class="sc-school">· 惑控</span></div>
+      <div class="sc-desc">你扭曲一个生物的感知，让它认为周围所有人都是敌人。目标必须通过感知豁免，否则对施法距离内所有生物视为敌人。目标的回合内，它必须攻击离它最近的生物，否则将用尽移动力靠近威胁。每回合结束时可重复豁免。</div>
+      <div class="sc-meta">施法：动作 · 距离：120尺 · 成分：V、S · 持续：专注至多1分钟</div>
+    </div>
   </div>
 </div>
 
-<div class="spell-group">
-  <div class="sg-title" style="border-left-color:var(--gold)">克里里拉琴 · 乐器法术（每个法术每天可使用一次）</div>
-  <div class="g-auto">
-    <div class="spell"><span class="sn">飞行术</span> <span class="ss">· 变化</span></div>
-    <div class="spell"><span class="sn">隐形术</span> <span class="ss">· 幻术</span></div>
-    <div class="spell"><span class="sn">浮空术</span> <span class="ss">· 变化</span></div>
-    <div class="spell"><span class="sn">防护善恶</span> <span class="ss">· 防护</span></div>
-    <div class="spell"><span class="sn">塑石术</span> <span class="ss">· 变化</span></div>
-    <div class="spell"><span class="sn">火墙术</span> <span class="ss">· 塑能</span></div>
-    <div class="spell"><span class="sn">风墙术</span> <span class="ss">· 塑能</span></div>
+<div class="spell-block">
+  <div class="sb-hd" style="border-left-color:var(--gold);color:var(--gold)">✦ 克里里拉琴 · 乐器法术</div>
+  <div class="spell-row">
+    <div class="inst-card">
+      <div class="sc-hd">飞行术 <span class="sc-school">· 变化</span></div>
+      <div class="sc-desc">你触碰一个同伴，对方获得60尺飞行速度。可控制飞行方向和高度，持续到法术结束。</div>
+      <div class="sc-meta">施法：动作 · 触碰 · 专注至多10分钟</div>
+    </div>
+    <div class="inst-card">
+      <div class="sc-hd">隐形术 <span class="sc-school">· 幻术</span></div>
+      <div class="sc-desc">触碰一个生物使其完全看不见——包括它身上的装备和物品。攻击或施放伤害性法术后隐形结束。</div>
+      <div class="sc-meta">施法：动作 · 触碰 · 专注至多1小时</div>
+    </div>
+    <div class="inst-card">
+      <div class="sc-hd">浮空术 <span class="sc-school">· 变化</span></div>
+      <div class="sc-desc">选择一生物或物件垂直上升不超过20尺，在该位置悬浮整个持续期间。可左右轻微摆动但不能横向移动。</div>
+      <div class="sc-meta">施法：动作 · 60尺 · 专注至多10分钟</div>
+    </div>
+    <div class="inst-card">
+      <div class="sc-hd">防护善恶 <span class="sc-school">· 防护</span></div>
+      <div class="sc-desc">触碰一个同伴，对方获得针对天界生物/元素/精类/魔族/不死亡灵的防护：对方攻击该生物时劣势，该生物攻击被防护者时优势。同时免疫魅惑、恐惧和附身。</div>
+      <div class="sc-meta">施法：动作 · 触碰 · 专注至多10分钟</div>
+    </div>
+    <div class="inst-card">
+      <div class="sc-hd">塑石术 <span class="sc-school">· 变化</span></div>
+      <div class="sc-desc">施法距离内一块5尺立方的石头改变形状。可用于造门、封墙、架桥、雕刻等。不能造成伤害或创造精细机关。</div>
+      <div class="sc-meta">施法：动作 · 触碰 · 持续：立即</div>
+    </div>
+    <div class="inst-card">
+      <div class="sc-hd">火墙术 <span class="sc-school">· 塑能</span></div>
+      <div class="sc-desc">你创造一道火焰组成的墙。穿越火墙的生物受到5d8火焰伤害。火墙会遮蔽视线，持续期间阻隔通道。可用作控制战场或保护阵地。</div>
+      <div class="sc-meta">施法：动作 · 120尺 · 专注至多1分钟</div>
+    </div>
+    <div class="inst-card">
+      <div class="sc-hd">风墙术 <span class="sc-school">· 塑能</span></div>
+      <div class="sc-desc">你创造一道呼啸的强风气墙。穿墙的远程武器攻击自动失效（箭矢、弩矢等），小型飞行生物无法穿越。气体状的攻击也被完全阻隔。</div>
+      <div class="sc-meta">施法：动作 · 120尺 · 专注至多1分钟</div>
+    </div>
   </div>
+  <div style="font-size:.65rem;color:var(--muted);margin-top:4px">※ 以上法术每日各可使用一次，次日黎明恢复。</div>
 </div>
 
-<!-- 装备 -->
-<h2>装备与物品</h2>
+<hr style="border:none;border-top:1px solid rgba(124,92,252,.08);margin:16px 0">
+
+<!-- ══════════════════════ EQUIPMENT ══════════════════════ -->
+<h2>✦ <h2>装备与物品</h2>
 <div class="card">
   <p>
     <span class="eq eq-gold">641金币</span>
