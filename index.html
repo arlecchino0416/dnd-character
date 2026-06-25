@@ -127,6 +127,7 @@ h2::before{content:"◇";font-size:.7rem;color:var(--accent)}
 .party .pc{background:var(--card);border:1px solid rgba(124,92,252,.06);border-radius:7px;padding:6px 12px;font-size:.78rem}
 .party .pc .nm{color:#d0bcf0;font-weight:600}
 .party .pc .cl{color:var(--muted);font-size:.7rem}
+.party .pc .pn{font-size:.68rem;color:#b0a0c8;margin-top:4px;padding:2px 6px;background:rgba(124,92,252,.04);border-radius:4px;line-height:1.4}
 .eq{display:inline-block;background:rgba(124,92,252,.03);border:1px solid rgba(124,92,252,.06);border-radius:4px;padding:2px 7px;margin:1px;font-size:.74rem;color:#b0a0c8}
 .eq-gold{background:rgba(212,160,87,.05);border-color:rgba(212,160,87,.08);color:#e0c080}
 </style>
@@ -183,9 +184,9 @@ magic:[
   {n:'火焰抗性戒指',d:'佩戴后获得对火焰伤害的抗性。'}
 ],
 party:[
-  {n:'加洛奈斯',c:'希拉西风宗·战士'},
-  {n:'马洛',c:'阿斯莫·审判领域·圣武士'},
-  {n:'艾特拉',c:'人类·复生幽影术·术士'}
+  {n:'加洛奈斯',c:'希拉西风宗·战士',note:''},
+  {n:'马洛',c:'阿斯莫·审判领域·圣武士',note:''},
+  {n:'艾特拉',c:'人类·复生幽影术·术士',note:''}
 ],
 people:[
   '克里斯蒂娜|预言法师·父哈丁·汐坤结识','雷纳德|黑马佣兵团二把手·汐坤结识','莱丝卡|女神判官→格拉西亚新女皇',
@@ -312,11 +313,11 @@ function render(d){
 
     '<h2>冒险的初衷</h2><div class="card" style="border-left:3px solid var(--accent);border-radius:0 8px 8px 0;background:rgba(124,92,252,.03)"><p style="font-size:.82rem;line-height:1.7">'+esc(d.bg||'')+'</p></div>'+
 
-    '<h2>旅伴</h2><div class="party">'+(d.party||[]).map(function(p){return '<div class="pc"><span class="nm">'+esc(p.n)+'</span><span class="cl">'+esc(p.c)+'</span></div>'}).join('')+'</div>'+
-
-    '<h2>冒险纪事·焚天之战</h2><div class="chronicle">'+(d.chronicle||[]).map(function(c){return '<div class="chronicle-item"><span class="ch-tag">'+esc(c.tag)+'</span><div class="ch-title">'+esc(c.title)+'</div><div class="ch-body">'+esc(c.body)+'</div></div>'}).join('')+'</div>'+
+    '<h2>旅伴</h2><div class="party">'+(d.party||[]).map(function(p){return '<div class="pc"><span class="nm">'+esc(p.n)+'</span><span class="cl">'+esc(p.c)+'</span>'+(p.note?'<div class="pn">💬 '+esc(p.note)+'</div>':'')+'</div>'}).join('')+'</div>'+
 
     '<h2>旅途中遇到的人</h2><div class="g-a">'+(d.people||[]).map(function(p){var s=p.split('|');return '<div class="card" style="padding:8px 10px"><div class="hd" style="font-size:.8rem">'+esc(s[0])+'</div><div class="meta">'+esc(s[1]||'')+'</div></div>'}).join('')+'</div>'+
+
+    '<h2>冒险纪事·焚天之战</h2><div class="chronicle">'+(d.chronicle||[]).map(function(c){return '<div class="chronicle-item"><span class="ch-tag">'+esc(c.tag)+'</span><div class="ch-title">'+esc(c.title)+'</div><div class="ch-body">'+esc(c.body)+'</div></div>'}).join('')+'</div>'+
 
     '<div style="text-align:center;color:var(--muted);font-size:.65rem;padding:24px 0 12px;border-top:1px solid rgba(124,92,252,.06);margin-top:20px">D&D 5R·歌织者·梦之铎音·星期日<br>长团模组：焚天之战</div>';
 }
@@ -334,7 +335,7 @@ function buildTabs(){
   else if(curTab==='classf'){tc.innerHTML='<h4><span style="color:var(--soft);cursor:pointer" id="addItem_features">+ 添加职业特性</span></h4><div id="list_features">'+(d.features||[]).map(function(f,i){return '<div class="sec-i"><div class="sec-d" data-idx="'+i+'" data-list="features">✕</div><div class="edit-f" style="margin-bottom:3px"><label>名称</label><input class="f-fn" value="'+esc(f.n)+'"></div><div class="edit-f" style="margin-bottom:3px"><label>频率/标签</label><input class="f-ft" value="'+esc(f.t||'')+'"></div><div id="ef_features_'+i+'" class="ef-list">'+(f.effects||[{label:'',desc:''}]).map(function(e,j){return '<div class="ef-item"><div class="ef-d" data-parent="features" data-idx="'+i+'" data-eidx="'+j+'">✕</div><div class="edit-f" style="margin-bottom:2px"><label>效果标签</label><input class="f-el" value="'+esc(e.label)+'"></div><div class="edit-f"><label>效果描述</label><textarea class="f-ed" rows="2">'+esc(e.desc)+'</textarea></div></div>'}).join('')+'</div><span style="color:var(--soft);cursor:pointer;font-size:.7rem" class="add-ef" data-parent="features" data-idx="'+i+'">+ 添加效果</span></div>'}).join('')+'</div>';document.getElementById('addItem_features').onclick=function(){addItem('features',{n:'新特性',t:'频率',effects:[{label:'新效果',desc:'描述……'}]})};}
   else if(curTab==='spells'){buildSpellsTab(tc,d);}
   else if(curTab==='equip'){tc.innerHTML='<div class="edit-g"><div class="edit-f full"><label>装备列表（用·分隔）</label><textarea class="f-equip" rows="2">'+esc(d.equip||'')+'</textarea></div></div><h4><span style="color:var(--soft);cursor:pointer" id="addItem_magic">+ 添加魔法物品</span></h4><div id="list_magic">'+(d.magic||[]).map(function(m,i){return '<div class="sec-i"><div class="sec-d" data-idx="'+i+'" data-list="magic">✕</div><div class="edit-f" style="margin-bottom:3px"><label>名称</label><input class="f-mn" value="'+esc(m.n)+'"></div><div class="edit-f"><label>描述</label><textarea class="f-md" rows="2">'+esc(m.d)+'</textarea></div></div>'}).join('')+'</div>';document.getElementById('addItem_magic').onclick=function(){addItem('magic',{n:'新物品',d:'描述……'})};}
-  else if(curTab==='story'){tc.innerHTML='<div class="edit-g"><div class="edit-f full"><label>背景故事（完整版）</label><textarea class="f-bg" rows="8">'+esc(d.bg||'')+'</textarea></div></div><h4><span style="color:var(--soft);cursor:pointer" id="addItem_party">+ 添加旅伴</span></h4><div id="list_party">'+(d.party||[]).map(function(p,i){return '<div class="sec-i"><div class="sec-d" data-idx="'+i+'" data-list="party">✕</div><div class="edit-f" style="margin-bottom:3px"><label>名称</label><input class="f-pn" value="'+esc(p.n)+'"></div><div class="edit-f"><label>职业/描述</label><input class="f-pc" value="'+esc(p.c)+'"></div></div>'}).join('')+'</div><h4><span style="color:var(--soft);cursor:pointer" id="addItem_people">+ 添加人物</span></h4><div id="list_people">'+(d.people||[]).map(function(p,i){return '<div class="sec-i"><div class="sec-d" data-idx="'+i+'" data-list="people">✕</div><div class="edit-f"><label>格式：名字|描述</label><input class="f-ppl" value="'+esc(p)+'"></div></div>'}).join('')+'</div>';document.getElementById('addItem_party').onclick=function(){addItem('party',{n:'新旅伴',c:'职业'})};document.getElementById('addItem_people').onclick=function(){addItem('people','新人物|描述')};}
+  else if(curTab==='story'){tc.innerHTML='<div class="edit-g"><div class="edit-f full"><label>背景故事（完整版）</label><textarea class="f-bg" rows="8">'+esc(d.bg||'')+'</textarea></div></div><h4><span style="color:var(--soft);cursor:pointer" id="addItem_party">+ 添加旅伴</span></h4><div id="list_party">'+(d.party||[]).map(function(p,i){return '<div class="sec-i"><div class="sec-d" data-idx="'+i+'" data-list="party">✕</div><div class="edit-f" style="margin-bottom:3px"><label>名称</label><input class="f-pn" value="'+esc(p.n)+'"></div><div class="edit-f" style="margin-bottom:3px"><label>职业/描述</label><input class="f-pc" value="'+esc(p.c)+'"></div><div class="edit-f"><label>星期日对他的看法</label><textarea class="f-pnote" rows="2">'+esc(p.note||'')+'</textarea></div></div>'}).join('')+'</div><h4><span style="color:var(--soft);cursor:pointer" id="addItem_people">+ 添加人物</span></h4><div id="list_people">'+(d.people||[]).map(function(p,i){return '<div class="sec-i"><div class="sec-d" data-idx="'+i+'" data-list="people">✕</div><div class="edit-f"><label>格式：名字|描述</label><input class="f-ppl" value="'+esc(p)+'"></div></div>'}).join('')+'</div>';document.getElementById('addItem_party').onclick=function(){addItem('party',{n:'新旅伴',c:'职业',note:''})};document.getElementById('addItem_people').onclick=function(){addItem('people','新人物|描述')};}
   else if(curTab==='chronicle'){tc.innerHTML='<div id="list_chronicle">'+(d.chronicle||[]).map(function(c,i){return '<div class="cr-i"><div class="cr-d" data-idx="'+i+'" data-list="chronicle">✕</div><div class="edit-f" style="margin-bottom:3px"><label>标签</label><input class="f-ct" value="'+esc(c.tag)+'"></div><div class="edit-f" style="margin-bottom:3px"><label>标题</label><input class="f-ch" value="'+esc(c.title)+'"></div><div class="edit-f"><label>内容（完整版）</label><textarea class="f-cb" rows="3">'+esc(c.body)+'</textarea></div></div>'}).join('')+'</div><div class="cr-a" id="addItem_chronicle">+ 新增纪事条目</div>';document.getElementById('addItem_chronicle').onclick=function(){addItem('chronicle',{tag:'新章',title:'新纪事',body:'写下你的冒险经历……'})};}
   else if(curTab==='data'){tc.innerHTML='<p style="color:var(--muted);font-size:.7rem">你可以在这里粘贴之前导出的JSON数据来恢复。</p><textarea id="jsonImport" rows="8" style="width:100%;background:rgba(124,92,252,.06);border:1px solid rgba(124,92,252,.1);border-radius:4px;padding:6px;color:var(--fg);font-family:monospace;font-size:.7rem;margin-top:6px" placeholder="粘贴JSON数据..."></textarea><div style="display:flex;gap:8px;margin-top:6px"><button class="btn-s" id="importBtn" style="flex:1">📥 导入</button></div>';document.getElementById('importBtn').onclick=function(){try{var j=JSON.parse(document.getElementById('jsonImport').value);sv(j);render(j);buildTabs();var ok=document.getElementById('editOk');ok.textContent='✅ 导入成功';ok.classList.add('show');setTimeout(function(){ok.classList.remove('show');ok.textContent='✅ 已保存'},2000)}catch(e){alert('JSON解析失败：'+e.message)}};}
 }
@@ -426,7 +427,7 @@ function collect(){
     var efList=el.querySelector('.ef-list');
     if(efList){var lastItem=d[list][d[list].length-1];lastItem.effects=[];efList.querySelectorAll('.ef-item').forEach(function(ef){lastItem.effects.push({label:(ef.querySelector('.f-el')||{}).value||'',desc:(ef.querySelector('.f-ed')||{}).value||''})});}
       else if(list==='magic')d[list].push({n:(el.querySelector('.f-mn')||{}).value||'',d:(el.querySelector('.f-md')||{}).value||''});
-      else if(list==='party')d[list].push({n:(el.querySelector('.f-pn')||{}).value||'',c:(el.querySelector('.f-pc')||{}).value||''});
+      else if(list==='party')d[list].push({n:(el.querySelector('.f-pn')||{}).value||'',c:(el.querySelector('.f-pc')||{}).value||'',note:(el.querySelector('.f-pnote')||{}).value||''});
       else if(list==='people')d[list].push((el.querySelector('.f-ppl')||{}).value||'');
     });
   });
