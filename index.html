@@ -28,16 +28,16 @@
   .feather{
     position:absolute;top:-60px;
     width:18px;height:8px;
-    background:radial-gradient(ellipse at 30% 50%,rgba(255,255,255,.8),rgba(196,164,255,.25) 60%,transparent 80%);
+    background:radial-gradient(ellipse at 30% 50%,rgba(255,248,220,.85),rgba(212,160,87,.2) 60%,transparent 80%);
     border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
     opacity:0;
-    box-shadow:0 0 6px 2px rgba(124,92,252,.08);
+    box-shadow:0 0 8px 3px rgba(212,160,87,.08), 0 0 2px 1px rgba(255,248,220,.04);
     will-change:transform,opacity;
   }
   .feather::after{
     content:'';position:absolute;top:2px;left:50%;
-    width:1px;height:5px;
-    background:linear-gradient(to bottom,rgba(255,255,255,.3),transparent);
+    width:1px;height:6px;
+    background:linear-gradient(to bottom,rgba(255,248,200,.4),transparent);
     transform:translateX(-50%);
   }
 
@@ -65,13 +65,17 @@
   .music-label .track{color:var(--soft);font-size:.7rem;display:block}
 
   .music-bar .vol-slider{width:0;overflow:hidden;transition:width .3s;display:flex;align-items:center}
-  .music-bar:hover .vol-slider,.vol-slider.open{width:60px}
+  .music-bar:hover .vol-slider,.vol-slider.open{width:80px}
   .vol-slider input[type="range"]{
-    width:52px;height:3px;-webkit-appearance:none;appearance:none;
-    background:rgba(124,92,252,.2);border-radius:2px;outline:none;margin-left:4px;
+    width:72px;height:3px;-webkit-appearance:none;appearance:none;
+    background:rgba(124,92,252,.2);border-radius:2px;outline:none;margin-left:6px;
   }
   .vol-slider input[type="range"]::-webkit-slider-thumb{
     -webkit-appearance:none;width:10px;height:10px;border-radius:50%;
+    background:var(--accent);cursor:pointer;border:none;
+  }
+  .vol-slider input[type="range"]::-moz-range-thumb{
+    width:10px;height:10px;border-radius:50%;
     background:var(--accent);cursor:pointer;border:none;
   }
 
@@ -634,70 +638,63 @@
 
   let isPlaying = false;
   let biliIframe = null;
-  let biliContainer = null;
+  let currentVolume = 0.3;
 
   const BVID = CONFIG.BVID;
   const EMBED_URL = `https://player.bilibili.com/player.html?bvid=${BVID}&page=1&high_quality=1&danmaku=0&dark_theme=1`;
   trackLabel.textContent = '星期日 · 谁陨落了我的太阳';
 
-  function removeBiliPlayer() {
+  // Hide the iframe off-screen — audio plays, video invisible
+  function createBiliIframe(autoplay) {
+    removeBiliIframe();
+    biliIframe = document.createElement('iframe');
+    const src = EMBED_URL + (autoplay ? '&autoplay=1' : '&autoplay=0');
+    biliIframe.src = src;
+    biliIframe.style.cssText = 'position:absolute;top:-9999px;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;border:none;';
+    biliIframe.allow = 'autoplay';
+    biliIframe.id = 'bili-player';
+    document.body.appendChild(biliIframe);
+
+    // Wait for load then set volume
+    biliIframe.onload = () => {
+      // Wait a bit then send volume
+      setTimeout(() => setBiliVolume(currentVolume), 500);
+    };
+  }
+
+  function removeBiliIframe() {
     if (biliIframe) {
       biliIframe.remove();
       biliIframe = null;
     }
-    if (biliContainer) {
-      biliContainer.remove();
-      biliContainer = null;
-    }
   }
 
-  function createBiliPlayer(autoplay) {
-    removeBiliPlayer();
-
-    // Small embed container at bottom-left
-    biliContainer = document.createElement('div');
-    biliContainer.style.cssText = `
-      position:fixed;bottom:76px;right:24px;z-index:99;
-      width:240px;height:160px;border-radius:10px;overflow:hidden;
-      border:1px solid rgba(124,92,252,.15);
-      box-shadow:0 4px 24px rgba(0,0,0,.5);
-      transition:opacity .3s,transform .3s;
-      opacity:0;transform:translateY(10px) scale(.95);
-    `;
-
-    biliIframe = document.createElement('iframe');
-    const src = EMBED_URL + (autoplay ? '&autoplay=1' : '&autoplay=0');
-    biliIframe.src = src;
-    biliIframe.style.cssText = 'width:100%;height:100%;border:none;';
-    biliIframe.allow = 'autoplay; fullscreen';
-
-    biliContainer.appendChild(biliIframe);
-    document.body.appendChild(biliContainer);
-
-    // Fade in
-    requestAnimationFrame(() => {
-      biliContainer.style.opacity = '1';
-      biliContainer.style.transform = 'translateY(0) scale(1)';
-    });
-
-    if (autoplay) {
-      statusEl.textContent = '播放中';
-    } else {
-      statusEl.textContent = '已暂停';
+  function setBiliVolume(vol) {
+    if (!biliIframe || !biliIframe.contentWindow) return;
+    try {
+      biliIframe.contentWindow.postMessage({
+        command: 'setVolume',
+        value: vol
+      }, '*');
+    } catch(e) {
+      // Silently fail - B站 postMessage 有时不支持
     }
   }
 
   function toggleMusic() {
     if (isPlaying) {
-      // Pause: remove iframe
-      removeBiliPlayer();
+      if (biliIframe && biliIframe.contentWindow) {
+        try {
+          biliIframe.contentWindow.postMessage({ command: 'pause' }, '*');
+        } catch(e) {}
+      }
+      removeBiliIframe();
       isPlaying = false;
       toggleBtn.textContent = '▶';
       toggleBtn.classList.remove('playing');
       statusEl.textContent = '已暂停';
     } else {
-      // Play: create & autoplay
-      createBiliPlayer(true);
+      createBiliIframe(true);
       isPlaying = true;
       toggleBtn.textContent = '⏸';
       toggleBtn.classList.add('playing');
@@ -707,15 +704,16 @@
 
   toggleBtn.addEventListener('click', toggleMusic);
 
-  // Volume slider: for B站, show a note that it controls system volume
+  // Volume control via postMessage
   volSlider.addEventListener('input', () => {
-    // B站不支持外部音量控制, 提示用户调系统音量
-    const val = Math.round(parseFloat(volSlider.value) * 100);
-    statusEl.textContent = `音量 ${val}% (系统)`;
+    currentVolume = parseFloat(volSlider.value);
+    const pct = Math.round(currentVolume * 100);
+    statusEl.textContent = `音量 ${pct}%`;
+    setBiliVolume(currentVolume);
     setTimeout(() => {
       if (isPlaying) statusEl.textContent = '播放中';
       else statusEl.textContent = '已暂停';
-    }, 1200);
+    }, 1000);
   });
 
   // Keyboard shortcut
