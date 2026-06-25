@@ -144,6 +144,11 @@ h2::before{content:"◇";font-size:.7rem;color:var(--accent)}
     <button class="btn-r" id="resetBtn">↺ 重置</button>
   </div>
   <div class="edit-ok" id="editOk">✅ 已保存</div>
+  <div style="margin-top:8px;padding:6px;border:1px solid rgba(124,92,252,.08);border-radius:5px;background:rgba(124,92,252,.02)">
+    <div class="edit-f"><label>GitHub Token（填一次保存，以后保存自动同步到所有设备）</label>
+    <input id="ghTokenInput" type="password" placeholder="ghp_..." style="background:rgba(124,92,252,.06);border:1px solid rgba(124,92,252,.1);border-radius:4px;padding:4px 7px;color:var(--fg);font-size:.75rem;width:100%;outline:none"></div>
+    <div id="publishStatus" style="font-size:.65rem;color:var(--muted);text-align:center;margin-top:3px"></div>
+  </div>
 </div>
 <audio id="bgAudio" preload="auto" style="display:none"></audio>
 <div class="music-bar"><button class="music-btn" id="musicToggle">▶</button>
@@ -249,7 +254,8 @@ spellLevelColor:{'戏法':'var(--accent)','1环':'var(--blue)','2环':'var(--gre
 
 var STORAGE_KEY='sunday_sheet_data';
 
-function ld(){try{var d=JSON.parse(localStorage.getItem(STORAGE_KEY));if(d&&d.lvl)return d}catch(e){}return JSON.parse(JSON.stringify(D))}
+function ld(){try{var d=JSON.parse(localStorage.getItem(STORAGE_KEY));if(d&&d.lvl){d=migrate(d);sv(d);return d}return d}catch(e){}return JSON.parse(JSON.stringify(D))}
+function migrate(d){if(d.people&&typeof d.people[0]==='string'){d.people=d.people.map(function(s){var a=s.split('|');var r=a[2]||'其他';if(r.indexOf('汐坤')>=0)r='汐坤';else if(r.indexOf('格拉西亚')>=0)r='格拉西亚';else if(r.indexOf('沙哈')>=0)r='沙哈拉斯提';else if(r.indexOf('拉格西亚')>=0)r='拉格西亚';else r='其他';return{name:a[0],desc:a[1]||'',region:r}})};return d}
 function sv(d){localStorage.setItem(STORAGE_KEY,JSON.stringify(d))}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 function md(v){var s=parseInt(v)||10;var m=Math.floor((s-10)/2);return m>=0?'（+'+m+'）':'（'+m+'）'}
@@ -453,6 +459,12 @@ function collect(){
 render(ld());
 buildTabs();
 
+// Restore saved token and auto-save on input
+var savedToken=localStorage.getItem('gh_token');
+var tokenInput=document.getElementById('ghTokenInput');
+if(savedToken&&tokenInput){tokenInput.value=savedToken}
+if(tokenInput){tokenInput.addEventListener('input',function(){localStorage.setItem('gh_token',this.value)})}
+
 document.getElementById('editBtn').addEventListener('click',function(){
   var p=document.getElementById('editPanel');p.classList.toggle('open');this.classList.toggle('active');
   if(p.classList.contains('open'))fillForm(ld());
@@ -463,6 +475,33 @@ document.getElementById('saveBtn').addEventListener('click',function(){
   var d=collect();sv(d);render(d);
   var ok=document.getElementById('editOk');ok.classList.add('show');
   setTimeout(function(){ok.classList.remove('show')},2000);
+  // Auto-publish to GitHub if token is saved
+  var ghToken=localStorage.getItem('gh_token');
+  if(!ghToken||ghToken.length<20)return;
+  var st=document.getElementById('publishStatus');
+  if(!st)return;
+  st.textContent='☁️ 自动同步中...';
+  st.style.color='var(--muted)';
+  var currentHtml=document.documentElement.outerHTML;
+  var payload={message:'Auto-sync from editor',content:btoa(unescape(encodeURIComponent(currentHtml))),branch:'master'};
+  var x=new XMLHttpRequest();
+  x.open('GET','https://api.github.com/repos/arlecchino0416/dnd-character/contents/index.html',true);
+  x.setRequestHeader('Authorization','token '+ghToken);
+  x.setRequestHeader('User-Agent','coco');
+  x.onload=function(){
+    if(x.status===200||x.status===404){
+      if(x.status===200)payload.sha=JSON.parse(x.responseText).sha;
+      var x2=new XMLHttpRequest();
+      x2.open('PUT','https://api.github.com/repos/arlecchino0416/dnd-character/contents/index.html',true);
+      x2.setRequestHeader('Authorization','token '+ghToken);
+      x2.setRequestHeader('User-Agent','coco');
+      x2.setRequestHeader('Content-Type','application/json');
+      x2.onload=function(){if(x2.status===200||x2.status===201){st.textContent='✅ 已同步到GitHub！刷新其他设备即可';st.style.color='var(--green)'}else{st.textContent='❌ '+((JSON.parse(x2.responseText)||{}).message||'同步失败');st.style.color='var(--red)'}};
+      x2.onerror=function(){st.textContent='❌ 网络错误'};x2.send(JSON.stringify(payload));
+    }else{st.textContent='❌ 获取文件信息失败：'+x.status;st.style.color='var(--red)'}
+  };
+  x.onerror=function(){st.textContent='❌ 网络错误'};
+  x.send();
 });
 
 document.getElementById('resetBtn').addEventListener('click',function(){
