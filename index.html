@@ -174,7 +174,7 @@ features:[
   {n:'万事通',t:'被动',effects:[{label:'万事通',desc:'将熟练加值的一半（+1）加入所有未熟练的技能检定。'}]},
   {n:'技能专精',t:'被动',effects:[{label:'技能专精',desc:'游说和表演获得双倍熟练加值（+6）。'}]},
   {n:'织曲入术',t:'每天一次',effects:[{label:'织曲入术',desc:'当一个同伴使用了你的诗人激励骰后，你可以立刻用一个反应施放一个法术。'}]},
-  {n:'咏术入织',t:'常驻',effects:[{label:'防护',desc:'60尺内一同伴恢复两枚激励骰的生命值'},{label:'咒法',desc:'60尺内一同伴速度+10尺、护甲+1，持续1分钟'},{label:'预言',desc:'60尺内目标被近战额外3力场'},{label:'惑控',desc:'60尺内一生物心灵伤害+恐慌'},{label:'塑能',desc:'120尺远程法术攻击，命中2d8+5力场'},{label:'幻术',desc:'自隐直到下回合'},{label:'死灵',desc:'所有伤害+3暗蚀，持续1分钟'},{label:'变化',desc:'传送至多30尺'}]}
+  {n:'咏术入织·防护',t:'常驻',effects:[{label:'防护',desc:'60尺内一同伴恢复两枚激励骰的生命值'}]},{n:'咏术入织·咒法',t:'常驻',effects:[{label:'咒法',desc:'60尺内一同伴速度+10尺、护甲+1，持续1分钟'}]},{n:'咏术入织·预言',t:'常驻',effects:[{label:'预言',desc:'60尺内目标被近战额外3力场'}]},{n:'咏术入织·惑控',t:'常驻',effects:[{label:'惑控',desc:'60尺内一生物心灵伤害+恐慌'}]},{n:'咏术入织·塑能',t:'常驻',effects:[{label:'塑能',desc:'120尺远程法术攻击，命中2d8+5力场'}]},{n:'咏术入织·幻术',t:'常驻',effects:[{label:'幻术',desc:'自隐直到下回合'}]},{n:'咏术入织·死灵',t:'常驻',effects:[{label:'死灵',desc:'所有伤害+3暗蚀，持续1分钟'}]},{n:'咏术入织·变化',t:'常驻',effects:[{label:'变化',desc:'传送至多30尺'}]}
 ],
 bg:'星期日出生于卡林港的橡木密教，这是一个世代侍奉梦女神蕾拉的神裔家族。他天生能听见他人心底的软弱，触碰梦境的涟漪。他有一个妹妹，知更鸟——她的歌声像星光一样能平息最狂乱的噩梦。童年平静而温柔：练钢琴、学梦境聆听、帮母亲打理花园、和妹妹在卡林港的阳光下喂鸽子。母亲常说："我们橡木之人，是梦的牧者，要安抚痛苦，而非制造枷锁。"直到一颗异界星辰砸进卡林港大剧院——街区崩塌、梦境失控、人们溺死在自己的恐惧里。母亲为护住他与妹妹，在梦境裂隙中消散。一夜之间成了孤儿，被密教家主歌斐木收养。歌斐木严厉却公正，教星期日编织梦境、安抚幻惑、治愈圣光，称他为"铎音"——梦之倾听者。星期日开始在卡林港的底层行走：贫民窟、奴隶市场、逐梦人的小巷。他听见工人的疲惫、孤儿的哭泣、难民的绝望——而神明从不回应，贵族视而不见。一颗阴霾的种子由心而发：温柔救不了人，善良挡不住痛苦。一只断翅白鸽被救活后飞走，却坠死在他们窗前。星期日开始在书本里寻找答案：梦界理论、秩序典籍、古代神谕。如果不能消除痛苦，那就给他们一个没有痛苦的梦；如果自由带来伤害，那就给他们安全的牢笼。16岁那年，妹妹受邀前往深水城巡演。星期日也离开卡林港，带着乐器、日记本和妹妹的照片，出发去寻找"既能保护弱者、又不剥夺自由"的答案。彼时的他，非独裁者，非家主，亦非梦之暴君——只是一个想治愈世界、却尚未找到方法的少年阿斯莫。',
 equip:'641金币·钢琴·里拉琴·鲁特琴·风笛·提琴·鼓·皮甲·两把匕首·艺人套装·旅行背包·2瓶治疗药水·雷石×1',
@@ -247,7 +247,7 @@ var STORAGE_KEY='sunday_sheet_data';
 function ld(){try{var d=JSON.parse(localStorage.getItem(STORAGE_KEY));if(d&&d.lvl)return d}catch(e){}return JSON.parse(JSON.stringify(D))}
 function sv(d){localStorage.setItem(STORAGE_KEY,JSON.stringify(d))}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
-function md(v){var m=Math.floor((parseInt(v)||10-10)/2);return m>=0?'（+'+m+'）':'（'+m+'）'}
+function md(v){var s=parseInt(v)||10;var m=Math.floor((s-10)/2);return m>=0?'（+'+m+'）':'（'+m+'）'}
 var curTab='stats',tabs=[
   {id:'stats',label:'📋基础'},{id:'attrs',label:'⚔️属性'},{id:'combat',label:'🛡️战斗'},
   {id:'race',label:'🧬种族'},{id:'feats',label:'🏅专长'},{id:'classf',label:'📖职业'},
@@ -265,7 +265,7 @@ function render(d){
     sh+='<div class="spell-block"><div class="sb-hd" style="border-left-color:'+(spColors[lv]||'var(--accent)')+'">'+lv+'</div><div class="spell-row">';
     arr.forEach(function(s){
       sh+='<div class="spell-card"><div class="sc-hd">'+esc(s.n)+' <span class="sc-school">· '+esc(s.s||'')+'</span></div>'+
-        '<div class="sc-desc">'+esc(s.d||'')+'</div><div class="sc-meta">'+(s.m||'').split('·').map(function(x){return esc(x.trim())}).join('<br>')+'</div></div>';
+        '<div class="sc-desc">'+esc(s.d||'')+'</div><div class="sc-meta">'+esc(s.m||'')+'</div></div>';
     });
     sh+='</div></div>';
   });
@@ -275,7 +275,7 @@ function render(d){
     sh+='<div class="spell-block"><div class="sb-hd" style="border-left-color:var(--gold);color:var(--gold)">🎵 克里里拉琴·乐器法术（每日各一次）</div><div class="spell-row">';
     inst.forEach(function(s){
       sh+='<div class="inst-card"><div class="sc-hd">'+esc(s.n)+' <span class="sc-school">· '+esc(s.s||'')+'</span></div>'+
-        (s.d?'<div class="sc-desc">'+esc(s.d)+'</div>':'')+'<div class="sc-meta">'+(s.m||'').split('·').map(function(x){return esc(x.trim())}).join('<br>')+'</div></div>';
+        (s.d?'<div class="sc-desc">'+esc(s.d)+'</div>':'')+'<div class="sc-meta">'+esc(s.m||'')+'</div></div>';
     });
     sh+='</div></div>';
   }
