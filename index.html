@@ -467,30 +467,7 @@ function collect(){
 // ═══ Init ═══
 render(ld());
 buildTabs();
-// Try to load remote data from GitHub for multi-device sync
-setTimeout(function(){
-  var x=new XMLHttpRequest();
-  x.open('GET','character-data.json?'+Date.now(),true);
-  x.overrideMimeType('application/json');
-  x.onload=function(){
-    if(x.status!==200)return;
-    try{
-      var remote=JSON.parse(x.responseText);
-      if(!remote||!remote.lvl)return;
-      remote=migrate(remote);
-      // Only apply if this device has no local data (first visit)
-      try{
-        var local=JSON.parse(localStorage.getItem(STORAGE_KEY));
-        if(local&&local.lvl)return; // Already has local data, don't override
-      }catch(e){}
-      // Apply remote data
-      sv(remote);render(remote);buildTabs();
-      var ok=document.getElementById('editOk');
-      if(ok){ok.textContent='✅ 已从GitHub加载最新数据';ok.classList.add('show');setTimeout(function(){ok.classList.remove('show');ok.textContent='✅ 已保存'},3000)}
-    }catch(e){}
-  };
-  x.send();
-},1000);
+// // Remote sync disabled - save button syncs character-data.json
 
 // Restore saved token and auto-save on input
 var savedToken=localStorage.getItem('gh_token');
