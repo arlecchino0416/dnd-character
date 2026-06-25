@@ -26,8 +26,6 @@ body{background:var(--bg);color:var(--fg);font-family:"Microsoft YaHei","Noto Sa
 .vol-slider input[type=range]{width:72px;height:3px;-webkit-appearance:none;appearance:none;background:rgba(124,92,252,.2);border-radius:2px;outline:none;margin-left:6px}
 .vol-slider input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:10px;height:10px;border-radius:50%;background:var(--accent);cursor:pointer;border:none}
 .vol-slider input[type=range]::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:var(--accent);cursor:pointer;border:none}
-
-/* Edit button + panel */
 .edit-btn{position:fixed;bottom:76px;right:24px;z-index:100;background:rgba(21,18,32,.88);border:1px solid rgba(124,92,252,.2);color:var(--soft);border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(0,0,0,.3)}
 .edit-btn:hover{background:rgba(124,92,252,.25);border-color:var(--accent)}
 .edit-btn.active{background:var(--accent);color:#fff}
@@ -54,10 +52,9 @@ body{background:var(--bg);color:var(--fg);font-family:"Microsoft YaHei","Noto Sa
 .cr-a:hover{background:rgba(124,92,252,.15);border-color:var(--accent);color:var(--soft)}
 .cr-i{border:1px solid rgba(124,92,252,.06);border-radius:5px;padding:6px 8px;margin:4px 0;position:relative}
 .cr-d{position:absolute;top:4px;right:4px;width:18px;height:18px;border-radius:50%;background:rgba(255,94,107,.1);border:1px solid rgba(255,94,107,.15);color:var(--red);cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;opacity:0}
-.cr-i:hover .cr-d{opacity:1}
+.cr-i:hover .cr-d,.sec-i:hover .sec-d{opacity:1}
 .sec-i{border:1px solid rgba(124,92,252,.06);border-radius:5px;padding:6px 8px;margin:4px 0;position:relative}
 .sec-d{position:absolute;top:4px;right:4px;width:18px;height:18px;border-radius:50%;background:rgba(255,94,107,.1);border:1px solid rgba(255,94,107,.15);color:var(--red);cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center;opacity:0}
-.sec-i:hover .sec-d{opacity:1}
 .tab-bar{display:flex;gap:4px;margin-bottom:12px;flex-wrap:wrap}
 .tab{background:rgba(124,92,252,.08);border:1px solid rgba(124,92,252,.1);border-radius:5px;padding:4px 10px;cursor:pointer;font-size:.7rem;color:var(--muted)}
 .tab:hover{background:rgba(124,92,252,.15);color:var(--soft)}
@@ -65,12 +62,9 @@ body{background:var(--bg);color:var(--fg);font-family:"Microsoft YaHei","Noto Sa
 .tab-p{display:none}
 .tab-p.open{display:block}
 @media(max-width:560px){.edit-panel{width:100vw;right:-100vw}}
-
-/* Page styles */
 h1{font-size:1.8rem;font-weight:900;letter-spacing:3px;background:linear-gradient(135deg,#f0e6ff,#7c5cfc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 h2{font-size:1.15rem;font-weight:700;color:var(--soft);margin:28px 0 10px;padding-bottom:5px;border-bottom:1.5px solid rgba(124,92,252,.2);display:flex;align-items:center;gap:8px}
 h2::before{content:"◇";font-size:.7rem;color:var(--accent)}
-h3{font-size:.95rem;color:#d0bcf0;margin:14px 0 6px}
 .tag{display:inline-block;padding:1px 7px;border-radius:4px;font-size:.68rem;margin:1px;background:rgba(124,92,252,.1);border:1px solid rgba(124,92,252,.15);color:#b0a0d0}
 .tag-r{background:rgba(255,94,107,.08);border-color:rgba(255,94,107,.15);color:#ff8a94}
 .tag-g{background:rgba(107,203,138,.08);border-color:rgba(107,203,138,.15);color:#8bdaa4}
@@ -123,7 +117,6 @@ h3{font-size:.95rem;color:#d0bcf0;margin:14px 0 6px}
 .party .pc .cl{color:var(--muted);font-size:.7rem}
 .eq{display:inline-block;background:rgba(124,92,252,.03);border:1px solid rgba(124,92,252,.06);border-radius:4px;padding:2px 7px;margin:1px;font-size:.74rem;color:#b0a0c8}
 .eq-gold{background:rgba(212,160,87,.05);border-color:rgba(212,160,87,.08);color:#e0c080}
-.note-box{background:rgba(124,92,252,.04);border-left:3px solid var(--gold);border-radius:0 7px 7px 0;padding:8px 12px;margin:8px 0;font-size:.78rem;color:#c0b0d0}
 </style>
 </head>
 <body>
@@ -148,96 +141,138 @@ h3{font-size:.95rem;color:#d0bcf0;margin:14px 0 6px}
 <script>
 var D={
 lvl:'6',prof:'+3',hp:'45（20+5d8）',ac:'15',init:'+4',
-speed:'30尺（变身可飞行30尺）',pp:'16',bi:'八面骰 · 每天5次（短休恢复）',
+speed:'30尺（变身可飞行30尺）',pp:'16',bi:'八面骰·每天5次（短休恢复）',
 str:'12',dex:'18',con:'15',int:'14',wis:'16',cha:'20',dc:'16',atk:'+8',slots:'4,3,3',
 saves:'敏捷+7；魅力+8',
 skills:'游说+11（专精）；表演+11（专精）；察觉+6；洞察+6；奥秘+5',
 resist:'火焰伤害抗性',tools:'钢琴·里拉琴·鲁特琴·风笛·提琴·鼓·工匠工具',
 langs:'通用语·天界语·通用手语',
 race:[
-  {n:'治愈之手',d:'触碰一个生物恢复2d4生命值。每天一次。'},
-  {n:'天启变身',d:'附赠动作变身，造成伤害+3光耀。每天一次。'},
+  {n:'治愈之手',d:'触碰一个生物，用手上的圣光为其恢复2d4点生命值。每天只能用一次。'},
+  {n:'天启变身',d:'用附赠动作变身，背后展开灵体飞翼。变身期间每回合一次，造成伤害时额外附带3点光耀伤害。每天只能用一次。'},
   {n:'天堂飞翼',d:'天启变身期间获得30尺飞行速度。'}
 ],
 feats:[
-  {n:'音乐家',t:'1级起源',d:'乐器训练：三种乐器熟练。鼓舞之歌：休息时演奏，最多3名同伴获得英雄激励。'},
-  {n:'领袖之证',t:'4级通用',d:'魅力+1（提升至20）。激励演出：休息时表演，最多6名同伴获得临时生命值。'}
+  {n:'音乐家',t:'1级起源专长',d:'乐器训练：获得三种自选乐器的使用熟练。鼓舞之歌：休息时演奏歌曲，最多3名同伴获得英雄激励（可以重骰一次）。'},
+  {n:'领袖之证',t:'4级通用专长',d:'魅力+1（提升至20）。激励演出：休息结束时做一场表演，最多6名同伴获得临时生命值，数值等于你的角色等级+魅力调整值。'}
 ],
 features:[
-  {n:'美梦祝福',t:'每天一次',d:'你或30尺内所有同伴豁免投掷两次取高。'},
-  {n:'诗人激励',t:'d8·每天5次',d:'附赠动作，30尺内同伴获得激励骰。'},
-  {n:'万事通',t:'被动',d:'熟练加值的一半加入未熟练技能检定。'},
-  {n:'技能专精',t:'被动',d:'游说和表演获得双倍熟练加值。'},
-  {n:'织曲入术',t:'每天一次',d:'同伴使用激励骰后，你能以反应施法。'},
-  {n:'咏术入织',t:'常驻',d:'施法时消耗激励次数，根据学派触发效果：防护→60尺内一同伴恢复2d6生命；咒法→60尺一同伴速度+10、ac+1；预言→60尺内目标被近战额外3力场；惑控→心灵伤害+恐慌；塑能→120尺远程法术攻击；幻术→自隐直到下回合；死灵→所有伤害+3暗蚀；变化→传送至多30尺。'}
+  {n:'美梦祝福',t:'每天一次',d:'你或30尺内所有同伴进行豁免检定时，可以投掷两次并使用较高的结果。'},
+  {n:'诗人激励',t:'八面骰·每天5次',d:'用附赠动作，让30尺内一个同伴获得一枚激励骰（八面骰），10分钟内可用于属性检定、攻击检定或豁免检定。'},
+  {n:'万事通',t:'被动',d:'将熟练加值的一半（+1）加入所有未熟练的技能检定。'},
+  {n:'技能专精',t:'被动',d:'游说和表演获得双倍熟练加值（+6）。'},
+  {n:'织曲入术',t:'每天一次',d:'当一个同伴使用了你的诗人激励骰后，你可以立刻用一个反应施放一个法术。'},
+  {n:'咏术入织',t:'常驻',d:'当你施放一个需要消耗法术位的法术时，可以额外消耗一次诗人激励次数。根据法术学派触发不同效果：防护→60尺内一同伴恢复两枚激励骰的生命值；咒法→60尺内一同伴速度+10尺、护甲+1，持续1分钟；预言→60尺内指定生物被近战攻击时额外受到3点力场伤害；惑控→60尺内一生物受心灵伤害并陷入恐慌；塑能→120尺远程法术攻击，命中受2枚激励骰+5点力场伤害；幻术→自己隐形直到下回合结束；死灵→所有伤害额外+3暗蚀伤害，持续1分钟；变化→传送至多30尺。'}
 ],
-bg:'星期日出生于卡林港的橡木密教，世代侍奉梦女神蕾拉的神裔家族。天生能听见他人心底的软弱，触碰梦境的涟漪。妹妹知更鸟——她的歌声能平息最狂乱的噩梦。童年平静温柔。直到一颗异界星辰砸进卡林港大剧院——母亲在梦境裂隙中消散。被密教家主歌斐木收养，称他为"铎音"——梦之倾听者。他开始在底层行走：听见工人的疲惫、孤儿的哭泣、难民的绝望。温柔救不了人，善良挡不住痛苦。一只断翅白鸽被救活后飞走，却坠死在窗前。16岁那年妹妹受邀前往深水城巡演。星期日离开卡林港，出发去寻找答案。',
+bg:'星期日出生于卡林港的橡木密教，这是一个世代侍奉梦女神蕾拉的神裔家族。他天生能听见他人心底的软弱，触碰梦境的涟漪。他有一个妹妹，知更鸟——她的歌声像星光一样能平息最狂乱的噩梦。童年平静而温柔：练钢琴、学梦境聆听、帮母亲打理花园、和妹妹在卡林港的阳光下喂鸽子。母亲常说："我们橡木之人，是梦的牧者，要安抚痛苦，而非制造枷锁。"直到一颗异界星辰砸进卡林港大剧院——街区崩塌、梦境失控、人们溺死在自己的恐惧里。母亲为护住他与妹妹，在梦境裂隙中消散。一夜之间成了孤儿，被密教家主歌斐木收养。歌斐木严厉却公正，教星期日编织梦境、安抚幻惑、治愈圣光，称他为"铎音"——梦之倾听者。星期日开始在卡林港的底层行走：贫民窟、奴隶市场、逐梦人的小巷。他听见工人的疲惫、孤儿的哭泣、难民的绝望——而神明从不回应，贵族视而不见。一颗阴霾的种子由心而发：温柔救不了人，善良挡不住痛苦。一只断翅白鸽被救活后飞走，却坠死在他们窗前。星期日开始在书本里寻找答案：梦界理论、秩序典籍、古代神谕。如果不能消除痛苦，那就给他们一个没有痛苦的梦；如果自由带来伤害，那就给他们安全的牢笼。16岁那年，妹妹受邀前往深水城巡演。星期日也离开卡林港，带着乐器、日记本和妹妹的照片，出发去寻找"既能保护弱者、又不剥夺自由"的答案。彼时的他，非独裁者，非家主，亦非梦之暴君——只是一个想治愈世界、却尚未找到方法的少年阿斯莫。',
 equip:'641金币·钢琴·里拉琴·鲁特琴·风笛·提琴·鼓·皮甲·两把匕首·艺人套装·旅行背包·2瓶治疗药水·雷石×1',
 magic:[
-  {n:'克里里拉琴 Cli Lyre',d:'稀有级吟游诗人魔法乐器（需同调）。内含七道法术：飞行术·隐形术·浮空术·防护善恶·塑石术·火墙术·风墙术，每日各一次。'},
+  {n:'克里里拉琴 Cli Lyre',d:'稀有级别的吟游诗人魔法乐器（需要同调）。内含七道法术：飞行术·隐形术·浮空术·防护善恶·塑石术·火墙术·风墙术，每个法术每天可以使用一次。'},
   {n:'火焰抗性戒指',d:'佩戴后获得对火焰伤害的抗性。'}
 ],
-party:[{n:'加洛奈斯',c:'希拉西风宗·战士'},{n:'马洛',c:'阿斯莫·审判领域·圣武士'},{n:'艾特拉',c:'人类·复生幽影术·术士'}],
-people:['克里斯蒂娜|预言法师·汐坤结识','雷纳德|黑马二把手·汐坤结识','莱丝卡|女神判官→格拉西亚新女皇','杰西|欲魔·拉格西亚难民领袖','沙洛沙公主|沙哈拉斯提·寻求结盟','戈哈纳赫|莱希姆学院院长','基尔南&李|学院叛徒','卡兹克|被囚禁在学院地牢','知更鸟|妹妹·同谐歌者·深水城巡演中'],
-chronicle:[
-  {tag:'旅人',title:'同伴集结',body:'星期日先后遇到加洛奈斯、马洛和艾特拉。三人各自背负着使命与秘密。'},
-  {tag:'汐坤',title:'莱希姆学院',body:'抵达汐坤的莱希姆学院。院长戈哈纳赫研究永生之秘，学院内有叛徒勾结拉格西亚。'},
-  {tag:'难民',title:'拉格西亚逃亡者',body:'欲魔杰西请求救出被囚禁的姐妹卡兹克。蒂莫尔夫人领导达森难民游说汐坤。'},
-  {tag:'外交',title:'沙哈拉斯提使者',body:'沙洛沙公主求结盟对抗格拉西亚，被戈哈纳赫拒绝。'},
-  {tag:'女皇',title:'莱丝卡的崛起',body:'女神判官莱丝卡即将成为格拉西亚新女皇。'},
-  {tag:'焚天',title:'煤舌皇帝与焚天',body:'已故煤舌皇帝的神器"焚天"下落不明。'},
-  {tag:'当前',title:'重返汐坤',body:'四人告别沙洛沙公主返回汐坤。星期日站在命运的十字路口。'}
+party:[
+  {n:'加洛奈斯',c:'希拉西风宗·战士'},
+  {n:'马洛',c:'阿斯莫·审判领域·圣武士'},
+  {n:'艾特拉',c:'人类·复生幽影术·术士'}
 ],
+people:[
+  '克里斯蒂娜|预言法师·父哈丁·汐坤结识','雷纳德|黑马佣兵团二把手·汐坤结识','莱丝卡|女神判官→格拉西亚新女皇',
+  '杰西|欲魔·拉格西亚难民领袖','沙洛沙公主|沙哈拉斯提·寻求结盟','戈哈纳赫|莱希姆学院院长·研究永生',
+  '基尔南&李|学院叛徒·勾结拉格西亚','卡兹克|被囚禁在莱希姆学院地牢','知更鸟|妹妹·同谐歌者·深水城巡演中',
+  '塞娅娜|沙洛沙公主的侍女','蒂莫尔夫人|达森难民领袖'
+],
+chronicle:[
+  {tag:'旅人',title:'同伴集结',body:'在旅途初期，星期日先后遇到了加洛奈斯（希拉西风宗）、马洛（阿斯莫审判领域圣武士）和艾特拉（复生幽影术师）。三人各有自己的目的，却都与即将到来的风暴息息相关。加洛奈斯的老师名为乌尔，将火焰之鹿封印在火焰森林中。艾特拉、马洛、加洛奈斯在一次意外中释放了天灾。'},
+  {tag:'汐坤',title:'莱希姆学院·学城的暗流',body:'一行人抵达汐坤——莱希姆学院所在的学术之城。学院院长戈哈纳赫取走了火法师的吊坠，似乎在研究永生的秘密。学院内有叛徒：防护法师基尔南和神秘的李与拉格西亚有染，用操控天气的神器挑拨沙哈拉斯提与汐坤的关系。预言法师克里斯蒂娜（父哈丁）和黑马二把手雷纳德是在这里遇到的友人。'},
+  {tag:'难民',title:'拉格西亚的逃亡者',body:'在汐坤的难民营中，星期日遇到了来自不同国度的难民。拉格西亚难民的大姐头杰西是一名欲魔，她告知星期日：戈哈纳赫已经掌握了长生的秘密，而她的姐妹卡兹克被关押在莱希姆学院内。达森的难民由蒂莫尔夫人领导，正在游说汐坤对抗格拉西亚。此外还有辛达尔的难民和回声之魂的圣鹰十字团骑士。'},
+  {tag:'外交',title:'沙哈拉斯提的使者',body:'沙哈拉斯提公主沙洛沙携侍女塞娅娜来到汐坤，希望与汐坤结盟对抗格拉西亚。然而院长戈哈纳赫拒绝了沙洛沙的请求——他盲目自大，认为法师的力量可以做到一切。汐坤夹在沙哈拉斯提和格拉西亚之间，每个选择都可能引发灾难。'},
+  {tag:'女皇',title:'莱丝卡的崛起',body:'莱丝卡——原是女神判官（审判官的领导者），如今即将成为格拉西亚的新女皇。此前她下达了前所未有的命令：通缉所有法师，格杀勿论。她的立场将决定整个地区的命运。星期日不知她将带来和平还是战争。'},
+  {tag:'焚天',title:'煤舌皇帝与焚天神器',body:'已故的煤舌皇帝曾持有一件名为"焚天"（Skyburner）的神器。如今皇帝已死，焚天神器下落不明。拉格西亚、格拉西亚和沙哈拉斯提都在觊觎这件神器——它足以改变整个地区的力量平衡。模组名"焚天之战"即由此而来。'},
+  {tag:'当前',title:'各怀心事·重返汐坤',body:'艾特拉、马洛和加洛奈斯告别了公主沙洛沙，动身返回汐坤。每个人都有自己的目的——有人要赎释放天灾之罪，有人要救被囚禁之人，有人要追寻焚天神器的真相。星期日站在命运的十字路口：是选择秩序带来的安稳，还是自由带来的风险？此行是否正确？仍未可知……'}
+],
+spellLevels:['戏法','1环','2环','3环'],  // <-- add new levels here like '4环','5环'
+spellSlots:{'戏法':'','1环':'4个','2环':'3个','3环':'3个'},
 spells:{
-  cantrips:[
-    {n:'光亮术',s:'塑能',d:'触碰一个物件，发出20尺光照+20尺微光。',m:'动作·触碰·V,S·1小时'},
-    {n:'修复术',s:'变化',d:'修复一个破损物件的单处断裂或裂缝。',m:'1分钟·触碰·V,S,M·立即'},
-    {n:'恶言相加',s:'惑控',d:'对一个生物说出魔法侮辱，造成1d4心灵伤害。',m:'附赠·60尺·V·立即'},
-    {n:'流光闪灵',s:'塑能',d:'远程法术攻击，命中1d8光耀伤害。',m:'动作·120尺·V,S·立即'},
-    {n:'魔法伎俩',s:'变化',d:'改变颜色/温度、清洁/弄脏等基础把戏。',m:'动作·30尺·V,S·至多1小时'}
+  '戏法':[
+    {n:'光亮术',s:'塑能',d:'你触碰一个物件，使其发出半径20尺的明亮光照+20尺微光光照。可以设定颜色。持续1小时，可被解除魔法驱散。',m:'动作·触碰·V、S·1小时'},
+    {n:'修复术',s:'变化',d:'修复一个破损物件上的单处断裂或裂缝，例如断链、磨损的绳索、破洞等。裂隙不超过1尺时完全修复。不能修复魔法物品。',m:'1分钟·触碰·V、S、M·立即'},
+    {n:'恶言相加',s:'惑控',d:'对施法距离内一个能听见你声音的生物说出一段蕴含魔法力量的侮辱。目标必须通过感知豁免，否则受到1d4点心灵伤害，并在其下一回合结束前的首次攻击检定中承受劣势。',m:'附赠·60尺·V·立即·强化(5/11/17级)+1d4'},
+    {n:'流光闪灵',s:'塑能·歌织者',d:'歌织者的专属戏法。你创造一颗闪耀的魔法星火射向目标。远程法术攻击，命中造成1d8点光耀伤害，并且目标在下一回合结束前无法受益于隐形效果。',m:'动作·120尺·V、S·立即·5/11/17级+1d8'},
+    {n:'魔法伎俩',s:'变化',d:'一种基础的魔法把戏。你可以在一回合内做出以下效应之一：让物件改变颜色/温度、清洁或弄脏物件、制造一小撮无害的味道/声音/火花、点燃或吹熄蜡烛。',m:'动作·30尺·V、S·至多1小时'}
   ],
-  L1:[{n:'命令术',s:'惑控',d:'命令生物服从单字指令。',m:'动作·60尺·V·1轮'},{n:'治愈真言',s:'防护',d:'一个生物恢复1d4+魅力值。',m:'附赠·60尺·V·立即'},{n:'羽落术',s:'变化',d:'最多5个生物免受坠落伤害。',m:'反应·60尺·V,M·1分钟'},{n:'妖火',s:'塑能',d:'20尺立方内生物被描出轮廓攻击者优势。',m:'动作·60尺·V·专注至多1分钟'}],
-  L2:[{n:'沉默术',s:'幻术',d:'40尺半径球状区域绝对寂静无法施法。',m:'动作·120尺·V,S·专注至多10分钟'},{n:'人类定身术',s:'惑控',d:'一个人形生物被麻痹。',m:'动作·60尺·V,S,M·专注至多1分钟'},{n:'暗示术',s:'惑控',d:'用一句话暗示生物执行合理指令。',m:'动作·30尺·V,M·专注至多8小时'},{n:'识破隐形',s:'预言',d:'看透隐形灵体及隐藏魔法陷阱。',m:'动作·自身·V,S,M·专注至多1小时'}],
-  L3:[{n:'解除魔法',s:'防护',d:'终止生物/物件/魔法效应上的法术。',m:'动作·120尺·V,S·立即'},{n:'死者交谈',s:'死灵',d:'触碰一具尸体问5个问题。',m:'动作·触碰·V,S,M·10分钟'},{n:'举目皆敌',s:'惑控',d:'扭曲生物感知视周围所有生物为敌。',m:'动作·120尺·V,S·专注至多1分钟'}],
-  inst:[
-    {n:'飞行术',s:'变化·60尺飞行',m:'动作·触碰·专注至多10分钟'},{n:'隐形术',s:'幻术·触碰隐形',m:'动作·触碰·专注至多1小时'},
-    {n:'浮空术',s:'变化·垂直升降',m:'动作·60尺·专注至多10分钟'},{n:'防护善恶',s:'防护·抵御异界',m:'动作·触碰·专注至多10分钟'},
-    {n:'塑石术',s:'变化·改变5尺石材',m:'动作·触碰·立即'},{n:'火墙术',s:'塑能·5d8火墙',m:'动作·120尺·专注至多1分钟'},
-    {n:'风墙术',s:'塑能·阻挡远程武器',m:'动作·120尺·专注至多1分钟'}
+  '1环':[
+    {n:'命令术',s:'惑控',d:'你对施法距离内一个生物说出一个单字命令。目标必须通过感知豁免，否则必须立即服从命令执行行动。可选命令有：Approach（靠近）、Drop（丢弃）、Flee（逃跑）、Grovel（跪地）、Halt（停步）、Beckon（过来）。',m:'动作·60尺·V·1轮·升环：每升1环多影响1目标'},
+    {n:'治愈真言',s:'防护',d:'你念诵一段简短而充满力量的治愈祷言。施法距离内一个你可见的生物恢复1d4+你的施法属性调整值（魅力+5）点生命值。这是战斗中最快最省动作的治疗手段。',m:'附赠·60尺·V·立即·升环每+1环+1d4'},
+    {n:'羽落术',s:'变化',d:'当你或有生物坠落的瞬间施放此法术。最多5个生物的坠落速度急剧减慢，不受坠落伤害。以反应施放，用于应对突然的坠落、陷阱或被打下悬崖。',m:'反应·60尺·V、M·1分钟'},
+    {n:'妖火',s:'塑能',d:'施法距离内20尺立方区域内的生物被蓝绿色火光勾勒出轮廓。失败敏捷豁免的生物发出微光，攻击者对其攻击检定获得优势（advantage）。隐形生物也清晰可见。',m:'动作·60尺·V·专注至多1分钟·升环+1d6区域'}
+  ],
+  '2环':[
+    {n:'沉默术',s:'幻术',d:'施法距离内某处40尺半径球状区域被绝对的寂静笼罩。区域内所有声音消失，完全阻隔交谈、法术施放（需要言语成分的法术无法施放），也无法发出声音。对施法者极为有效的控制手段。',m:'动作·120尺·V、S·专注至多10分钟'},
+    {n:'人类定身术',s:'惑控',d:'选择施法距离内一个人形生物，目标必须通过感知豁免，否则被麻痹——完全无法移动、无法说话、无法做任何动作。每回合结束时目标可再尝试一次豁免解除。对类人生物特攻。',m:'动作·60尺·V、S、M·专注至多1分钟·升环+1目标'},
+    {n:'暗示术',s:'惑控',d:'你用一句简短的话暗示一个生物。目标必须通过感知豁免，否则会竭尽全力去执行你的指令。指令必须简短且合理（例如"把你的钥匙给我""带我们去你们的营地"）——伤害自身或明显荒谬的指令会结束法术。',m:'动作·30尺·V、M·专注至多8小时·升环+1目标'},
+    {n:'识破隐形',s:'预言',d:'你获得看透隐形、灵体及隐藏魔法陷阱的能力。持续期间你能看到所有隐形的生物和物件、看到灵体位面的生物、及任何隐藏的魔法陷阱。探索和反潜行的必备法术。',m:'动作·自身·V、S、M·专注至多1小时'}
+  ],
+  '3环':[
+    {n:'解除魔法',s:'防护',d:'选择施法距离内一个生物、物件或魔法效应，终止其上持续中的任何法术，环阶等于或低于施法位等级的直接解除。高阶法术需进行DC10+法术环阶的魅力检定（你的施法属性）。',m:'动作·120尺·V、S·立即·升环自动解除等于施法位环阶的法术'},
+    {n:'死者交谈',s:'死灵',d:'你触碰一具尸体（不能是无心智的不死生物或没有嘴巴），以天界语、通用语等它能理解的语言与之交谈。允许问5个问题，尸体所知仅为生前信息，不受欺骗/蛊惑类法术影响。',m:'动作·触碰·V、S、M·10分钟'},
+    {n:'举目皆敌',s:'惑控',d:'你扭曲一个生物的感知，让它认为周围所有人都是敌人。目标必须通过感知豁免，否则对施法距离内所有生物视为敌人。目标回合内必须攻击离它最近的生物，否则将用尽移动力靠近威胁。每回合结束时可重复豁免。',m:'动作·120尺·V、S·专注至多1分钟'}
+  ],
+  '乐器':[
+    {n:'飞行术',s:'变化·60尺飞行',d:'你触碰一个同伴，对方获得60尺飞行速度。可控制飞行方向和高度，持续到法术结束。',m:'动作·触碰·专注至多10分钟'},
+    {n:'隐形术',s:'幻术·触碰隐形',d:'触碰一个生物使其完全看不见——包括它身上的装备和物品。攻击或施放伤害性法术后隐形结束。',m:'动作·触碰·专注至多1小时'},
+    {n:'浮空术',s:'变化·垂直升降',d:'选择一生物或物件垂直上升不超过20尺，在该位置悬浮整个持续期间。可左右轻微摆动但不能横向移动。',m:'动作·60尺·专注至多10分钟'},
+    {n:'防护善恶',s:'防护·抵御异界/魔族',d:'触碰一个同伴，对方获得针对天界生物/元素/精类/魔族/不死亡灵的防护：对方攻击该生物时劣势，该生物攻击被防护者时优势。同时免疫魅惑、恐惧和附身。',m:'动作·触碰·专注至多10分钟'},
+    {n:'塑石术',s:'变化·改变5尺石材',d:'施法距离内一块5尺立方的石头改变形状。可用于造门、封墙、架桥、雕刻等。不能造成伤害或创造精细机关。',m:'动作·触碰·立即'},
+    {n:'火墙术',s:'塑能·5d8火墙',d:'你创造一道火焰组成的墙。穿越火墙的生物受到5d8火焰伤害。火墙会遮蔽视线，持续期间阻隔通道。可用作控制战场或保护阵地。',m:'动作·120尺·专注至多1分钟'},
+    {n:'风墙术',s:'塑能·阻挡远程武器',d:'你创造一道呼啸的强风气墙。穿墙的远程武器攻击自动失效（箭矢、弩矢等），小型飞行生物无法穿越。气体状的攻击也被完全阻隔。',m:'动作·120尺·专注至多1分钟'}
   ]
-}};
-var KEY='sun5_data';
-function ld(){try{var d=JSON.parse(localStorage.getItem(KEY));return d||JSON.parse(JSON.stringify(D))}catch(e){return JSON.parse(JSON.stringify(D))}}
-function sv(d){localStorage.setItem(KEY,JSON.stringify(d))}
-function md(v){var m=Math.floor((parseInt(v)||10-10)/2);return m>=0?'（+'+m+'）':'（'+m+'）'}
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+},
+spellLevelColor:{'戏法':'var(--accent)','1环':'var(--blue)','2环':'var(--green)','3环':'var(--red)','4环':'var(--gold)','5环':'#ff6b9d','6环':'#6b9dff','7环':'#9d6bff','8环':'#ff9d6b','9环':'#ffd700','乐器':'var(--gold)'}
+};
 
-function rn(d){
+var STORAGE_KEY='sunday_sheet_data';
+
+function ld(){try{var d=JSON.parse(localStorage.getItem(STORAGE_KEY));if(d&&d.lvl)return d}catch(e){}return JSON.parse(JSON.stringify(D))}
+function sv(d){localStorage.setItem(STORAGE_KEY,JSON.stringify(d))}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function md(v){var m=Math.floor((parseInt(v)||10-10)/2);return m>=0?'（+'+m+'）':'（'+m+'）'}
+var curTab='stats',tabs=[
+  {id:'stats',label:'📋基础'},{id:'attrs',label:'⚔️属性'},{id:'combat',label:'🛡️战斗'},
+  {id:'race',label:'🧬种族'},{id:'feats',label:'🏅专长'},{id:'classf',label:'📖职业'},
+  {id:'spells',label:'✨法术'},{id:'equip',label:'🎒装备'},{id:'story',label:'📜剧情'},
+  {id:'chronicle',label:'📖纪事'},{id:'data',label:'💾数据'}
+];
+
+function render(d){
   if(!d)d=ld();
-  var dd=d.spells||{},sl=(d.slots||'4,3,3').split(',').map(function(x){return x.trim()});
-  var slt={
-    cantrips:{l:'戏法（0环）',c:'var(--accent)'},
-    L1:{l:'1环法术（'+(sl[0]||4)+'个法术位）',c:'var(--blue)'},
-    L2:{l:'2环法术（'+(sl[1]||3)+'个法术位）',c:'var(--green)'},
-    L3:{l:'3环法术（'+(sl[2]||3)+'个法术位）',c:'var(--red)'},
-    inst:{l:'🎵 克里里拉琴·乐器法术（每日各一次）',c:'var(--gold)'}
-  };
+  var spData=d.spells||{},spLevels=d.spellLevels||[],spSlots=d.spellSlots||{},spColors=d.spellLevelColor||{};
   var sh='';
-  Object.keys(slt).forEach(function(k){
-    if(!dd[k]||!dd[k].length)return;
-    sh+='<div class="spell-block"><div class="sb-hd" style="border-left-color:'+slt[k].c+'">'+slt[k].l+'</div><div class="spell-row">';
-    dd[k].forEach(function(s){
-      sh+='<div class="'+(k==='inst'?'inst-card':'spell-card')+'"><div class="sc-hd">'+esc(s.n)+' <span class="sc-school">· '+esc(s.s||'')+'</span></div>'+
-        (s.d?'<div class="sc-desc">'+esc(s.d)+'</div>':'')+'<div class="sc-meta">'+esc(s.m||'')+'</div></div>';
+  spLevels.forEach(function(lv){
+    var arr=spData[lv]||[];
+    if(!arr.length)return;
+    sh+='<div class="spell-block"><div class="sb-hd" style="border-left-color:'+(spColors[lv]||'var(--accent)')+'">'+lv+'</div><div class="spell-row">';
+    arr.forEach(function(s){
+      sh+='<div class="spell-card"><div class="sc-hd">'+esc(s.n)+' <span class="sc-school">· '+esc(s.s||'')+'</span></div>'+
+        '<div class="sc-desc">'+esc(s.d||'')+'</div><div class="sc-meta">'+esc(s.m||'')+'</div></div>';
     });
     sh+='</div></div>';
   });
+  // Instrument spells
+  var inst=spData['乐器']||[];
+  if(inst.length){
+    sh+='<div class="spell-block"><div class="sb-hd" style="border-left-color:var(--gold);color:var(--gold)">🎵 克里里拉琴·乐器法术（每日各一次）</div><div class="spell-row">';
+    inst.forEach(function(s){
+      sh+='<div class="inst-card"><div class="sc-hd">'+esc(s.n)+' <span class="sc-school">· '+esc(s.s||'')+'</span></div>'+
+        (s.d?'<div class="sc-desc">'+esc(s.d)+'</div>':'')+'<div class="sc-meta">'+esc(s.m||'')+'</div></div>';
+    });
+    sh+='</div></div>';
+  }
 
-  var h='<div class="hero"><h1>星期日</h1><div class="cn">S U N D A Y · 梦之铎音</div><div class="info">'+esc(d.lvl||'6')+'级 歌织者（吟游诗人）· 阿斯莫 · 守序中立</div></div>'+
+  var pg=document.getElementById('pg');
+  pg.innerHTML=
+    '<div class="hero"><h1>星期日</h1><div class="cn">S U N D A Y · 梦之铎音</div><div class="info">'+esc(d.lvl||'')+'级 歌织者（吟游诗人）·阿斯莫·守序中立</div></div>'+
     '<div class="portrait-wrap"><picture><source srcset="sunday_splash.webp" type="image/webp"><img src="sunday_splash.jpg" alt="星期日"></picture></div>'+
-    '<div class="abilities">'+
-    ['str','dex','con','int','wis','cha'].map(function(a){return '<div class="ab"><div class="n">'+(a==='str'?'力量':a==='dex'?'敏捷':a==='con'?'体质':a==='int'?'智力':a==='wis'?'感知':'魅力')+'</div><div class="v">'+esc(d[a])+'</div><div class="m">'+md(d[a])+'</div></div>'}).join('')+
-    '</div>'+
+    '<div class="abilities">'+['str','dex','con','int','wis','cha'].map(function(a){return '<div class="ab"><div class="n">'+({str:'力量',dex:'敏捷',con:'体质',int:'智力',wis:'感知',cha:'魅力'}[a])+'</div><div class="v">'+esc(d[a])+'</div><div class="m">'+md(d[a])+'</div></div>'}).join('')+'</div>'+
     '<div class="info-grid">'+
     '<div class="ig"><div class="lb">护甲等级</div><div class="vl">'+esc(d.ac||'')+'</div></div>'+
     '<div class="ig"><div class="lb">生命值</div><div class="vl">'+esc(d.hp||'')+'</div></div>'+
@@ -249,7 +284,7 @@ function rn(d){
     '<div class="ig"><div class="lb">体型/种族</div><div class="vl">中型·阿斯莫</div></div></div>'+
 
     '<div class="g2"><div class="card"><div class="hd">豁免检定</div><p>'+(d.saves||'').split('；').map(function(s){return '<span class="tag tag-r">'+esc(s)+'</span>'}).join(' ')+'</p>'+
-    '<div class="hd" style="margin-top:6px;font-size:.82rem">技能熟练</div><p>'+(d.skills||'').split('；').map(function(s){return '<span class="tag tag-b">'+esc(s)+'</span>'}).join(' ')+'</p><div class="meta">万事通：+1</div></div>'+
+    '<div class="hd" style="margin-top:6px;font-size:.82rem">技能熟练</div><p>'+(d.skills||'').split('；').map(function(s){return '<span class="tag tag-b">'+esc(s)+'</span>'}).join(' ')+'</p><div class="meta">万事通：所有未熟练技能检定+1</div></div>'+
     '<div class="card"><div class="hd">抗性·工具·语言</div><p>'+(d.resist||'').split('；').map(function(s){return '<span class="tag tag-r">'+esc(s)+'</span>'}).join(' ')+'</p><p style="margin-top:3px">'+(d.tools||'').split('·').map(function(s){return '<span class="tag">'+esc(s)+'</span>'}).join('')+'</p><p style="margin-top:3px">'+(d.langs||'').split('·').map(function(s){return '<span class="tag">'+esc(s)+'</span>'}).join('')+'</p><div class="meta">诗人激励：'+esc(d.bi||'')+'</div></div></div>'+
 
     '<h2>阿斯莫种族特性</h2><div class="g3">'+(d.race||[]).map(function(r){return '<div class="card"><div class="hd">'+esc(r.n)+'</div><p>'+esc(r.d)+'</p></div>'}).join('')+'</div>'+
@@ -258,7 +293,7 @@ function rn(d){
 
     '<h2>吟游诗人·歌织者</h2>'+(d.features||[]).map(function(f){return '<div class="card"><div class="hd">'+esc(f.n)+' <span class="tag tag-r">'+esc(f.t||'')+'</span></div><p>'+esc(f.d)+'</p></div>'}).join('')+
 
-    '<h2>法术</h2><div class="card" style="margin-bottom:6px"><p><span class="tag tag-b">施法属性：魅力</span> <span class="tag tag-b">DC：'+esc(d.dc||'')+'</span> <span class="tag tag-b">攻击：'+esc(d.atk||'')+'</span> <span class="tag" style="color:var(--muted)">法术位：'+esc(d.slots||'')+'</span></p></div>'+sh+
+    '<h2>法术</h2><div class="card" style="margin-bottom:6px"><p><span class="tag tag-b">施法属性：魅力</span> <span class="tag tag-b">法术难度等级（DC）：'+esc(d.dc||'')+'</span> <span class="tag tag-b">法术攻击加值：'+esc(d.atk||'')+'</span> <span class="tag" style="color:var(--muted)">法术位数量：'+esc(d.slots||'')+'</span></p></div>'+sh+
 
     '<h2>装备与物品</h2><div class="card"><p>'+(d.equip||'').split('·').map(function(e){return '<span class="eq eq-gold">'+esc(e)+'</span>'}).join('')+'</p></div>'+
     '<div class="g2">'+(d.magic||[]).map(function(m){return '<div class="card"><div class="hd" style="font-size:.82rem;color:var(--gold)">'+esc(m.n)+'</div><p>'+esc(m.d)+'</p></div>'}).join('')+'</div>'+
@@ -272,263 +307,147 @@ function rn(d){
     '<h2>旅途中遇到的人</h2><div class="g-a">'+(d.people||[]).map(function(p){var s=p.split('|');return '<div class="card" style="padding:8px 10px"><div class="hd" style="font-size:.8rem">'+esc(s[0])+'</div><div class="meta">'+esc(s[1]||'')+'</div></div>'}).join('')+'</div>'+
 
     '<div style="text-align:center;color:var(--muted);font-size:.65rem;padding:24px 0 12px;border-top:1px solid rgba(124,92,252,.06);margin-top:20px">D&D 5R·歌织者·梦之铎音·星期日<br>长团模组：焚天之战</div>';
-  document.getElementById('pg').innerHTML=h;
 }
-
-// ═══ Edit panels ═══
-var tabs=[
-  {id:'stats',label:'📋基础'},
-  {id:'attrs',label:'⚔️属性'},
-  {id:'combat',label:'🛡️战斗'},
-  {id:'race',label:'🧬种族'},
-  {id:'feats',label:'🏅专长'},
-  {id:'classf',label:'📖职业'},
-  {id:'spells',label:'✨法术'},
-  {id:'equip',label:'🎒装备'},
-  {id:'story',label:'📜剧情'},
-  {id:'chronicle',label:'📖纪事'},
-  {id:'data',label:'💾数据'}
-];
-var curTab='stats';
 
 function buildTabs(){
   var tb=document.getElementById('tabBar'),tc=document.getElementById('tabContent');
   tb.innerHTML=tabs.map(function(t){return '<div class="tab'+(t.id===curTab?' act':'')+'" data-tab="'+t.id+'">'+t.label+'</div>'}).join('');
-  tb.querySelectorAll('.tab').forEach(function(el){
-    el.addEventListener('click',function(){curTab=this.getAttribute('data-tab');buildTabs();fillForm(ld())});
-  });
+  tb.querySelectorAll('.tab').forEach(function(el){el.addEventListener('click',function(){curTab=this.getAttribute('data-tab');buildTabs();fillForm(ld())})});
   var d=ld();
-  if(curTab==='stats')buildStatsTab(tc,d);
-  else if(curTab==='attrs')buildAttrsTab(tc,d);
-  else if(curTab==='combat')buildCombatTab(tc,d);
-  else if(curTab==='race')buildRaceTab(tc,d);
-  else if(curTab==='feats')buildFeatsTab(tc,d);
-  else if(curTab==='classf')buildClassTab(tc,d);
-  else if(curTab==='spells')buildSpellsTab(tc,d);
-  else if(curTab==='equip')buildEquipTab(tc,d);
-  else if(curTab==='story')buildStoryTab(tc,d);
-  else if(curTab==='chronicle')buildChronicleTab(tc,d);
-  else if(curTab==='data')buildDataTab(tc,d);
-}
-
-function buildStatsTab(el,d){
-  el.innerHTML='<div class="edit-g">'+
-    '<div class="edit-f half"><label>等级</label><input class="f-lvl" value="'+esc(d.lvl)+'"></div>'+
-    '<div class="edit-f half"><label>熟练加值</label><input class="f-prof" value="'+esc(d.prof)+'"></div>'+
-    '<div class="edit-f half"><label>生命值</label><input class="f-hp" value="'+esc(d.hp)+'"></div>'+
-    '<div class="edit-f half"><label>护甲等级</label><input class="f-ac" value="'+esc(d.ac)+'"></div>'+
-    '<div class="edit-f half"><label>先攻加值</label><input class="f-init" value="'+esc(d.init)+'"></div>'+
-    '<div class="edit-f half"><label>速度</label><input class="f-speed" value="'+esc(d.speed)+'"></div>'+
-    '<div class="edit-f half"><label>被动察觉</label><input class="f-pp" value="'+esc(d.pp)+'"></div>'+
-    '<div class="edit-f half"><label>诗人激励</label><input class="f-bi" value="'+esc(d.bi)+'"></div>'+
-    '</div>';
-}
-
-function buildAttrsTab(el,d){
-  el.innerHTML='<h4>属性值（改数值自动算加值）</h4><div class="edit-g">'+
-    ['str','dex','con','int','wis','cha'].map(function(a){
-      var nm={str:'力量',dex:'敏捷',con:'体质',int:'智力',wis:'感知',cha:'魅力'};
-      var m=md(d[a]||10);
-      return '<div class="edit-f half"><label>'+nm[a]+' '+m+'</label><input class="f-'+a+'" type="number" value="'+(d[a]||10)+'"></div>';
-    }).join('')+
-    '</div><h4>法术</h4><div class="edit-g">'+
-    '<div class="edit-f half"><label>法术DC</label><input class="f-dc" value="'+esc(d.dc)+'"></div>'+
-    '<div class="edit-f half"><label>法术攻击</label><input class="f-atk" value="'+esc(d.atk)+'"></div>'+
-    '<div class="edit-f full"><label>法术位（逗号分隔）</label><input class="f-slots" value="'+esc(d.slots)+'"></div>'+
-    '</div>';
-}
-
-function buildCombatTab(el,d){
-  el.innerHTML='<div class="edit-g">'+
-    '<div class="edit-f full"><label>豁免检定（用；分隔）</label><textarea class="f-saves" rows="2">'+esc(d.saves)+'</textarea></div>'+
-    '<div class="edit-f full"><label>技能熟练（用；分隔）</label><textarea class="f-skills" rows="2">'+esc(d.skills)+'</textarea></div>'+
-    '<div class="edit-f full"><label>伤害抗性（用；分隔）</label><input class="f-resist" value="'+esc(d.resist)+'"></div>'+
-    '<div class="edit-f full"><label>工具熟练（用·分隔）</label><input class="f-tools" value="'+esc(d.tools)+'"></div>'+
-    '<div class="edit-f full"><label>语言（用·分隔）</label><input class="f-langs" value="'+esc(d.langs)+'"></div>'+
-    '</div>';
-}
-
-function buildRaceTab(el,d){
-  el.innerHTML='<h4><span style="color:var(--soft);cursor:pointer" id="addRace">+ 添加特性</span></h4><div id="raceList">'+
-    (d.race||[]).map(function(r,i){return '<div class="sec-i"><div class="sec-d" data-idx="'+i+'" data-list="race">✕</div>'+
-      '<div class="edit-f" style="margin-bottom:3px"><label>名称</label><input class="f-rn" value="'+esc(r.n)+'"></div>'+
-      '<div class="edit-f"><label>描述</label><textarea class="f-rd" rows="2">'+esc(r.d)+'</textarea></div></div>'}).join('')+
-    '</div>';
-  document.getElementById('addRace').onclick=function(){addItem('race')};
-}
-
-function buildFeatsTab(el,d){
-  el.innerHTML='<h4><span style="color:var(--soft);cursor:pointer" id="addFeat">+ 添加专长</span></h4><div id="featList">'+
-    (d.feats||[]).map(function(f,i){return '<div class="sec-i"><div class="sec-d" data-idx="'+i+'" data-list="feats">✕</div>'+
-      '<div class="edit-f" style="margin-bottom:3px"><label>名称</label><input class="f-fn" value="'+esc(f.n)+'"></div>'+
-      '<div class="edit-f" style="margin-bottom:3px"><label>等级/标签</label><input class="f-ft" value="'+esc(f.t||'')+'"></div>'+
-      '<div class="edit-f"><label>描述</label><textarea class="f-fd" rows="2">'+esc(f.d)+'</textarea></div></div>'}).join('')+
-    '</div>';
-  document.getElementById('addFeat').onclick=function(){addItem('feats')};
-}
-
-function buildClassTab(el,d){
-  el.innerHTML='<h4><span style="color:var(--soft);cursor:pointer" id="addFeat">+ 添加职业特性</span></h4><div id="featList">'+
-    (d.features||[]).map(function(f,i){return '<div class="sec-i"><div class="sec-d" data-idx="'+i+'" data-list="features">✕</div>'+
-      '<div class="edit-f" style="margin-bottom:3px"><label>名称</label><input class="f-fn" value="'+esc(f.n)+'"></div>'+
-      '<div class="edit-f" style="margin-bottom:3px"><label>频率/标签</label><input class="f-ft" value="'+esc(f.t||'')+'"></div>'+
-      '<div class="edit-f"><label>描述</label><textarea class="f-fd" rows="2">'+esc(f.d)+'</textarea></div></div>'}).join('')+
-    '</div>';
-  document.getElementById('addFeat').onclick=function(){addItem('features')};
+  if(curTab==='stats'){tc.innerHTML='<div class="edit-g">'+['lvl|等级','prof|熟练加值','hp|生命值','ac|护甲等级','init|先攻加值','speed|速度','pp|被动察觉','bi|诗人激励'].map(function(p){var s=p.split('|');return '<div class="edit-f half"><label>'+s[1]+'</label><input class="f-'+s[0]+'" value="'+esc(d[s[0]]||'')+'"></div>'}).join('')+'</div>';}
+  else if(curTab==='attrs'){tc.innerHTML='<h4>属性（自动算加值）</h4><div class="edit-g">'+['str|力量','dex|敏捷','con|体质','int|智力','wis|感知','cha|魅力'].map(function(p){var s=p.split('|');return '<div class="edit-f half"><label>'+s[1]+' '+md(d[s[0]]||10)+'</label><input class="f-'+s[0]+'" type="number" value="'+(d[s[0]]||10)+'"></div>'}).join('')+'</div><h4>法术</h4><div class="edit-g"><div class="edit-f half"><label>法术DC</label><input class="f-dc" value="'+esc(d.dc||'')+'"></div><div class="edit-f half"><label>法术攻击</label><input class="f-atk" value="'+esc(d.atk||'')+'"></div><div class="edit-f full"><label>法术位（逗号分隔，如4,3,3）</label><input class="f-slots" value="'+esc(d.slots||'')+'"></div></div>';}
+  else if(curTab==='combat'){tc.innerHTML='<div class="edit-g"><div class="edit-f full"><label>豁免检定（用；分隔）</label><textarea class="f-saves" rows="2">'+esc(d.saves||'')+'</textarea></div><div class="edit-f full"><label>技能熟练（用；分隔）</label><textarea class="f-skills" rows="2">'+esc(d.skills||'')+'</textarea></div><div class="edit-f full"><label>伤害抗性（用；分隔）</label><input class="f-resist" value="'+esc(d.resist||'')+'"></div><div class="edit-f full"><label>工具熟练（用·分隔）</label><input class="f-tools" value="'+esc(d.tools||'')+'"></div><div class="edit-f full"><label>语言（用·分隔）</label><input class="f-langs" value="'+esc(d.langs||'')+'"></div></div>';}
+  else if(curTab==='race'){tc.innerHTML='<h4><span style="color:var(--soft);cursor:pointer" id="addItem_race">+ 添加种族特性</span></h4><div id="list_race">'+(d.race||[]).map(function(r,i){return '<div class="sec-i"><div class="sec-d" data-idx="'+i+'" data-list="race">✕</div><div class="edit-f" style="margin-bottom:3px"><label>名称</label><input class="f-rn" value="'+esc(r.n)+'"></div><div class="edit-f"><label>描述</label><textarea class="f-rd" rows="2">'+esc(r.d)+'</textarea></div></div>'}).join('')+'</div>';document.getElementById('addItem_race').onclick=function(){addItem('race',{n:'新特性',d:'描述……'})};}
+  else if(curTab==='feats'){tc.innerHTML='<h4><span style="color:var(--soft);cursor:pointer" id="addItem_feats">+ 添加专长/能力</span></h4><div id="list_feats">'+(d.feats||[]).map(function(f,i){return '<div class="sec-i"><div class="sec-d" data-idx="'+i+'" data-list="feats">✕</div><div class="edit-f" style="margin-bottom:3px"><label>名称</label><input class="f-fn" value="'+esc(f.n)+'"></div><div class="edit-f" style="margin-bottom:3px"><label>等级/标签</label><input class="f-ft" value="'+esc(f.t||'')+'"></div><div class="edit-f"><label>完整描述</label><textarea class="f-fd" rows="2">'+esc(f.d)+'</textarea></div></div>'}).join('')+'</div>';document.getElementById('addItem_feats').onclick=function(){addItem('feats',{n:'新专长',t:'等级标签',d:'描述……'})};}
+  else if(curTab==='classf'){tc.innerHTML='<h4><span style="color:var(--soft);cursor:pointer" id="addItem_features">+ 添加职业特性</span></h4><div id="list_features">'+(d.features||[]).map(function(f,i){return '<div class="sec-i"><div class="sec-d" data-idx="'+i+'" data-list="features">✕</div><div class="edit-f" style="margin-bottom:3px"><label>名称</label><input class="f-fn" value="'+esc(f.n)+'"></div><div class="edit-f" style="margin-bottom:3px"><label>频率/标签</label><input class="f-ft" value="'+esc(f.t||'')+'"></div><div class="edit-f"><label>完整描述</label><textarea class="f-fd" rows="2">'+esc(f.d)+'</textarea></div></div>'}).join('')+'</div>';document.getElementById('addItem_features').onclick=function(){addItem('features',{n:'新特性',t:'频率',d:'描述……'})};}
+  else if(curTab==='spells'){buildSpellsTab(tc,d);}
+  else if(curTab==='equip'){tc.innerHTML='<div class="edit-g"><div class="edit-f full"><label>装备列表（用·分隔）</label><textarea class="f-equip" rows="2">'+esc(d.equip||'')+'</textarea></div></div><h4><span style="color:var(--soft);cursor:pointer" id="addItem_magic">+ 添加魔法物品</span></h4><div id="list_magic">'+(d.magic||[]).map(function(m,i){return '<div class="sec-i"><div class="sec-d" data-idx="'+i+'" data-list="magic">✕</div><div class="edit-f" style="margin-bottom:3px"><label>名称</label><input class="f-mn" value="'+esc(m.n)+'"></div><div class="edit-f"><label>描述</label><textarea class="f-md" rows="2">'+esc(m.d)+'</textarea></div></div>'}).join('')+'</div>';document.getElementById('addItem_magic').onclick=function(){addItem('magic',{n:'新物品',d:'描述……'})};}
+  else if(curTab==='story'){tc.innerHTML='<div class="edit-g"><div class="edit-f full"><label>背景故事（完整版）</label><textarea class="f-bg" rows="8">'+esc(d.bg||'')+'</textarea></div></div><h4><span style="color:var(--soft);cursor:pointer" id="addItem_party">+ 添加旅伴</span></h4><div id="list_party">'+(d.party||[]).map(function(p,i){return '<div class="sec-i"><div class="sec-d" data-idx="'+i+'" data-list="party">✕</div><div class="edit-f" style="margin-bottom:3px"><label>名称</label><input class="f-pn" value="'+esc(p.n)+'"></div><div class="edit-f"><label>职业/描述</label><input class="f-pc" value="'+esc(p.c)+'"></div></div>'}).join('')+'</div><h4><span style="color:var(--soft);cursor:pointer" id="addItem_people">+ 添加人物</span></h4><div id="list_people">'+(d.people||[]).map(function(p,i){return '<div class="sec-i"><div class="sec-d" data-idx="'+i+'" data-list="people">✕</div><div class="edit-f"><label>格式：名字|描述</label><input class="f-ppl" value="'+esc(p)+'"></div></div>'}).join('')+'</div>';document.getElementById('addItem_party').onclick=function(){addItem('party',{n:'新旅伴',c:'职业'})};document.getElementById('addItem_people').onclick=function(){addItem('people','新人物|描述')};}
+  else if(curTab==='chronicle'){tc.innerHTML='<div id="list_chronicle">'+(d.chronicle||[]).map(function(c,i){return '<div class="cr-i"><div class="cr-d" data-idx="'+i+'" data-list="chronicle">✕</div><div class="edit-f" style="margin-bottom:3px"><label>标签</label><input class="f-ct" value="'+esc(c.tag)+'"></div><div class="edit-f" style="margin-bottom:3px"><label>标题</label><input class="f-ch" value="'+esc(c.title)+'"></div><div class="edit-f"><label>内容（完整版）</label><textarea class="f-cb" rows="3">'+esc(c.body)+'</textarea></div></div>'}).join('')+'</div><div class="cr-a" id="addItem_chronicle">+ 新增纪事条目</div>';document.getElementById('addItem_chronicle').onclick=function(){addItem('chronicle',{tag:'新章',title:'新纪事',body:'写下你的冒险经历……'})};}
+  else if(curTab==='data'){tc.innerHTML='<p style="color:var(--muted);font-size:.7rem">你可以在这里粘贴之前导出的JSON数据来恢复。</p><textarea id="jsonImport" rows="8" style="width:100%;background:rgba(124,92,252,.06);border:1px solid rgba(124,92,252,.1);border-radius:4px;padding:6px;color:var(--fg);font-family:monospace;font-size:.7rem;margin-top:6px" placeholder="粘贴JSON数据..."></textarea><div style="display:flex;gap:8px;margin-top:6px"><button class="btn-s" id="importBtn" style="flex:1">📥 导入</button></div>';document.getElementById('importBtn').onclick=function(){try{var j=JSON.parse(document.getElementById('jsonImport').value);sv(j);render(j);buildTabs();var ok=document.getElementById('editOk');ok.textContent='✅ 导入成功';ok.classList.add('show');setTimeout(function(){ok.classList.remove('show');ok.textContent='✅ 已保存'},2000)}catch(e){alert('JSON解析失败：'+e.message)}};}
 }
 
 function buildSpellsTab(el,d){
-  var sp=d.spells||{};
-  var lvs=['cantrips','L1','L2','L3','inst'];
-  var ln={cantrips:'戏法',L1:'1环',L2:'2环',L3:'3环',inst:'乐器'};
-  el.innerHTML='<h4>法术管理</h4>';
-  lvs.forEach(function(k){
-    el.innerHTML+='<div style="margin-bottom:8px"><div style="font-size:.72rem;color:var(--muted);margin-bottom:3px">'+ln[k]+' <span style="color:var(--soft);cursor:pointer" class="sp-add" data-lv="'+k+'">+</span></div>'+
-      '<div id="splist-'+k+'">'+(sp[k]||[]).map(function(s,j){
-        return '<div class="spell-card" style="margin:3px 0;position:relative"><div class="sc-hd">'+esc(s.n)+' <span class="sc-school">'+esc(s.s||'')+'</span> <span style="position:absolute;right:4px;top:4px;cursor:pointer;color:var(--red);font-size:10px" class="sp-del" data-lv="'+k+'" data-idx="'+j+'">✕</span></div>'+
-          (s.d?'<div class="sc-desc">'+esc(s.d)+'</div>':'')+
-          '<div class="sc-meta">'+esc(s.m||'')+'</div></div>';
-      }).join('')+'</div></div>';
+  var sp=d.spells||{},lv=d.spellLevels||[],sl=d.spellSlots||{},colors=d.spellLevelColor||{};
+  var html='<h4>法术环级管理</h4><div class="edit-g">'+
+    lv.map(function(l,i){return '<div class="edit-f half"><label>'+l+' 法术位</label><input class="f-sl_'+l+'" value="'+esc(sl[l]||'')+'"> <span style="cursor:pointer;color:var(--red);font-size:.6rem" class="delLevel" data-lv="'+l+'">删除该环</span></div>'}).join('')+
+    '</div><div style="text-align:center;margin-bottom:8px"><input id="newLevelName" placeholder="如 4环、5环" style="width:120px;background:rgba(124,92,252,.06);border:1px solid rgba(124,92,252,.1);border-radius:4px;padding:4px 7px;color:var(--fg);font-size:.75rem;margin-right:4px"> <span class="cr-a" id="addLevelBtn" style="display:inline;padding:4px 12px">+ 添加法术环级</span></div>';
+  
+  lv.forEach(function(l){
+    var arr=sp[l]||[];
+    html+='<div style="margin-bottom:8px;border:1px solid rgba(124,92,252,.06);border-radius:5px;padding:6px">'+
+      '<div style="font-size:.75rem;color:'+(colors[l]||'var(--soft)')+';margin-bottom:4px">'+l+' <span style="color:var(--soft);cursor:pointer" class="addSpell" data-lv="'+l+'">+ 添加法术</span></div>';
+    arr.forEach(function(s,j){
+      html+='<div class="spell-card" style="margin:3px 0;position:relative">'+
+        '<div class="sc-hd">'+esc(s.n)+' <span class="sc-school">'+esc(s.s||'')+'</span>'+
+        ' <span style="float:right;cursor:pointer;color:var(--red);font-size:10px" class="delSpell" data-lv="'+l+'" data-idx="'+j+'">✕</span></div>'+
+        '<div class="sc-desc">'+esc(s.d||'')+'</div><div class="sc-meta">'+esc(s.m||'')+'</div></div>';
+    });
+    html+='</div>';
   });
-  el.querySelectorAll('.sp-del').forEach(function(b){b.addEventListener('click',function(){
+  
+  // Instrument spells
+  var inst=sp['乐器']||[];
+  html+='<div style="margin:8px 0;border:1px solid rgba(212,160,87,.12);border-radius:5px;padding:6px">'+
+    '<div style="font-size:.75rem;color:var(--gold);margin-bottom:4px">🎵 乐器法术 <span style="color:var(--soft);cursor:pointer" class="addSpell" data-lv="乐器">+ 添加</span></div>';
+  inst.forEach(function(s,j){
+    html+='<div class="inst-card" style="margin:3px 0;position:relative">'+
+      '<div class="sc-hd">'+esc(s.n)+' <span class="sc-school">'+esc(s.s||'')+'</span>'+
+      ' <span style="float:right;cursor:pointer;color:var(--red);font-size:10px" class="delSpell" data-lv="乐器" data-idx="'+j+'">✕</span></div>'+
+      '<div class="sc-desc">'+esc(s.d||'')+'</div><div class="sc-meta">'+esc(s.m||'')+'</div></div>';
+  });
+  html+='</div>';
+  
+  el.innerHTML=html;
+  
+  // Event listeners for spell management
+  el.querySelectorAll('.delSpell').forEach(function(b){b.addEventListener('click',function(){
     var l=this.getAttribute('data-lv'),i=parseInt(this.getAttribute('data-idx')),d2=ld();
-    if(d2.spells[l])d2.spells[l].splice(i,1);sv(d2);rn(d2);buildTabs();
+    if(d2.spells[l])d2.spells[l].splice(i,1);sv(d2);render(d2);buildTabs();
   })});
-  el.querySelectorAll('.sp-add').forEach(function(b){b.addEventListener('click',function(){
+  el.querySelectorAll('.addSpell').forEach(function(b){b.addEventListener('click',function(){
     var l=this.getAttribute('data-lv'),nm=prompt('法术名称：');if(!nm)return;
-    var sc=prompt('学派：')||'',dc=prompt('简述：')||'',mt=prompt('施法信息：')||'';
+    var sc=prompt('学派（如 塑能、惑控）：')||'',dc=prompt('完整描述（给新手看的详细说明）：')||'',mt=prompt('施法信息（动作·距离·成分·持续等）：')||'';
     var d2=ld();if(!d2.spells[l])d2.spells[l]=[];d2.spells[l].push({n:nm,s:sc,d:dc,m:mt});
-    sv(d2);rn(d2);buildTabs();
+    sv(d2);render(d2);buildTabs();
   })});
-}
-
-function buildEquipTab(el,d){
-  el.innerHTML='<div class="edit-g">'+
-    '<div class="edit-f full"><label>装备列表（用·分隔）</label><textarea class="f-equip" rows="2">'+esc(d.equip)+'</textarea></div>'+
-    '</div><h4><span style="color:var(--soft);cursor:pointer" id="addMagic">+ 添加魔法物品</span></h4><div id="magicList">'+
-    (d.magic||[]).map(function(m,i){return '<div class="sec-i"><div class="sec-d" data-idx="'+i+'" data-list="magic">✕</div>'+
-      '<div class="edit-f" style="margin-bottom:3px"><label>名称</label><input class="f-mn" value="'+esc(m.n)+'"></div>'+
-      '<div class="edit-f"><label>描述</label><textarea class="f-md" rows="2">'+esc(m.d)+'</textarea></div></div>'}).join('')+
-    '</div>';
-  document.getElementById('addMagic').onclick=function(){addItem('magic')};
-}
-
-function buildStoryTab(el,d){
-  el.innerHTML='<div class="edit-g">'+
-    '<div class="edit-f full"><label>背景故事</label><textarea class="f-bg" rows="6">'+esc(d.bg)+'</textarea></div>'+
-    '</div><h4><span style="color:var(--soft);cursor:pointer" id="addParty">+ 添加旅伴</span></h4><div id="partyList">'+
-    (d.party||[]).map(function(p,i){return '<div class="sec-i"><div class="sec-d" data-idx="'+i+'" data-list="party">✕</div>'+
-      '<div class="edit-f" style="margin-bottom:3px"><label>名称</label><input class="f-pn" value="'+esc(p.n)+'"></div>'+
-      '<div class="edit-f"><label>职业/描述</label><input class="f-pc" value="'+esc(p.c)+'"></div></div>'}).join('')+
-    '</div><h4><span style="color:var(--soft);cursor:pointer" id="addPeople">+ 添加人物</span></h4><div id="peopleList">'+
-    (d.people||[]).map(function(p,i){return '<div class="sec-i"><div class="sec-d" data-idx="'+i+'" data-list="people">✕</div>'+
-      '<div class="edit-f"><label>格式：名字|描述</label><input class="f-ppl" value="'+esc(p)+'"></div></div>'}).join('')+
-    '</div>';
-  document.getElementById('addParty').onclick=function(){addItem('party')};
-  document.getElementById('addPeople').onclick=function(){addItem('people')};
-}
-
-function buildChronicleTab(el,d){
-  el.innerHTML='<div id="crList">'+(d.chronicle||[]).map(function(c,i){return '<div class="cr-i"><div class="cr-d" data-idx="'+i+'">✕</div>'+
-    '<div class="edit-f" style="margin-bottom:3px"><label>标签</label><input class="f-ct" value="'+esc(c.tag)+'"></div>'+
-    '<div class="edit-f" style="margin-bottom:3px"><label>标题</label><input class="f-ch" value="'+esc(c.title)+'"></div>'+
-    '<div class="edit-f"><label>内容</label><textarea class="f-cb" rows="2">'+esc(c.body)+'</textarea></div></div>'}).join('')+'</div>'+
-    '<div class="cr-a" id="addCr">+ 新增纪事条目</div>';
-  document.getElementById('addCr').onclick=function(){addItem('chronicle')};
-}
-
-function buildDataTab(el,d){
-  el.innerHTML='<p style="color:var(--muted);font-size:.7rem">你可以在这里粘贴之前导出的JSON数据来恢复。</p>'+
-    '<textarea id="jsonImport" rows="8" style="width:100%;background:rgba(124,92,252,.06);border:1px solid rgba(124,92,252,.1);border-radius:4px;padding:6px;color:var(--fg);font-family:monospace;font-size:.7rem;margin-top:6px" placeholder="粘贴JSON数据..."></textarea>'+
-    '<div style="display:flex;gap:8px;margin-top:6px"><button class="btn-s" id="importBtn" style="flex:1">📥 导入</button></div>';
-  document.getElementById('importBtn').onclick=function(){
-    try{var j=JSON.parse(document.getElementById('jsonImport').value);sv(j);rn(j);buildTabs();
-      var ok=document.getElementById('editOk');ok.textContent='✅ 导入成功';ok.classList.add('show');setTimeout(function(){ok.classList.remove('show');ok.textContent='✅ 已保存'},2000)}catch(e){alert('JSON解析失败：'+e.message)}
+  el.querySelectorAll('.delLevel').forEach(function(b){b.addEventListener('click',function(){
+    var l=this.getAttribute('data-lv');if(!confirm('删除「'+l+'」及其所有法术？'))return;
+    var d2=ld();d2.spellLevels=d2.spellLevels.filter(function(x){return x!==l});delete d2.spells[l];delete d2.spellSlots[l];
+    sv(d2);render(d2);buildTabs();
+  })});
+  document.getElementById('addLevelBtn').onclick=function(){
+    var nm=document.getElementById('newLevelName').value.trim();if(!nm)return;
+    var d2=ld();if(!d2.spellLevels)d2.spellLevels=[];if(d2.spellLevels.indexOf(nm)>=0)return alert('已存在');
+    d2.spellLevels.push(nm);if(!d2.spells)d2.spells={};d2.spells[nm]=[];if(!d2.spellSlots)d2.spellSlots={};d2.spellSlots[nm]='';
+    sv(d2);render(d2);buildTabs();
   };
 }
 
 // ═══ Generic add item ═══
-function addItem(list){
+function addItem(list,template){
   var d2=ld();
-  if(list==='race'){if(!d2.race)d2.race=[];d2.race.push({n:'新特性',d:'描述……'});}
-  else if(list==='feats'){if(!d2.feats)d2.feats=[];d2.feats.push({n:'新专长',t:'等级标签',d:'描述……'});}
-  else if(list==='features'){if(!d2.features)d2.features=[];d2.features.push({n:'新特性',t:'频率',d:'描述……'});}
-  else if(list==='magic'){if(!d2.magic)d2.magic=[];d2.magic.push({n:'新物品',d:'描述……'});}
-  else if(list==='party'){if(!d2.party)d2.party=[];d2.party.push({n:'新旅伴',c:'职业'});}
-  else if(list==='people'){if(!d2.people)d2.people=[];d2.people.push('新人物|描述');}
-  else if(list==='chronicle'){if(!d2.chronicle)d2.chronicle=[];d2.chronicle.push({tag:'新章',title:'新纪事',body:'写下冒险经历……'});}
-  sv(d2);rn(d2);buildTabs();
+  if(!d2[list])d2[list]=[];
+  d2[list].push(JSON.parse(JSON.stringify(template)));
+  sv(d2);render(d2);buildTabs();
 }
 
 // ═══ Collect form ═══
 function collect(){
   var d=ld();
-  // Stats
+  // Simple fields
   ['lvl','prof','hp','ac','init','speed','pp','bi','dc','atk','slots','saves','skills','resist','tools','langs','equip','bg'].forEach(function(k){
     var el=document.querySelector('.f-'+k);if(el)d[k]=el.value;
   });
-  // Attrs
   ['str','dex','con','int','wis','cha'].forEach(function(k){
     var el=document.querySelector('.f-'+k);if(el)d[k]=el.value;
   });
-  // Race
-  var rl=document.getElementById('raceList');
-  if(rl){d.race=[];rl.querySelectorAll('.sec-i').forEach(function(el){
-    d.race.push({n:(el.querySelector('.f-rn')||{}).value||'',d:(el.querySelector('.f-rd')||{}).value||''});
-  });}
-  // Feats
-  var fl=document.getElementById('featList');
-  if(fl){d.feats=[];fl.querySelectorAll('.sec-i').forEach(function(el){
-    d.feats.push({n:(el.querySelector('.f-fn')||{}).value||'',t:(el.querySelector('.f-ft')||{}).value||'',d:(el.querySelector('.f-fd')||{}).value||''});
-  });}
-  // Features (reuse featList id in class tab)
-  var ff=document.getElementById('featList');
-  if(ff&&curTab==='classf'){d.features=[];ff.querySelectorAll('.sec-i').forEach(function(el){
-    d.features.push({n:(el.querySelector('.f-fn')||{}).value||'',t:(el.querySelector('.f-ft')||{}).value||'',d:(el.querySelector('.f-fd')||{}).value||''});
-  });}
-  // Magic items
-  var ml=document.getElementById('magicList');
-  if(ml){d.magic=[];ml.querySelectorAll('.sec-i').forEach(function(el){
-    d.magic.push({n:(el.querySelector('.f-mn')||{}).value||'',d:(el.querySelector('.f-md')||{}).value||''});
-  });}
-  // Party
-  var pl=document.getElementById('partyList');
-  if(pl){d.party=[];pl.querySelectorAll('.sec-i').forEach(function(el){
-    d.party.push({n:(el.querySelector('.f-pn')||{}).value||'',c:(el.querySelector('.f-pc')||{}).value||''});
-  });}
-  // People
-  var pl2=document.getElementById('peopleList');
-  if(pl2){d.people=[];pl2.querySelectorAll('.sec-i').forEach(function(el){
-    d.people.push((el.querySelector('.f-ppl')||{}).value||'');
-  });}
+  // Lists
+  ['race','feats','features','magic','party','people'].forEach(function(list){
+    var container=document.getElementById('list_'+list);
+    if(!container)return;
+    d[list]=[];
+    container.querySelectorAll('.sec-i').forEach(function(el){
+      if(list==='race')d[list].push({n:(el.querySelector('.f-rn')||{}).value||'',d:(el.querySelector('.f-rd')||{}).value||''});
+      else if(list==='feats'||list==='features')d[list].push({n:(el.querySelector('.f-fn')||{}).value||'',t:(el.querySelector('.f-ft')||{}).value||'',d:(el.querySelector('.f-fd')||{}).value||''});
+      else if(list==='magic')d[list].push({n:(el.querySelector('.f-mn')||{}).value||'',d:(el.querySelector('.f-md')||{}).value||''});
+      else if(list==='party')d[list].push({n:(el.querySelector('.f-pn')||{}).value||'',c:(el.querySelector('.f-pc')||{}).value||''});
+      else if(list==='people')d[list].push((el.querySelector('.f-ppl')||{}).value||'');
+    });
+  });
   // Chronicle
-  var cl=document.getElementById('crList');
+  var cl=document.getElementById('list_chronicle');
   if(cl){d.chronicle=[];cl.querySelectorAll('.cr-i').forEach(function(el){
     d.chronicle.push({tag:(el.querySelector('.f-ct')||{}).value||'',title:(el.querySelector('.f-ch')||{}).value||'',body:(el.querySelector('.f-cb')||{}).value||''});
   });}
+  // Spell levels & slots
+  if(d.spellLevels){
+    d.spellLevels.forEach(function(l){
+      var el=document.querySelector('.f-sl_'+l);
+      if(el)d.spellSlots[l]=el.value;
+    });
+  }
   return d;
 }
 
 // ═══ Init ═══
-rn(ld());
+render(ld());
 buildTabs();
 
 document.getElementById('editBtn').addEventListener('click',function(){
-  var p=document.getElementById('editPanel'),b=this;
-  p.classList.toggle('open');b.classList.toggle('active');
+  var p=document.getElementById('editPanel');p.classList.toggle('open');this.classList.toggle('active');
   if(p.classList.contains('open'))fillForm(ld());
 });
-
-function fillForm(d){/*rebuild tabs handles this*/}
+function fillForm(d){}
 
 document.getElementById('saveBtn').addEventListener('click',function(){
-  var d=collect();sv(d);rn(d);
+  var d=collect();sv(d);render(d);
   var ok=document.getElementById('editOk');ok.classList.add('show');
   setTimeout(function(){ok.classList.remove('show')},2000);
 });
 
 document.getElementById('resetBtn').addEventListener('click',function(){
-  localStorage.removeItem(KEY);var d=JSON.parse(JSON.stringify(D));rn(d);buildTabs();
+  localStorage.removeItem(STORAGE_KEY);render(D);buildTabs();
   var ok=document.getElementById('editOk');ok.textContent='🔄 已重置';ok.classList.add('show');
   setTimeout(function(){ok.textContent='✅ 已保存';ok.classList.remove('show')},2000);
 });
@@ -539,15 +458,12 @@ document.getElementById('exportBtn').addEventListener('click',function(){
   var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='sunday_char_data.json';a.click();
 });
 
-// Delete handlers (delegated)
+// Delete handler (delegated)
 document.addEventListener('click',function(e){
   var t=e.target;
   if(t.classList.contains('sec-d')||t.classList.contains('cr-d')){
-    var idx=parseInt(t.getAttribute('data-idx'));
-    var list=t.getAttribute('data-list')||'chronicle';
-    var d=ld();
-    if(d[list])d[list].splice(idx,1);
-    sv(d);rn(d);buildTabs();
+    var idx=parseInt(t.getAttribute('data-idx')),list=t.getAttribute('data-list')||'chronicle';
+    var d=ld();if(d[list])d[list].splice(idx,1);sv(d);render(d);buildTabs();
   }
 });
 
