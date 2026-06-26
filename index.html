@@ -569,7 +569,7 @@ audio.src='sunday_bgm_1.mp3';
 audio.volume=0.3;var ip=false,is=false;
 function ft(t){return t&&!isNaN(t)?Math.floor(t/60)+':'+(Math.floor(t%60)+'').padStart(2,'0'):'0:00'}
 tb.addEventListener('click',function(){if(ip)audio.pause();else{if(audio.ended)audio.currentTime=0;audio.play().catch(function(){})}});
-audio.addEventListener('play',function(){ip=1;tb.textContent='⏸';tb.classList.add('playing')});audio.addEventListener('waiting',function(){tb.innerHTML='⏳';tb.title='缓冲中...'});audio.addEventListener('canplay',function(){if(ip)tb.innerHTML='⏸'});
+audio.addEventListener('play',function(){ip=1;tb.textContent='⏸';tb.classList.add('playing')});
 audio.addEventListener('pause',function(){ip=0;tb.textContent='▶';tb.classList.remove('playing')});
 audio.addEventListener('timeupdate',function(){if(audio.duration&&!is){pf.style.width=(audio.currentTime/audio.duration*100)+'%';td.textContent=ft(audio.currentTime)+' / '+ft(audio.duration)}});
 audio.addEventListener('loadedmetadata',function(){td.textContent='0:00 / '+ft(audio.duration)});
