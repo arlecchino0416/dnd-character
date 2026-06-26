@@ -564,7 +564,7 @@ document.addEventListener('click',function(e){
 });
 
 // ═══ Audio ═══
-var audio=document.getElementById('bgAudio'),tb=document.getElementById('musicToggle'),pb=document.getElementById('progressBar'),pf=document.getElementById('progressFill'),td=document.getElementById('timeDisplay'),vs=document.getElementById('volControl');
+var audio=document.getElementById('bgAudio'),tb=document.getElementById('musicToggle'),pb=document.getElementById('progressBar'),pf=document.getElementById('progressFill'),td=document.getElementById('timeDisplay'),vs=document.getElementById('volControl');audio.preload='none';tb.innerHTML='▶';
 audio.src='sunday_bgm.mp3';
 audio.volume=0.3;var ip=false,is=false;
 function ft(t){return t&&!isNaN(t)?Math.floor(t/60)+':'+(Math.floor(t%60)+'').padStart(2,'0'):'0:00'}
